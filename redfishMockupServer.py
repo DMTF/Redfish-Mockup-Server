@@ -3,13 +3,14 @@
 # License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/Redfish-Mockup-Server/LICENSE.md
 
 # redfishMockupServer.py
-# v0.9.2
+# v0.9.3
 # tested and developed Python 3.4
 
 import urllib
 import cgi
 import sys
 import getopt
+import time
 
 import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -18,7 +19,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
         '''
         returns index.json file for Serverthe specified URL
         '''
-        server_version = "RedfishMockupHTTPD_v0.9.2"
+        server_version = "RedfishMockupHTTPD_v0.9.3"
 
         def do_GET(self):
                 # for GETs always dump the request headers to the console
@@ -40,13 +41,16 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 # get the testEtagFlag and mockup directory path parameters passed in from the http server
                 apath=self.server.mockDir    # this is the real absolute path to the mockup directory
                 testEtagFlag=self.server.testEtagFlag
+                responseTime=self.server.responseTime
+                time.sleep(responseTime)
+
                 #print("-------apath; {}".format(apath))
                 #print("-------test: {}".format(testEtagFlag))
 
                 # form the path in the mockup of the file
                 #      old only support mockup in CWD:  apath=os.path.abspath(rpath)
                 fpath=os.path.join(apath,rpath, rfile)
-                fpathxml=os.path.join(apath,rfileXml)
+                fpathxml=os.path.join(apath,rpath, rfileXml)
                 #print("-------filepath:{}".format(fpath))
                 sys.stdout.flush()
 
@@ -81,6 +85,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         len=int(self.headers["content-length"])
                         dataa=self.rfile.read(len)
                         print("   PATCH: Data: {}".format(dataa))
+                responseTime=self.server.responseTime
+                time.sleep(responseTime)
+
                 self.send_response(204)
                 self.end_headers()
                 
@@ -90,6 +97,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         len=int(self.headers["content-length"])
                         dataa=self.rfile.read(len)
                         print("   POST: Data: {}".format(dataa))
+                responseTime=self.server.responseTime
+                time.sleep(responseTime)
+
                 self.send_response(204)
                 self.end_headers()
                 
@@ -100,6 +110,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         len=int(self.headers["content-length"])
                         dataa=self.rfile.read(len)
                         print("DELETE: Data: {}".format(dataa))
+                responseTime=self.server.responseTime
+                time.sleep(responseTime)
+                
                 self.send_response(204)
                 self.end_headers()
                 
@@ -133,6 +146,7 @@ def usage(program):
         print("      -P <port>     --Port=<port>      # port:  default is 8000")
         print("      -D <dir>,     --Dir=<dir>        # the to the mockup directory. It may be relative to CWD")
         print("      -T --TestEtag  # etag testing--enable returning etag for certain APIs for testing.  See Readme")
+        print("      -t <responseTime> --time=<executionTime> # time added to respond to any API")
         sys.stdout.flush()
 
 
@@ -145,9 +159,11 @@ def main(argv):
         mockDirPath=None
         mockDir=None
         testEtagFlag=False
+        responseTime=0
         
         try:
-                opts, args = getopt.getopt(argv[1:],"hLTH:P:D:",["help","Load", "TestEtag", "Host=", "Port=", "Dir="])
+                opts, args = getopt.getopt(argv[1:],"hLTH:P:D:t:",["help","Load", "TestEtag", "Host=", "Port=", "Dir=",
+                                                                   "time="])
         except getopt.GetoptError:
                 #usage()
                 print("Error parsing options", file=sys.stderr)
@@ -169,6 +185,8 @@ def main(argv):
                         mockDirPath=arg
                 elif opt in ("-T", "--TestEtag"):
                         testEtagFlag=True
+                elif opt in ("-t", "--time"):
+                        responseTime=float(arg)
                 else:
                         print('unhandled option', file=sys.stderr)
                         sys.exit(2)
@@ -177,6 +195,7 @@ def main(argv):
         print ('Hostname:', hostname)
         print ('Port:', port)
         print ("dir path specified by user:{}".format(mockDirPath))
+        print ("response time: {} seconds".format(responseTime))
         sys.stdout.flush()
 
         # check if mockup path was specified.  If not, use current working directory
@@ -200,6 +219,7 @@ def main(argv):
         # save the test flag, and real path to the mockup dir for the handler to use
         myServer.mockDir=mockDir
         myServer.testEtagFlag=testEtagFlag
+        myServer.responseTime=responseTime
         #myServer.me="HELLO"
         
         print( "Serving Redfish mockup on port: {}".format(port))

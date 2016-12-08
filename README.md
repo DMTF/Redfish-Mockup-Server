@@ -9,6 +9,7 @@ Copyright 2016 Distributed Management Task Force, Inc. All rights reserved.
 ###To start the server:
 * copy the ***redfishMockupServer.py*** file to the the folder you want to execute it from
 * use the `-D <mockupDir>` option to specify an absolute or relative path to the mockup dir from CWD
+* use the `-t <responseTime>` option to specify a delay to add to responses. Default is 0 sec
 * Note that the mockup directory must start with /redfish:  
  * "redfish" should be a sub-directory.   
  * This is a "Tall Mockup" which includes /redfish/v1 in the mockup directory structure in case some of the URIs in the mockup do not start with /redfish/v1.
@@ -23,13 +24,14 @@ Copyright 2016 Distributed Management Task Force, Inc. All rights reserved.
 
 * `redfishMockupServer -h`     -- gives help usage and exits
 
-* `redfishMockupServer [-H *HostIpAddress* ] [-P *port*] [-D <mockupDir>] [-H <host>] [-P <port>] [-T]`    
+* `redfishMockupServer [-H *HostIpAddress* ] [-P *port*] [-D <mockupDir>] [-H <host>] [-P <port>] [-T] [-t <responseTime>]
   * default *HostIpAddress* is 127.0.0.1
   * default *port*         is 8000
   * *mockupDir* is absolute or relative to CWD if starting with . or ..
   * -T option causes mockup server to generate etags on GETs for certain hard coded APIs for testing client patch etag code
     * response header Etag: "W/12345" is returned on GET /redfish/v1/Systems/1
     * response header Etag: "123456"  is returned on GET /redfish/v1/AccountService/Accounts/1
+  * `-t <responseTime>` tells the mockup server to add `<responseTime>` delay to each response.  Default is 0 sec.
 * Example:    
 `.\redfishMockupServer -P 8001 -D ./MyServerMockup9`   # to start another service on port 8001 from folder *./MyServerMockup9*
 
