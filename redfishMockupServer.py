@@ -48,6 +48,10 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 if isinstance(d["GET"],dict):
                     for k,v in d["GET"].items():
                         self.send_header(k,v)
+            elif (os.path.isfile(fpath) is False):
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("OData-Version","4.0")
             else:
                 self.send_response(404)
                 self.end_headers()
@@ -93,7 +97,6 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
             if( os.path.isfile(fpath) is True):
                 self.send_response(200)
-                self.send_header("Content-Type", "application/json")
                 # special cases to test etag for testing
                 #if etag is returned then the patch to these resources should include this etag
                 if( testEtagFlag is True ):
@@ -107,7 +110,11 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         d = json.load(headers_data)
                     if isinstance(d["GET"],dict):
                         for k,v in d["GET"].items():
-                            self.send_header(k,v)        
+                            self.send_header(k,v)
+                elif (os.path.isfile(fhpath) is False):
+                    self.send_header("Content-Type", "application/json")
+                    self.send_header("OData-Version","4.0")        
+
                 self.end_headers()
                 f=open(fpath,"r")
                 self.wfile.write(f.read().encode())
