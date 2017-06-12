@@ -11,9 +11,30 @@ import cgi
 import sys
 import getopt
 import time
+import json
 
 import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
+
+def dict_merge(dct, merge_dct):
+        """ 
+        https://gist.github.com/angstwad/bf22d1822c38a92ec0a9 modified
+        Recursive dict merge. Inspired by :meth:``dict.update()``, instead of
+        updating only top-level keys, dict_merge recurses down into dicts nested
+        to an arbitrary depth, updating keys. The ``merge_dct`` is merged into
+        ``dct``.
+        :param dct: dict onto which the merge is executed
+        :param merge_dct: dct merged into dct
+        :return: None
+        """
+        for k in merge_dct:
+            if (k in dct and isinstance(dct[k], dict)
+                and isinstance(merge_dct[k], collections.Mapping)):
+                dict_merge(dct[k], merge_dct[k])
+            else:
+                dct[k] = merge_dct[k]
+
+patchedLinks = dict()
 
 class RfMockupServer(BaseHTTPRequestHandler):
         '''
@@ -55,19 +76,29 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 #print("-------filepath:{}".format(fpath))
                 sys.stdout.flush()
 
-                if( os.path.isfile(fpath) is True):
-                        self.send_response(200)
-                        self.send_header("Content-Type", "application/json")
+                if( os.path.isfile(fpath) or fpath in patchedLinks):
                         # special cases to test etag for testing
                         # if etag is returned then the patch to these resources should include this etag
-                        if( testEtagFlag is True ):
-                                if( self.path=="/redfish/v1/Systems/1" ):
-                                        self.send_header("Etag", "W/\"12345\"")
-                                elif( self.path=="/redfish/v1/AccountService/Accounts/1" ):
-                                        self.send_header("Etag", "\"123456\"")
-                        self.end_headers()
                         f=open(fpath,"r")
-                        self.wfile.write(f.read().encode())
+                        if fpath not in patchedLinks:
+                            self.send_response(200)
+                            self.send_header("Content-Type", "application/json")
+                            # if( testEtagFlag is True ):
+                                    # if( self.path=="/redfish/v1/Systems/1" ):
+                                            # self.send_header("Etag", "W/\"12345\"")
+                                    # elif( self.path=="/redfish/v1/AccountService/Accounts/1" ):
+                                            # self.send_header("Etag", "\"123456\"")
+                            self.end_headers()
+                            self.wfile.write(f.read().encode())
+                        else:
+                            if patchedLinks[fpath] is None:
+                                self.send_response(404)
+                                self.end_headers()
+                            else:
+                                self.send_response(200)
+                                self.send_header("Content-Type", "application/json")
+                                self.end_headers()
+                                self.wfile.write(json.dumps(patchedLinks[fpath], indent=4).encode())
                         f.close()
                 elif( os.path.isfile(fpathxml) is True or os.path.isfile(fpathdirect) is True):
                         if os.path.isfile(fpathxml): 
@@ -85,16 +116,71 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         self.send_response(404)
                         self.end_headers()
                         
+
         def do_PATCH(self):
                 print("   PATCH: Headers: {}".format(self.headers))
-                if( "content-length" in self.headers ):
-                        len=int(self.headers["content-length"])
-                        dataa=self.rfile.read(len)
-                        print("   PATCH: Data: {}".format(dataa))
                 responseTime=self.server.responseTime
                 time.sleep(responseTime)
 
-                self.send_response(204)
+                if( "content-length" in self.headers ):
+                    len=int(self.headers["content-length"])
+                    dataa = json.loads(self.rfile.read(len).decode("utf-8") )
+                    print("   PATCH: Data: {}".format(dataa))
+                
+                    if(self.path[0]=='/'):
+                            rpath=self.path[1:]
+                    rpath = rpath.split('?',1)[0]
+                    rpath = rpath.split('#',1)[0]
+                    
+                    apath=self.server.mockDir    # this is the real absolute path to the mockup directory
+                    fpath=os.path.join(apath,rpath,'index.json')
+
+                    sys.stdout.flush()
+                    if os.path.isfile(fpath) or fpath in patchedLinks:
+                        jsonData = None
+                        if fpath not in patchedLinks:
+                            with open(fpath) as f:
+                                jsonData = json.load(f)
+                        else:
+                            jsonData = patchedLinks[fpath]
+                        print (self.headers.get('content-type'))
+                        print (dataa)
+                        print (jsonData)
+                        dict_merge(jsonData, dataa)
+                        print (jsonData)
+                        patchedLinks[fpath] = jsonData
+                        self.send_response(204)
+                         
+                    else:
+                        self.send_response(400)
+
+                self.end_headers()
+        
+        def do_PUT(self):
+                print("   PUT: Headers: {}".format(self.headers))
+                responseTime=self.server.responseTime
+                time.sleep(responseTime)
+
+                if( "content-length" in self.headers ):
+                    len=int(self.headers["content-length"])
+                    dataa = json.loads(self.rfile.read(len).decode("utf-8") )
+                    print("   POST: Data: {}".format(dataa))
+                    if(self.path[0]=='/'):
+                            rpath=self.path[1:]
+                    rpath = rpath.split('?',1)[0]
+                    rpath = rpath.split('#',1)[0]
+                    
+                    apath=self.server.mockDir    # this is the real absolute path to the mockup directory
+                    fpath=os.path.join(apath,rpath,'index.json')
+
+                    sys.stdout.flush()
+
+                    if os.path.isfile(fpath) or fpath in patchedLinks:
+                        patchedLinks[fpath] = dataa
+                        self.send_response(204)
+                    else:
+                        self.send_response(400)
+                    
                 self.end_headers()
                 
         def do_POST(self):
@@ -103,10 +189,26 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         len=int(self.headers["content-length"])
                         dataa=self.rfile.read(len)
                         print("   POST: Data: {}".format(dataa))
+                    
                 responseTime=self.server.responseTime
                 time.sleep(responseTime)
 
-                self.send_response(204)
+                if(self.path[0]=='/'):
+                        rpath=self.path[1:]
+                rpath = rpath.split('?',1)[0]
+                rpath = rpath.split('#',1)[0]
+                
+                apath=self.server.mockDir    # this is the real absolute path to the mockup directory
+                fpath=os.path.join(apath,rpath,'index.json')
+
+                sys.stdout.flush()
+
+                if not(os.path.isfile(fpath) or fpath in patchedLinks):
+                    patchedLinks[fpath] = dataa
+                    self.send_response(204)
+                else:
+                    self.send_response(400)
+                
                 self.end_headers()
                 
         def do_DELETE(self):
@@ -118,6 +220,16 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         print("DELETE: Data: {}".format(dataa))
                 responseTime=self.server.responseTime
                 time.sleep(responseTime)
+                if(self.path[0]=='/'):
+                        rpath=self.path[1:]
+                rpath = rpath.split('?',1)[0]
+                rpath = rpath.split('#',1)[0]
+                
+                apath=self.server.mockDir    # this is the real absolute path to the mockup directory
+                fpath=os.path.join(apath,rpath,'index.json')
+
+                sys.stdout.flush()
+                patchedLinks[fpath] = None
                 
                 self.send_response(204)
                 self.end_headers()
