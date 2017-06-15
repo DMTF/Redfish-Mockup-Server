@@ -51,12 +51,13 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 #      old only support mockup in CWD:  apath=os.path.abspath(rpath)
                 fpath=os.path.join(apath,rpath, rfile)
                 fpathxml=os.path.join(apath,rpath, rfileXml)
+                fpathdirect=os.path.join(apath,rpath)
                 #print("-------filepath:{}".format(fpath))
                 sys.stdout.flush()
 
                 if( os.path.isfile(fpath) is True):
                         self.send_response(200)
-                        self.send_header("Content-type", "application/json")
+                        self.send_header("Content-Type", "application/json")
                         # special cases to test etag for testing
                         # if etag is returned then the patch to these resources should include this etag
                         if( testEtagFlag is True ):
@@ -68,11 +69,16 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         f=open(fpath,"r")
                         self.wfile.write(f.read().encode())
                         f.close()
-                elif( os.path.isfile(fpathxml) is True):
+                elif( os.path.isfile(fpathxml) is True or os.path.isfile(fpathdirect) is True):
+                        if os.path.isfile(fpathxml): 
+                            file_extension = 'xml'
+                            f=open(fpathxml,"r")
+                        elif os.path.isfile(fpathdirect): 
+                            filename, file_extension = os.path.splitext(fpathdirect)
+                            f=open(fpathdirect,"r")
                         self.send_response(200)
-                        self.send_header("Content-type", "application/xml")
+                        self.send_header("Content-Type", "application/" + file_extension + ";odata.metadata=minimal;charset=utf-8")
                         self.end_headers()
-                        f=open(fpathxml,"r")
                         self.wfile.write(f.read().encode())
                         f.close()
                 else:
