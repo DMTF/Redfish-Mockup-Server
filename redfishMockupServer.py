@@ -97,6 +97,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
             fpath=os.path.join(apath,rpath, rfile)
             fhpath=os.path.join(apath,rpath, rhfile)
             fpathxml=os.path.join(apath,rpath, rfileXml)
+            fpathdirect=os.path.join(apath,rpath)
             #print("-------filepath:{}".format(fpath))
             sys.stdout.flush()
 
@@ -120,23 +121,28 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 elif (os.path.isfile(fhpath) is False):
                     self.send_header("Content-Type", "application/json")
                     self.send_header("OData-Version","4.0")        
+                    self.end_headers()
+                    f=open(fpath,"r")
+                    self.wfile.write(f.read().encode())
+                    f.close()
 
-                self.end_headers()
-                f=open(fpath,"r")
-                self.wfile.write(f.read().encode())
-                f.close()
+                elif( os.path.isfile(fpathxml) is True or os.path.isfile(fpathdirect) is True):
+                     if os.path.isfile(fpathxml): 
+                         file_extension = 'xml'
+                         f=open(fpathxml,"r")
+                     elif os.path.isfile(fpathdirect): 
+                         filename, file_extension = os.path.splitext(fpathdirect)
+                         f=open(fpathdirect,"r")
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/" + file_extension + ";odata.metadata=minimal;charset=utf-8")
+                    self.end_headers()
+                    f=open(fpathxml,"r")
+                    self.wfile.write(f.read().encode())
+                    f.close()
+                else:
+                    self.send_response(404)
+                    self.end_headers()
 
-            elif( os.path.isfile(fpathxml) is True):
-                self.send_response(200)
-                self.send_header("Content-type", "application/xml")
-                self.end_headers()
-                f=open(fpathxml,"r")
-                self.wfile.write(f.read().encode())
-                f.close()
-            else:
-                self.send_response(404)
-                self.end_headers()
-                
                         
         def do_PATCH(self):
                 print("   PATCH: Headers: {}".format(self.headers))
@@ -224,9 +230,11 @@ def usage(program):
         print("      -L --Load      # <not implemented yet>: load and Dump json read from mockup in pretty format with indent=4")
         print("      -H <IpAddr>   --Host=<IpAddr>    # hostIP, default: 127.0.0.1")
         print("      -P <port>     --Port=<port>      # port:  default is 8000")
-        print("      -D <dir>,     --Dir=<dir>        # the to the mockup directory. It may be relative to CWD")
-        print("      -T --TestEtag  # etag testing--enable returning etag for certain APIs for testing.  See Readme")
-        print("      -t <responseTime> --time=<executionTime> # time added to respond to any API")
+        print("      -D <dir>,     --Dir=<dir>        # Path to the mockup directory. It may be relative to CWD")
+        print("      -X,           --headers          # Option to load headers or not from json files")
+        print("      -t <delay>    --time=<delayTime> # Delay Time in seconds added to any request. Must be float or int.")
+        print("                    --TestEtag         # etag testing--enable returning etag for certain APIs for testing.  See Readme")
+        print("      -T                               # Option to delay response or not.")
         sys.stdout.flush()
 
 
