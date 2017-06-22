@@ -233,7 +233,7 @@ def usage(program):
         print("      -D <dir>,     --Dir=<dir>        # Path to the mockup directory. It may be relative to CWD")
         print("      -X,           --headers          # Option to load headers or not from json files")
         print("      -t <delay>    --time=<delayTime> # Delay Time in seconds added to any request. Must be float or int.")
-        print("                    --TestEtag         # etag testing--enable returning etag for certain APIs for testing.  See Readme")
+        print("      -E             --TestEtag         # etag testing--enable returning etag for certain APIs for testing.  See Readme")
         print("      -T                               # Option to delay response or not.")
         sys.stdout.flush()
 
