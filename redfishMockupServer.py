@@ -23,8 +23,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
         # Headers only request
         def do_HEAD(self):
-            print ("Sending Headers: ")
-            
+            print ("Headers: ")
+            sys.stdout.flush()
             rfile = "headers.json"
             if(self.path[0]=='/'):
                 rpath=self.path[1:]
@@ -32,37 +32,40 @@ class RfMockupServer(BaseHTTPRequestHandler):
             rpath = rpath.split('#',1)[0]
 
             apath=self.server.mockDir
-            responseTime = self.getResponseTime('HEAD',apath,rpath)
-            try:
-                time.sleep(float(responseTime))
-            except ValueError as e:
-                print ("Time is not a float value. Sleeping with default response time")
-                time.sleep(float(self.server.responseTime))
+            if self.server.timefromJson:
+                responseTime = self.getResponseTime('HEAD',apath,rpath)
+                try:
+                    time.sleep(float(responseTime))
+                except ValueError as e:
+                    print ("Time is not a float value. Sleeping with default response time")
+                    time.sleep(float(self.server.responseTime))
             fpath=os.path.join(apath,rpath, rfile)
             sys.stdout.flush()
-
-            if( os.path.isfile(fpath) is True):
+            print (self.server.headers)
+            if  self.server.headers and (os.path.isfile(fpath) is True):
                 self.send_response(200)
                 with open(fpath) as headers_data:
                     d = json.load(headers_data)
                 if isinstance(d["GET"],dict):
                     for k,v in d["GET"].items():
                         self.send_header(k,v)
-            elif (os.path.isfile(fpath) is False):
+                self.end_headers()
+            elif (self.server.headers is False) or (os.path.isfile(fpath) is False):
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")
                 self.send_header("OData-Version","4.0")
+                self.end_headers()
             else:
                 self.send_response(404)
                 self.end_headers()
-            self.end_headers()
+            
 
         def do_GET(self):
             # for GETs always dump the request headers to the console
             # there is no request data, so no need to dump that
             print("   GET: Headers: {}".format(self.headers))
             sys.stdout.flush()
-
+            dont_send = [ "Connection", "Keep-Alive", "Content-Length"]
             rfile="index.json"
             rfileXml="index.xml"
             f=None
@@ -77,12 +80,14 @@ class RfMockupServer(BaseHTTPRequestHandler):
             # get the testEtagFlag and mockup directory path parameters passed in from the http server
             apath=self.server.mockDir    # this is the real absolute path to the mockup directory
             testEtagFlag=self.server.testEtagFlag
-            responseTime = self.getResponseTime('GET',apath,rpath)
-            try:
-                time.sleep(float(responseTime))
-            except ValueError as e:
-                print ("Time is not a float value. Sleeping with default response time.")
-                time.sleep(float(self.server.responseTime))
+            print (self.server.timefromJson)
+            if self.server.timefromJson:            
+                responseTime = self.getResponseTime('GET',apath,rpath)
+                try:
+                    time.sleep(float(responseTime))
+                except ValueError as e:
+                    print ("Time is not a float value. Sleeping with default response time.")
+                    time.sleep(float(self.server.responseTime))
 
             #print("-------apath; {}".format(apath))
             #print("-------test: {}".format(testEtagFlag))
@@ -110,7 +115,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         d = json.load(headers_data)
                     if isinstance(d["GET"],dict):
                         for k,v in d["GET"].items():
-                            self.send_header(k,v)
+                            if k not in dont_send:
+                                self.send_header(str(k),str(v))
                 elif (os.path.isfile(fhpath) is False):
                     self.send_header("Content-Type", "application/json")
                     self.send_header("OData-Version","4.0")        
@@ -234,9 +240,10 @@ def main(argv):
         mockDir=None
         testEtagFlag=False
         responseTime=0
-        
+        timefromJson = False
+        headers = False
         try:
-                opts, args = getopt.getopt(argv[1:],"hLTH:P:D:t:",["help","Load", "TestEtag", "Host=", "Port=", "Dir=",
+                opts, args = getopt.getopt(argv[1:],"hLTEH:P:D:t:X",["help","Load", "TestEtag","headers", "Host=", "Port=", "Dir=",
                                                                    "time="])
         except getopt.GetoptError:
                 #usage()
@@ -253,14 +260,18 @@ def main(argv):
                         load=True
                 elif opt in ("-H", "--Host"):
                         hostname=arg
+                elif opt in ("-X","--headers"):
+                        headers=True
                 elif opt in ("-P", "--Port"):
                         port=int(arg)
                 elif opt in ("-D", "--Dir"):
                         mockDirPath=arg
-                elif opt in ("-T", "--TestEtag"):
+                elif opt in ("-E", "--TestEtag"):
                         testEtagFlag=True
                 elif opt in ("-t", "--time"):
                         responseTime=arg
+                elif opt in ("-T"):
+                        timefromJson=True
                 else:
                         print('unhandled option', file=sys.stderr)
                         sys.exit(2)
@@ -293,6 +304,8 @@ def main(argv):
         # save the test flag, and real path to the mockup dir for the handler to use
         myServer.mockDir=mockDir
         myServer.testEtagFlag=testEtagFlag
+        myServer.headers = headers
+        myServer.timefromJson = timefromJson
         try:
            myServer.responseTime=float(responseTime)
         except ValueError as e:
