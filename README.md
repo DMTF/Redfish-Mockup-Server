@@ -9,7 +9,9 @@ Copyright 2016 Distributed Management Task Force, Inc. All rights reserved.
 ###To start the server:
 * copy the ***redfishMockupServer.py*** file to the the folder you want to execute it from
 * use the `-D <mockupDir>` option to specify an absolute or relative path to the mockup dir from CWD
-* use the `-t <responseTime>` option to specify a delay to add to responses. Default is 0 sec
+* use the `-T` option to tell mockup server to include response delay in time.
+* use the `-t <responseTime>` option to change default delay in seconds to each response. Default is 0 sec. Must be float or int.
+* use the `-X` or `--headers` option to tell mockup server, to send headers. Loads from headers.json. If not, defaults are sent.
 * Note that the mockup directory must start with /redfish:  
  * "redfish" should be a sub-directory.   
  * This is a "Tall Mockup" which includes /redfish/v1 in the mockup directory structure in case some of the URIs in the mockup do not start with /redfish/v1.
@@ -24,16 +26,18 @@ Copyright 2016 Distributed Management Task Force, Inc. All rights reserved.
 
 * `redfishMockupServer -h`     -- gives help usage and exits
 
-* `redfishMockupServer [-H *HostIpAddress* ] [-P *port*] [-D <mockupDir>] [-H <host>] [-P <port>] [-T] [-t <responseTime>]
+* `redfishMockupServer [-H *HostIpAddress* ] [-P *port*] [-D <mockupDir>] [-H <host>] [-P <port>] [-T] [-t <responseTime>] [-X] [-E]
   * default *HostIpAddress* is 127.0.0.1
   * default *port*         is 8000
   * *mockupDir* is absolute or relative to CWD if starting with . or ..
-  * -T option causes mockup server to generate etags on GETs for certain hard coded APIs for testing client patch etag code
+  * -T option causes mockup server to include delay in reponse. Loads from time.json . If not, looks up the default delay time.
+  * -E option causes mockup server to generate etags on GETs for certain hard coded APIs for testing client patch etag code
     * response header Etag: "W/12345" is returned on GET /redfish/v1/Systems/1
     * response header Etag: "123456"  is returned on GET /redfish/v1/AccountService/Accounts/1
-  * `-t <responseTime>` tells the mockup server to add `<responseTime>` delay to each response.  Default is 0 sec.
+  * `-t <responseTime>` tells the mockup server to add `<responseTime>` default delay to each response.  Default is 0 sec. Must be float or int
+  * `-X` or `--headers` tells the mockup server to send headers from headers.json file
 * Example:    
-`.\redfishMockupServer -P 8001 -D ./MyServerMockup9`   # to start another service on port 8001 from folder *./MyServerMockup9*
+`.\redfishMockupServer -P 8001 -D ./MyServerMockup9 -X `   # to start another service on port 8001 from folder *./MyServerMockup9*
 
 
 
