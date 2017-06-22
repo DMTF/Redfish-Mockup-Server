@@ -97,6 +97,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
             fpath=os.path.join(apath,rpath, rfile)
             fhpath=os.path.join(apath,rpath, rhfile)
             fpathxml=os.path.join(apath,rpath, rfileXml)
+            fpathdirect=os.path.join(apath,rpath)
             #print("-------filepath:{}".format(fpath))
             sys.stdout.flush()
 
@@ -120,23 +121,28 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 elif (os.path.isfile(fhpath) is False):
                     self.send_header("Content-Type", "application/json")
                     self.send_header("OData-Version","4.0")        
+                    self.end_headers()
+                    f=open(fpath,"r")
+                    self.wfile.write(f.read().encode())
+                    f.close()
 
-                self.end_headers()
-                f=open(fpath,"r")
-                self.wfile.write(f.read().encode())
-                f.close()
+                elif( os.path.isfile(fpathxml) is True or os.path.isfile(fpathdirect) is True):
+                     if os.path.isfile(fpathxml): 
+                         file_extension = 'xml'
+                         f=open(fpathxml,"r")
+                     elif os.path.isfile(fpathdirect): 
+                         filename, file_extension = os.path.splitext(fpathdirect)
+                         f=open(fpathdirect,"r")
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/" + file_extension + ";odata.metadata=minimal;charset=utf-8")
+                    self.end_headers()
+                    f=open(fpathxml,"r")
+                    self.wfile.write(f.read().encode())
+                    f.close()
+                else:
+                    self.send_response(404)
+                    self.end_headers()
 
-            elif( os.path.isfile(fpathxml) is True):
-                self.send_response(200)
-                self.send_header("Content-type", "application/xml")
-                self.end_headers()
-                f=open(fpathxml,"r")
-                self.wfile.write(f.read().encode())
-                f.close()
-            else:
-                self.send_response(404)
-                self.end_headers()
-                
                         
         def do_PATCH(self):
                 print("   PATCH: Headers: {}".format(self.headers))
