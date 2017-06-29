@@ -91,6 +91,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                                             # self.send_header("Etag", "\"123456\"")
                             self.end_headers()
                             self.wfile.write(f.read().encode())
+                            f.close()
                         else:
                             if patchedLinks[fpath] is None:
                                 self.send_response(404)
@@ -100,7 +101,6 @@ class RfMockupServer(BaseHTTPRequestHandler):
                                 self.send_header("Content-Type", "application/json")
                                 self.end_headers()
                                 self.wfile.write(json.dumps(patchedLinks[fpath], indent=4).encode())
-                        f.close()
                 elif( os.path.isfile(fpathxml) is True or os.path.isfile(fpathdirect) is True):
                         if os.path.isfile(fpathxml): 
                             file_extension = 'xml'
@@ -135,7 +135,6 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     apath = self.server.mockDir    # this is the real absolute path to the mockup directory
                     fpath = os.path.join(apath, rpath, 'index.json')
 
-                    sys.stdout.flush()
                     # check if resource exists, otherwise 404
                     if os.path.isfile(fpath) or patchedLinks.get(fpath) is not None:
                         jsonData = None
@@ -188,7 +187,6 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         len = int(self.headers["content-length"])
                         dataa = json.loads(self.rfile.read(len).decode("utf-8"))
                         print("   POST: Data: {}".format(dataa))
-                    
                 responseTime = self.server.responseTime
                 time.sleep(responseTime)
 
@@ -196,12 +194,11 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         rpath = self.path[1:]
                 rpath = rpath.split('?', 1)[0]
                 rpath = rpath.split('#', 1)[0]
-                
+
                 apath = self.server.mockDir    # this is the real absolute path to the mockup directory
                 fpath = os.path.join(apath, rpath, 'index.json')
-                parentpath = os.path.join(apath, rpath.rsplit('/',1)[0], 'index.json')
+                parentpath = os.path.join(apath, rpath.rsplit('/', 1)[0], 'index.json')
 
-                sys.stdout.flush()
 
                 # don't bother if this item exists
                 if os.path.isfile(fpath) or patchedLinks.get(fpath) is not None:
@@ -213,15 +210,23 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     if 'SubmitTestEvent' in rpath:
                         pass
                     if parentpath not in patchedLinks:
-                        with open(parentpath) as f:
-                            jsonData = json.load(f)
+                        if os.path.isfile(parentpath):
+                            with open(parentpath) as f:
+                                jsonData = json.load(f)
+                        else:
+                            self.send_response(404)
+                            self.end_headers()
+                            return
                     else:
                         jsonData = patchedLinks[parentpath]
                     if jsonData.get('Members') is None:
                         self.send_response(405)
                     else:
-                        patchedLinks[fpath] = json.sload(dataa)
-                        jsonData.get['Members'] += {'@odata.id': fpath}
+                        print(dataa)
+                        print(type(dataa))
+                        patchedLinks[fpath] = dataa
+                        jsonData.get('Members').append({'@odata.id': rpath})
+                        patchedLinks[parentpath] = jsonData
                         self.send_response(204)
 
                 self.end_headers()
@@ -231,28 +236,38 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 Delete a resource
                 """
                 print("DELETE: Headers: {}".format(self.headers))
+                if("content-length" in self.headers):
+                        len = int(self.headers["content-length"])
+                        dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                        print("   POST: Data: {}".format(dataa))
+
                 responseTime = self.server.responseTime
                 time.sleep(responseTime)
 
-                rpath = self.path[0]
-                if(rpath == '/'):
-                        rpath = rpath[1:]
+                if(self.path[0] == '/'):
+                        rpath = self.path[1:]
+                rpath = rpath.split('?', 1)[0]
+                rpath = rpath.split('#', 1)[0]
 
                 apath = self.server.mockDir    # this is the real absolute path to the mockup directory
                 fpath = os.path.join(apath, rpath, 'index.json')
-                parentpath = os.path.join(apath, rpath.rsplit('/',1)[0], 'index.json')
+                parentpath = os.path.join(apath, rpath.rsplit('/', 1)[0], 'index.json')
 
-                print(apath, rpath, fpath, parentpath)
-                sys.stdout.flush()
                 if os.path.isfile(fpath) or patchedLinks.get(fpath) is not None:
                     if parentpath not in patchedLinks:
-                        with open(parentpath) as f:
-                            jsonData = json.load(f)
+                        if os.path.isfile(parentpath):
+                            with open(parentpath) as f:
+                                jsonData = json.load(f)
+                        else:
+                            self.send_response(404)
+                            self.end_headers()
+                            return
                     else:
                         jsonData = patchedLinks[parentpath]
-                    if jsonData.get['Members'] is not None:
+                    if jsonData.get('Members') is not None:
                         patchedLinks[fpath] = None
-                        jsonData['Members'] = [x for x in jsonData['Members'] if not x['@odata.id'] == fpath]
+                        jsonData['Members'] = [x for x in jsonData['Members'] if not x['@odata.id'] == rpath]
+                        patchedLinks[parentpath] = jsonData
                     else:
                         self.send_response(405)
                 else:
