@@ -11,9 +11,31 @@ import cgi
 import sys
 import getopt
 import time
+import collections
 import json
+
 import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
+
+def dict_merge(dct, merge_dct):
+        """ 
+        https://gist.github.com/angstwad/bf22d1822c38a92ec0a9 modified
+        Recursive dict merge. Inspired by :meth:``dict.update()``, instead of
+        updating only top-level keys, dict_merge recurses down into dicts nested
+        to an arbitrary depth, updating keys. The ``merge_dct`` is merged into
+        ``dct``.
+        :param dct: dict onto which the merge is executed
+        :param merge_dct: dct merged into dct
+        :return: None
+        """
+        for k in merge_dct:
+            if (k in dct and isinstance(dct[k], dict)
+                and isinstance(merge_dct[k], collections.Mapping)):
+                dict_merge(dct[k], merge_dct[k])
+            else:
+                dct[k] = merge_dct[k]
+
+patchedLinks = dict()
 
 class RfMockupServer(BaseHTTPRequestHandler):
         '''
@@ -100,9 +122,13 @@ class RfMockupServer(BaseHTTPRequestHandler):
             fpathdirect=os.path.join(apath,rpath)
             #print("-------filepath:{}".format(fpath))
             sys.stdout.flush()
-
-            if( os.path.isfile(fpath) is True):
-                self.send_response(200)
+            
+            # if this location exists in memory or as file
+            if( os.path.isfile(fpath) or fpath in patchedLinks):
+                if patchedLinks.get(fpath) != '404':
+                    self.send_response(200)
+                else:
+                    self.send_response(404)
                 # special cases to test etag for testing
                 #if etag is returned then the patch to these resources should include this etag
                 if( testEtagFlag is True ):
@@ -122,64 +148,196 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     self.send_header("Content-Type", "application/json")
                     self.send_header("OData-Version","4.0")        
                     self.end_headers()
+                #print("-------apath; {}".format(apath))
+                #print("-------test: {}".format(testEtagFlag))
+
+                # form the path in the mockup of the file
+                #      old only support mockup in CWD:  apath=os.path.abspath(rpath)
+                #print("-------filepath:{}".format(fpath))
+                sys.stdout.flush()
+
+                if fpath not in patchedLinks:
                     f=open(fpath,"r")
                     self.wfile.write(f.read().encode())
                     f.close()
-
-                elif( os.path.isfile(fpathxml) is True or os.path.isfile(fpathdirect) is True):
-                     if os.path.isfile(fpathxml): 
-                         file_extension = 'xml'
-                         f=open(fpathxml,"r")
-                     elif os.path.isfile(fpathdirect): 
-                         filename, file_extension = os.path.splitext(fpathdirect)
-                         f=open(fpathdirect,"r")
-                    self.send_response(200)
-                    self.send_header("Content-Type", "application/" + file_extension + ";odata.metadata=minimal;charset=utf-8")
-                    self.end_headers()
-                    f=open(fpathxml,"r")
-                    self.wfile.write(f.read().encode())
-                    f.close()
                 else:
-                    self.send_response(404)
-                    self.end_headers()
+                    if patchedLinks[fpath] not in [None, '404']:
+                        self.wfile.write(json.dumps(patchedLinks[fpath], indent=4).encode())
+            elif( os.path.isfile(fpathxml) is True or os.path.isfile(fpathdirect) is True):
+                if os.path.isfile(fpathxml):
+                    file_extension = 'xml'
+                    f=open(fpathxml,"r")
+                elif os.path.isfile(fpathdirect):
+                    filename, file_extension = os.path.splitext(fpathdirect)
+                    f=open(fpathdirect,"r")
+                self.send_response(200)
+                self.send_header("Content-Type", "application/" + file_extension + ";odata.metadata=minimal;charset=utf-8")
+                self.end_headers()
+                f=open(fpathxml,"r")
+                self.wfile.write(f.read().encode())
+                f.close()
+            else:
+                self.send_response(404)
+                self.end_headers()
 
-                        
         def do_PATCH(self):
                 print("   PATCH: Headers: {}".format(self.headers))
-                if( "content-length" in self.headers ):
-                        len=int(self.headers["content-length"])
-                        dataa=self.rfile.read(len)
-                        print("   PATCH: Data: {}".format(dataa))
-                responseTime=self.server.responseTime
+                responseTime = self.server.responseTime
                 time.sleep(responseTime)
+
+                if("content-length" in self.headers):
+                    len = int(self.headers["content-length"])
+                    dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                    print("   PATCH: Data: {}".format(dataa))
+
+                    if(self.path[0] == '/'):
+                            rpath = self.path[1:]
+                    rpath = rpath.split('?', 1)[0]
+                    rpath = rpath.split('#', 1)[0]
+
+                    apath = self.server.mockDir    # this is the real absolute path to the mockup directory
+                    fpath = os.path.join(apath, rpath, 'index.json')
+
+                    # check if resource exists, otherwise 404
+                    if os.path.isfile(fpath) or patchedLinks.get(fpath) is not None:
+                        jsonData = None
+                        if fpath not in patchedLinks:
+                            with open(fpath) as f:
+                                jsonData = json.load(f)
+                        else:
+                            jsonData = patchedLinks[fpath]
+                        
+                        # If this is a collection, throw a 405
+                        if jsonData.get('Members') is not None:
+                            self.send_response(405)
+                        else:
+                            # After getting resource, merge the data.
+                            print(self.headers.get('content-type'))
+                            print(dataa)
+                            print(jsonData)
+                            dict_merge(jsonData, dataa)
+                            print(jsonData)
+                            # put into patchedLinks
+                            patchedLinks[fpath] = jsonData
+                            self.send_response(204)
+                    else:
+                        self.send_response(404)
+
+                self.end_headers()
+
+        def do_PUT(self):
+                print("   PUT: Headers: {}".format(self.headers))
+                responseTime = self.server.responseTime
+                time.sleep(responseTime)
+
+                if("content-length" in self.headers):
+                    len = int(self.headers["content-length"])
+                    dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                    print("   POST: Data: {}".format(dataa))
+                    if(self.path[0] == '/'):
+                            rpath = self.path[1:]
+                    rpath = rpath.split('?', 1)[0]
+                    rpath = rpath.split('#', 1)[0]
+
+                # we don't support this service
+                self.send_response(405)
+
+                self.end_headers()
+
+        def do_POST(self):
+                print("   POST: Headers: {}".format(self.headers))
+                if("content-length" in self.headers):
+                        len = int(self.headers["content-length"])
+                        dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                        print("   POST: Data: {}".format(dataa))
+                responseTime = self.server.responseTime
+                time.sleep(responseTime)
+
+                if(self.path[0] == '/'):
+                        rpath = self.path[1:]
+                rpath = rpath.split('?', 1)[0]
+                rpath = rpath.split('#', 1)[0]
+
+                apath = self.server.mockDir    # this is the real absolute path to the mockup directory
+                fpath = os.path.join(apath, rpath, 'index.json')
+                parentpath = os.path.join(apath, rpath.rsplit('/', 1)[0], 'index.json')
+
+                # don't bother if this item exists
+                if os.path.isfile(fpath) or patchedLinks.get(fpath) is not None:
+                    self.send_response(409)
+                else:
+                    # if action:
+                    # do that action
+                    # for now, be indiscriminatory
+                    if 'SubmitTestEvent' in rpath:
+                        pass
+                    if parentpath not in patchedLinks:
+                        if os.path.isfile(parentpath):
+                            with open(parentpath) as f:
+                                jsonData = json.load(f)
+                        else:
+                            self.send_response(404)
+                            self.end_headers()
+                            return
+                    else:
+                        jsonData = patchedLinks[parentpath]
+                    if jsonData.get('Members') is None:
+                        self.send_response(405)
+                    else:
+                        print(dataa)
+                        print(type(dataa))
+                        patchedLinks[fpath] = dataa
+                        jsonData.get('Members').append({'@odata.id': rpath})
+                        patchedLinks[parentpath] = jsonData
+                        self.send_response(204)
+                        
+                self.end_headers()
+
+        def do_DELETE(self):
+                """
+                Delete a resource
+                """
+                print("DELETE: Headers: {}".format(self.headers))
+                if("content-length" in self.headers):
+                        len = int(self.headers["content-length"])
+                        dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                        print("   POST: Data: {}".format(dataa))
+
+                responseTime = self.server.responseTime
+                time.sleep(responseTime)
+
+                if(self.path[0] == '/'):
+                        rpath = self.path[1:]
+                rpath = rpath.split('?', 1)[0]
+                rpath = rpath.split('#', 1)[0]
+
+                apath = self.server.mockDir    # this is the real absolute path to the mockup directory
+                fpath = os.path.join(apath, rpath, 'index.json')
+                parentpath = os.path.join(apath, rpath.rsplit('/', 1)[0], 'index.json')
+
+                if os.path.isfile(fpath) or patchedLinks.get(fpath) is not None:
+                    if parentpath not in patchedLinks:
+                        if os.path.isfile(parentpath):
+                            with open(parentpath) as f:
+                                jsonData = json.load(f)
+                        else:
+                            self.send_response(404)
+                            self.end_headers()
+                            return
+                    else:
+                        jsonData = patchedLinks[parentpath]
+                    if jsonData.get('Members') is not None:
+                        patchedLinks[fpath] = '404'
+                        jsonData['Members'] = [x for x in jsonData['Members'] if not x['@odata.id'] == rpath]
+                        patchedLinks[parentpath] = jsonData
+                    else:
+                        self.send_response(405)
+                else:
+                    self.send_response(404)
 
                 self.send_response(204)
                 self.end_headers()
-                
-        def do_POST(self):
-                print("   POST: Headers: {}".format(self.headers))
-                if( "content-length" in self.headers ):
-                        len=int(self.headers["content-length"])
-                        dataa=self.rfile.read(len)
-                        print("   POST: Data: {}".format(dataa))
-                responseTime=self.server.responseTime
-                time.sleep(responseTime)
-                self.send_response(204)
-                self.end_headers()
-                
-        def do_DELETE(self):
-                print("DELETE: Headers: {}".format(self.headers))
-                if( "content-length" in self.headers ):
-                        # Deletes don't have data, so this doesnt execute
-                        len=int(self.headers["content-length"])
-                        dataa=self.rfile.read(len)
-                        print("DELETE: Data: {}".format(dataa))
-                responseTime=self.server.responseTime
-                time.sleep(responseTime)
-                
-                self.send_response(204)
-                self.end_headers()
-                
+
         # this is currently not used
         def translate_path(self, path):
                 """
