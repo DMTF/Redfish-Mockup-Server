@@ -43,29 +43,110 @@ class RfMockupServer(BaseHTTPRequestHandler):
         '''
         server_version = "RedfishMockupHTTPD_v0.9.3"
 
+        # Headers only request
+        def do_HEAD(self):
+            print ("Headers: ")
+            sys.stdout.flush()
+            rfile = "headers.json"
+            if(self.path[0]=='/'):
+                rpath=self.path[1:]
+            rpath = rpath.split('?',1)[0]
+            rpath = rpath.split('#',1)[0]
+
+            apath=self.server.mockDir
+            if self.server.timefromJson:
+                responseTime = self.getResponseTime('HEAD',apath,rpath)
+                try:
+                    time.sleep(float(responseTime))
+                except ValueError as e:
+                    print ("Time is not a float value. Sleeping with default response time")
+                    time.sleep(float(self.server.responseTime))
+            fpath=os.path.join(apath,rpath, rfile)
+            sys.stdout.flush()
+            print (self.server.headers)
+            if  self.server.headers and (os.path.isfile(fpath) is True):
+                self.send_response(200)
+                with open(fpath) as headers_data:
+                    d = json.load(headers_data)
+                if isinstance(d["GET"],dict):
+                    for k,v in d["GET"].items():
+                        self.send_header(k,v)
+                self.end_headers()
+            elif (self.server.headers is False) or (os.path.isfile(fpath) is False):
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("OData-Version","4.0")
+                self.end_headers()
+            else:
+                self.send_response(404)
+                self.end_headers()
+            
+
         def do_GET(self):
-                # for GETs always dump the request headers to the console
-                # there is no request data, so no need to dump that
-                print("   GET: Headers: {}".format(self.headers))
-                sys.stdout.flush()
+            # for GETs always dump the request headers to the console
+            # there is no request data, so no need to dump that
+            print("   GET: Headers: {}".format(self.headers))
+            sys.stdout.flush()
+            dont_send = [ "Connection", "Keep-Alive", "Content-Length"]
+            rfile="index.json"
+            rfileXml="index.xml"
+            f=None
+            rhfile="headers.json"
+            #xpath = self.translate_path(self.path)
 
-                rfile="index.json"
-                rfileXml="index.xml"
-                f=None
+            if(self.path[0]=='/'):
+                rpath=self.path[1:]
+            rpath = rpath.split('?',1)[0]
+            rpath = rpath.split('#',1)[0]
+            
+            # get the testEtagFlag and mockup directory path parameters passed in from the http server
+            apath=self.server.mockDir    # this is the real absolute path to the mockup directory
+            testEtagFlag=self.server.testEtagFlag
+            print (self.server.timefromJson)
+            if self.server.timefromJson:            
+                responseTime = self.getResponseTime('GET',apath,rpath)
+                try:
+                    time.sleep(float(responseTime))
+                except ValueError as e:
+                    print ("Time is not a float value. Sleeping with default response time.")
+                    time.sleep(float(self.server.responseTime))
 
-                #xpath = self.translate_path(self.path)
+            #print("-------apath; {}".format(apath))
+            #print("-------test: {}".format(testEtagFlag))
 
-                if(self.path[0]=='/'):
-                        rpath=self.path[1:]
-                rpath = rpath.split('?',1)[0]
-                rpath = rpath.split('#',1)[0]
+            # form the path in the mockup of the file
+            #      old only support mockup in CWD:  apath=os.path.abspath(rpath)
+            fpath=os.path.join(apath,rpath, rfile)
+            fhpath=os.path.join(apath,rpath, rhfile)
+            fpathxml=os.path.join(apath,rpath, rfileXml)
+            fpathdirect=os.path.join(apath,rpath)
+            #print("-------filepath:{}".format(fpath))
+            sys.stdout.flush()
+
+            if( os.path.isfile(fpath) is True):
+                self.send_response(200)
+                # special cases to test etag for testing
+                #if etag is returned then the patch to these resources should include this etag
+                if( testEtagFlag is True ):
+                        if( self.path=="/redfish/v1/Systems/1" ):
+                                self.send_header("Etag", "W/\"12345\"")
+                        elif( self.path=="/redfish/v1/AccountService/Accounts/1" ):
+                                self.send_header("Etag", "\"123456\"")
                 
-                # get the testEtagFlag and mockup directory path parameters passed in from the http server
-                apath=self.server.mockDir    # this is the real absolute path to the mockup directory
-                testEtagFlag=self.server.testEtagFlag
-                responseTime=self.server.responseTime
-                time.sleep(responseTime)
-
+                if( os.path.isfile(fhpath) is True):
+                    with open(fhpath) as headers_data:
+                        d = json.load(headers_data)
+                    if isinstance(d["GET"],dict):
+                        for k,v in d["GET"].items():
+                            if k not in dont_send:
+                                self.send_header(str(k),str(v))
+                elif (os.path.isfile(fhpath) is False):
+                    self.send_header("Content-Type", "application/json")
+                    self.send_header("OData-Version","4.0")        
+                    self.end_headers()
+                    f=open(fpath,"r")
+                    self.wfile.write(f.read().encode())
+                    f.close()
                 #print("-------apath; {}".format(apath))
                 #print("-------test: {}".format(testEtagFlag))
 
@@ -78,12 +159,12 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 sys.stdout.flush()
 
                 if( os.path.isfile(fpath) or fpath in patchedLinks):
-                        # special cases to test etag for testing
-                        # if etag is returned then the patch to these resources should include this etag
                         if fpath not in patchedLinks:
                             f=open(fpath,"r")
                             self.send_response(200)
                             self.send_header("Content-Type", "application/json")
+                            # special cases to test etag for testing
+                            # if etag is returned then the patch to these resources should include this etag
                             # if( testEtagFlag is True ):
                                     # if( self.path=="/redfish/v1/Systems/1" ):
                                             # self.send_header("Etag", "W/\"12345\"")
@@ -102,20 +183,21 @@ class RfMockupServer(BaseHTTPRequestHandler):
                                 self.end_headers()
                                 self.wfile.write(json.dumps(patchedLinks[fpath], indent=4).encode())
                 elif( os.path.isfile(fpathxml) is True or os.path.isfile(fpathdirect) is True):
-                        if os.path.isfile(fpathxml): 
-                            file_extension = 'xml'
-                            f=open(fpathxml,"r")
-                        elif os.path.isfile(fpathdirect): 
-                            filename, file_extension = os.path.splitext(fpathdirect)
-                            f=open(fpathdirect,"r")
-                        self.send_response(200)
-                        self.send_header("Content-Type", "application/" + file_extension + ";odata.metadata=minimal;charset=utf-8")
-                        self.end_headers()
-                        self.wfile.write(f.read().encode())
-                        f.close()
+                     if os.path.isfile(fpathxml): 
+                         file_extension = 'xml'
+                         f=open(fpathxml,"r")
+                     elif os.path.isfile(fpathdirect): 
+                         filename, file_extension = os.path.splitext(fpathdirect)
+                         f=open(fpathdirect,"r")
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/" + file_extension + ";odata.metadata=minimal;charset=utf-8")
+                    self.end_headers()
+                    f=open(fpathxml,"r")
+                    self.wfile.write(f.read().encode())
+                    f.close()
                 else:
-                        self.send_response(404)
-                        self.end_headers()
+                    self.send_response(404)
+                    self.end_headers()
 
         def do_PATCH(self):
                 print("   PATCH: Headers: {}".format(self.headers))
@@ -228,7 +310,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         jsonData.get('Members').append({'@odata.id': rpath})
                         patchedLinks[parentpath] = jsonData
                         self.send_response(204)
-
+                        
                 self.end_headers()
 
         def do_DELETE(self):
@@ -298,15 +380,39 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 path = os.path.join(path, word)
                 return path
 
+        
+        # Response time calculation Algorithm
+        def getResponseTime(self,method,apath,rpath):
+            rfile = "time.json"
+            fpath=os.path.join(apath,rpath, rfile)
+            if not any(x in method for x in ("GET", "HEAD","POST","PATCH","DELETE") ): 
+                print ("Not a valid method")
+                return (0)
+
+            if( os.path.isfile(fpath) is True):
+                with open(fpath) as time_data:
+                    d=json.load(time_data)
+                    time_str = method + "_Time"
+                    if time_str in d:
+                        try:
+                            float(d[time_str])
+                        except Exception as e:
+                            print ("Time in the json file, not a float/int value. Reading the default time.")
+                            return (self.server.responseTime)
+                        return (float(d[time_str]))
+            return (self.server.responseTime)
+
 def usage(program):
         print("usage: {}   [-h][-P][-H <hostIpAddr>:<port>]".format(program))
         print("      -h --help      # prints usage ")
         print("      -L --Load      # <not implemented yet>: load and Dump json read from mockup in pretty format with indent=4")
         print("      -H <IpAddr>   --Host=<IpAddr>    # hostIP, default: 127.0.0.1")
         print("      -P <port>     --Port=<port>      # port:  default is 8000")
-        print("      -D <dir>,     --Dir=<dir>        # the to the mockup directory. It may be relative to CWD")
-        print("      -T --TestEtag  # etag testing--enable returning etag for certain APIs for testing.  See Readme")
-        print("      -t <responseTime> --time=<executionTime> # time added to respond to any API")
+        print("      -D <dir>,     --Dir=<dir>        # Path to the mockup directory. It may be relative to CWD")
+        print("      -X,           --headers          # Option to load headers or not from json files")
+        print("      -t <delay>    --time=<delayTime> # Delay Time in seconds added to any request. Must be float or int.")
+        print("      -E             --TestEtag         # etag testing--enable returning etag for certain APIs for testing.  See Readme")
+        print("      -T                               # Option to delay response or not.")
         sys.stdout.flush()
 
 
@@ -320,9 +426,10 @@ def main(argv):
         mockDir=None
         testEtagFlag=False
         responseTime=0
-        
+        timefromJson = False
+        headers = False
         try:
-                opts, args = getopt.getopt(argv[1:],"hLTH:P:D:t:",["help","Load", "TestEtag", "Host=", "Port=", "Dir=",
+                opts, args = getopt.getopt(argv[1:],"hLTEH:P:D:t:X",["help","Load", "TestEtag","headers", "Host=", "Port=", "Dir=",
                                                                    "time="])
         except getopt.GetoptError:
                 #usage()
@@ -339,14 +446,18 @@ def main(argv):
                         load=True
                 elif opt in ("-H", "--Host"):
                         hostname=arg
+                elif opt in ("-X","--headers"):
+                        headers=True
                 elif opt in ("-P", "--Port"):
                         port=int(arg)
                 elif opt in ("-D", "--Dir"):
                         mockDirPath=arg
-                elif opt in ("-T", "--TestEtag"):
+                elif opt in ("-E", "--TestEtag"):
                         testEtagFlag=True
                 elif opt in ("-t", "--time"):
-                        responseTime=float(arg)
+                        responseTime=arg
+                elif opt in ("-T"):
+                        timefromJson=True
                 else:
                         print('unhandled option', file=sys.stderr)
                         sys.exit(2)
@@ -379,7 +490,13 @@ def main(argv):
         # save the test flag, and real path to the mockup dir for the handler to use
         myServer.mockDir=mockDir
         myServer.testEtagFlag=testEtagFlag
-        myServer.responseTime=responseTime
+        myServer.headers = headers
+        myServer.timefromJson = timefromJson
+        try:
+           myServer.responseTime=float(responseTime)
+        except ValueError as e:
+            print ("Enter a integer or float value")
+            sys.exit(2)
         #myServer.me="HELLO"
         
         print( "Serving Redfish mockup on port: {}".format(port))
