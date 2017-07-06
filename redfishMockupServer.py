@@ -13,9 +13,23 @@ import getopt
 import time
 import collections
 import json
+import requests
 
 import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
+
+def get_cached_link(path):
+    jsonData = None
+    if path not in patchedLinks:
+        if os.path.isfile(path):
+            with open(path) as f:
+                jsonData = json.load(f)
+        else:
+            return False, jsonData
+    else:
+        jsonData = patchedLinks[path]
+    return jsonData is not None, jsonData
+
 
 def dict_merge(dct, merge_dct):
         """ 
@@ -233,7 +247,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 if("content-length" in self.headers):
                     len = int(self.headers["content-length"])
                     dataa = json.loads(self.rfile.read(len).decode("utf-8"))
-                    print("   POST: Data: {}".format(dataa))
+                    print("   PUT: Data: {}".format(dataa))
                     if(self.path[0] == '/'):
                             rpath = self.path[1:]
                     rpath = rpath.split('?', 1)[0]
@@ -266,30 +280,55 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 if os.path.isfile(fpath) or patchedLinks.get(fpath) is not None:
                     self.send_response(409)
                 else:
-                    # if action:
-                    # do that action
-                    # for now, be indiscriminatory
-                    if 'SubmitTestEvent' in rpath:
-                        pass
-                    if parentpath not in patchedLinks:
-                        if os.path.isfile(parentpath):
-                            with open(parentpath) as f:
-                                jsonData = json.load(f)
-                        else:
+                    if 'redfish/v1/EventService/Actions/EventService.SubmitTestEvent' == rpath:
+                        eventpath = os.path.join(apath, 'redfish/v1/EventService/Subscriptions', 'index.json')
+                        success, jsonData = get_cached_link(eventpath)
+                        print(eventpath)
+                        if not success:
                             self.send_response(404)
-                            self.end_headers()
-                            return
+                        else: 
+                            for member in jsonData.get('Members', []):
+                                entry = member['@odata.id']
+                                entrypath = os.path.join(apath + entry, 'index.json')
+                                success, jsonData = get_cached_link(entrypath)
+                                print(apath)
+                                print(entrypath)
+                                if not success:
+                                    print('No such resource')
+                                else:
+                                    destination = jsonData.get('Destination', 'http://0.0.0.0')
+                                    print('target', destination)
+                                    print(dataa.get('EventType'), jsonData.get('EventTypes'))
+                                    if dataa.get('EventType', 'None') in jsonData.get('EventTypes', [])\
+                                            or jsonData.get('EventTypes') is None:
+                                        try:
+                                            requests.patch(destination, timeout=20, data=dataa)
+                                        except Exception as e:
+                                            print('patch error', str(e))
+                                    else:
+                                        print('event not in eventtypes')
+                                sys.stdout.flush()
+                            self.send_response(204)
                     else:
-                        jsonData = patchedLinks[parentpath]
-                    if jsonData.get('Members') is None:
-                        self.send_response(405)
-                    else:
-                        print(dataa)
-                        print(type(dataa))
-                        patchedLinks[fpath] = dataa
-                        jsonData.get('Members').append({'@odata.id': rpath})
-                        patchedLinks[parentpath] = jsonData
-                        self.send_response(204)
+                        jsonData = None
+                        if parentpath not in patchedLinks:
+                            if os.path.isfile(parentpath):
+                                with open(parentpath) as f:
+                                    jsonData = json.load(f)
+                            else:
+                                self.send_response(404)
+                                self.end_headers()
+                        else:
+                            jsonData = patchedLinks[parentpath]
+                        if jsonData is not None:
+                            if jsonData.get('Members') is None:
+                                self.send_response(405)
+                            print(dataa)
+                            print(type(dataa))
+                            patchedLinks[fpath] = dataa
+                            jsonData.get('Members').append({'@odata.id': rpath})
+                            patchedLinks[parentpath] = jsonData
+                            self.send_response(204)
                         
                 self.end_headers()
 
