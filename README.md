@@ -3,10 +3,14 @@ Copyright 2016 Distributed Management Task Force, Inc. All rights reserved.
 # redfishMockupServer
 
 ## About
-***redfishMockupServer*** is a short python 3.4+ program that can be copied into folder at top of any redfish mockup and can serve redfish requests on the specified IP/port.
+***redfishMockupServer*** is a short python 3.4+ program that can be copied into folder at top of any redfish mockup and can serve redfish requests on the specified IP/port.  As a server, it may receive GET, PATCH, POST and DELETE commands, and implements the SubmitTestEvent action.
 
 ## Usage
-###To start the server:
+### Requirements
+
+
+
+### To start the server:
 * copy the ***redfishMockupServer.py*** file to the the folder you want to execute it from
 * use the `-D <mockupDir>` option to specify an absolute or relative path to the mockup dir from CWD
 * use the `-T` option to tell mockup server to include response delay in time.
