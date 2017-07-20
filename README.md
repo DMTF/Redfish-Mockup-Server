@@ -7,8 +7,9 @@ Copyright 2016 Distributed Management Task Force, Inc. All rights reserved.
 
 ## Usage
 ### Requirements
+In order to use this tool, please install the "requests" package for Python3.
 
-
+pip3 install requests
 
 ### To start the server:
 * copy the ***redfishMockupServer.py*** file to the the folder you want to execute it from

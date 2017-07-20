@@ -281,7 +281,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                                     if dataa.get('EventType', 'None') in jsonData.get('EventTypes', [])\
                                             or jsonData.get('EventTypes') is None:
                                         try:
-                                            r = requests.patch(destination, timeout=20, data=dataa)
+                                            r = requests.post(destination, timeout=20, data=dataa)
                                             print('patch complete', r.status_code)
                                         except Exception as e:
                                             print('patch error', str(e))
