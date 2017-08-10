@@ -13,6 +13,7 @@ import time
 import collections
 import json
 import requests
+import posixpath
 
 import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -483,7 +484,7 @@ def main(argv):
         sys.stdout.flush()
         try:
                 myServer.serve_forever()
-        except KeyboardInterupt:
+        except KeyboardInterrupt:
                 pass
 
         myServer.server_close()
