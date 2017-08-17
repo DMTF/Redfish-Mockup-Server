@@ -163,7 +163,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 elif (os.path.isfile(fhpath) is False):
                     self.send_header("Content-Type", "application/json")
                     self.send_header("OData-Version", "4.0")
-                    self.end_headers()
+                self.end_headers()
 
                 if fpath not in patchedLinks:
                     f = open(fpath, "r")
