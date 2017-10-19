@@ -76,6 +76,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
             rfile = "headers.json"
             rpath = clean_path(self.path)
+            if self.server.shortForm:
+                rpath = rpath.replace('redfish/v1/', '')
+                rpath = rpath.replace('redfish/v1', '')
             apath = self.server.mockDir
             fpath = os.path.join(apath, rpath, rfile)
 
@@ -118,6 +121,11 @@ class RfMockupServer(BaseHTTPRequestHandler):
             rhfile = "headers.json"
 
             rpath = clean_path(self.path)
+            if self.server.shortForm:
+                # print(rpath)
+                rpath = rpath.replace('redfish/v1/', '')
+                rpath = rpath.replace('redfish/v1', '')
+                # print(rpath)
             apath = self.server.mockDir    # this is the real absolute path to the mockup directory
             # form the path in the mockup of the file
             #      old only support mockup in CWD:  apath=os.path.abspath(rpath)
@@ -125,6 +133,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
             fhpath = os.path.join(apath, rpath, rhfile)
             fpathxml = os.path.join(apath, rpath, rfileXml)
             fpathdirect = os.path.join(apath, rpath)
+            print(fpath)
 
             # get the testEtagFlag and mockup directory path parameters passed in from the http server
             testEtagFlag = self.server.testEtagFlag
@@ -139,9 +148,18 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     time.sleep(float(self.server.responseTime))
 
             sys.stdout.flush()
+            
+            if(self.path == '/' and self.server.shortForm):
+                self.send_response(404)
+                self.end_headers()
+
+            elif(self.path == '/redfish' and self.server.shortForm):
+                self.wfile.write(json.dumps({'v1':'/redfish/v1'}, indent=4).encode())
+                self.send_response(200)
+                self.end_headers()
 
             # if this location exists in memory or as file
-            if(os.path.isfile(fpath) or fpath in patchedLinks):
+            elif(os.path.isfile(fpath) or fpath in patchedLinks):
                 if patchedLinks.get(fpath) != '404':
                     self.send_response(200)
                 else:
@@ -201,6 +219,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     print("   PATCH: Data: {}".format(dataa))
 
                     rpath = clean_path(self.path)
+                    if self.server.shortForm:
+                        rpath = rpath.replace('redfish/v1/', '')
+                        rpath = rpath.replace('redfish/v1', '')
                     apath = self.server.mockDir    # this is the real absolute path to the mockup directory
                     fpath = os.path.join(apath, rpath, 'index.json')
 
@@ -251,6 +272,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 time.sleep(responseTime)
 
                 rpath = clean_path(self.path)
+                if self.server.shortForm:
+                    rpath = rpath.replace('redfish/v1/', '')
+                    rpath = rpath.replace('redfish/v1', '')
                 apath = self.server.mockDir    # this is the real absolute path to the mockup directory
                 fpath = os.path.join(apath, rpath, 'index.json')
                 parentpath = os.path.join(apath, rpath.rsplit('/', 1)[0], 'index.json')
@@ -321,6 +345,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 time.sleep(responseTime)
 
                 rpath = clean_path(self.path)
+                if self.server.shortForm:
+                    rpath = rpath.replace('redfish/v1/', '')
+                    rpath = rpath.replace('redfish/v1', '')
                 apath = self.server.mockDir    # this is the real absolute path to the mockup directory
                 fpath = os.path.join(apath, rpath, 'index.json')
                 parentpath = os.path.join(apath, rpath.rsplit('/', 1)[0], 'index.json')
@@ -392,8 +419,9 @@ def usage(program):
         print("      -D <dir>,     --Dir=<dir>        # Path to the mockup directory. It may be relative to CWD")
         print("      -X,           --headers          # Option to load headers or not from json files")
         print("      -t <delay>    --time=<delayTime> # Delay Time in seconds added to any request. Must be float or int.")
-        print("      -E             --TestEtag         # etag testing--enable returning etag for certain APIs for testing.  See Readme")
+        print("      -E             --TestEtag        # etag testing--enable returning etag for certain APIs for testing.  See Readme")
         print("      -T                               # Option to delay response or not.")
+        print("      -S             --shortform       # Apply shortform to mockup (allowing to omit /redfish/v1)")
         sys.stdout.flush()
 
 
@@ -409,8 +437,9 @@ def main(argv):
         responseTime=0
         timefromJson = False
         headers = False
+        shortForm=False
         try:
-                opts, args = getopt.getopt(argv[1:],"hLTEH:P:D:t:X",["help","Load", "TestEtag","headers", "Host=", "Port=", "Dir=",
+                opts, args = getopt.getopt(argv[1:],"hLTSEH:P:D:t:X",["help","Load", "shortForm","TestEtag","headers", "Host=", "Port=", "Dir=",
                                                                    "time="])
         except getopt.GetoptError:
                 #usage()
@@ -439,6 +468,8 @@ def main(argv):
                         responseTime=arg
                 elif opt in ("-T"):
                         timefromJson=True
+                elif opt in ("-S", "--shortForm"):
+                        shortForm=True
                 else:
                         print('unhandled option', file=sys.stderr)
                         sys.exit(2)
@@ -460,11 +491,18 @@ def main(argv):
         print ("Serving Mockup in abs real directory path:{}".format(mockDir))
 
         # check that we have a valid tall mockup--with /redfish in mockDir before proceeding
-        slashRedfishDir=os.path.join(mockDir, "redfish")
-        if os.path.isdir(slashRedfishDir) is not True:
-                print("ERROR: Invalid Mockup Directory--no /redfish directory at top. Aborting", file=sys.stderr)
-                sys.stderr.flush()
-                sys.exit(1)
+        if not shortForm:
+            slashRedfishDir=os.path.join(mockDir, "redfish")
+            if os.path.isdir(slashRedfishDir) is not True:
+                    print("ERROR: Invalid Mockup Directory--no /redfish directory at top. Aborting", file=sys.stderr)
+                    sys.stderr.flush()
+                    sys.exit(1)
+
+        if shortForm:
+            if os.path.isdir(mockDir) is not True:
+                    print("ERROR: Invalid Mockup Directory--does not exist", file=sys.stderr)
+                    sys.stderr.flush()
+                    sys.exit(1)
 
         myServer=HTTPServer((hostname, port), RfMockupServer)
 
@@ -473,6 +511,7 @@ def main(argv):
         myServer.testEtagFlag=testEtagFlag
         myServer.headers = headers
         myServer.timefromJson = timefromJson
+        myServer.shortForm = shortForm
         try:
            myServer.responseTime=float(responseTime)
         except ValueError as e:
