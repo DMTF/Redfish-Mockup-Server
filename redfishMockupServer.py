@@ -153,7 +153,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 self.send_response(404)
                 self.end_headers()
 
-            elif(self.path == '/redfish' and self.server.shortForm):
+            elif(self.path in ['/redfish', '/redfish/'] and self.server.shortForm):
                 self.wfile.write(json.dumps({'v1':'/redfish/v1'}, indent=4).encode())
                 self.send_response(200)
                 self.end_headers()
