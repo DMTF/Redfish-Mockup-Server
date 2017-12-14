@@ -16,6 +16,7 @@ import requests
 import posixpath
 
 import os
+import ssl
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
@@ -148,7 +149,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     time.sleep(float(self.server.responseTime))
 
             sys.stdout.flush()
-            
+ 
             if(self.path == '/' and self.server.shortForm):
                 self.send_response(404)
                 self.end_headers()
@@ -388,7 +389,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 path = os.path.join(path, word)
                 return path
 
-        
+ 
         # Response time calculation Algorithm
         def getResponseTime(self,method,apath,rpath):
             rfile = "time.json"
@@ -419,9 +420,12 @@ def usage(program):
         print("      -D <dir>,     --Dir=<dir>        # Path to the mockup directory. It may be relative to CWD")
         print("      -X,           --headers          # Option to load headers or not from json files")
         print("      -t <delay>    --time=<delayTime> # Delay Time in seconds added to any request. Must be float or int.")
-        print("      -E             --TestEtag        # etag testing--enable returning etag for certain APIs for testing.  See Readme")
+        print("      -E            --TestEtag         # etag testing--enable returning etag for certain APIs for testing.  See Readme")
         print("      -T                               # Option to delay response or not.")
-        print("      -S             --shortform       # Apply shortform to mockup (allowing to omit /redfish/v1)")
+        print("      -s            --ssl              # Places server in https, requires a certificate and key")
+        print("      --cert <cert>                    # Specify a certificate for ssl server function")
+        print("      --key <key>                      # Specify a key for ssl")
+        print("      -S            --shortform        # Apply shortform to mockup (allowing to omit /redfish/v1)")
         sys.stdout.flush()
 
 
@@ -432,6 +436,9 @@ def main(argv):
         program=argv[0]
         print(program)
         mockDirPath=None
+        sslMode=False
+        sslCert=None
+        sslKey=None
         mockDir=None
         testEtagFlag=False
         responseTime=0
@@ -439,8 +446,8 @@ def main(argv):
         headers = False
         shortForm=False
         try:
-                opts, args = getopt.getopt(argv[1:],"hLTSEH:P:D:t:X",["help","Load", "shortForm","TestEtag","headers", "Host=", "Port=", "Dir=",
-                                                                   "time="])
+                opts, args = getopt.getopt(argv[1:],"hLTSsEH:P:D:t:X",["help","Load", "shortForm", "ssl","TestEtag","headers", "Host=", "Port=", "Dir=",
+                                                                   "time=", "cert=", "key="])
         except getopt.GetoptError:
                 #usage()
                 print("Error parsing options", file=sys.stderr)
@@ -468,6 +475,12 @@ def main(argv):
                         responseTime=arg
                 elif opt in ("-T"):
                         timefromJson=True
+                elif opt in ("-s", "--ssl"):
+                        sslMode=True
+                elif opt in ("--cert",):
+                        sslCert=arg
+                elif opt in ("--key",):
+                        sslKey=arg
                 elif opt in ("-S", "--shortForm"):
                         shortForm=True
                 else:
@@ -487,7 +500,6 @@ def main(argv):
 
         #create the full path to the top directory holding the Mockup  
         mockDir=os.path.realpath(mockDirPath) #creates real full path including path for CWD to the -D<mockDir> dir path
-        
         print ("Serving Mockup in abs real directory path:{}".format(mockDir))
 
         # check that we have a valid tall mockup--with /redfish in mockDir before proceeding
@@ -506,6 +518,10 @@ def main(argv):
 
         myServer=HTTPServer((hostname, port), RfMockupServer)
 
+        if sslMode:
+            print("Using SSL with certfile: {}".format(sslCert))
+            myServer.socket = ssl.wrap_socket(myServer.socket, certfile=sslCert, keyfile=sslKey, server_side=True)
+
         # save the test flag, and real path to the mockup dir for the handler to use
         myServer.mockDir=mockDir
         myServer.testEtagFlag=testEtagFlag
@@ -518,7 +534,7 @@ def main(argv):
             print ("Enter a integer or float value")
             sys.exit(2)
         #myServer.me="HELLO"
-        
+
         print( "Serving Redfish mockup on port: {}".format(port))
         sys.stdout.flush()
         try:
@@ -529,7 +545,7 @@ def main(argv):
         myServer.server_close()
         print("Shutting down http server")
         sys.stdout.flush()
-        
+
 
 # the below is only executed if the program is run as a script
 if __name__ == "__main__":

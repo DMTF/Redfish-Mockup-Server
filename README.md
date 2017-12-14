@@ -17,10 +17,12 @@ pip3 install requests
 * use the `-T` option to tell mockup server to include response delay in time.
 * use the `-t <responseTime>` option to change default delay in seconds to each response. Default is 0 sec. Must be float or int.
 * use the `-X` or `--headers` option to tell mockup server, to send headers. Loads from headers.json. If not, defaults are sent.
+* use the `-s` option to specify https protocol
+ * In order for the server to function, you must also include `--cert` and `--key` files for the server to function
 * Note that the mockup directory must start with /redfish:  
  * "redfish" should be a sub-directory.   
  * This is a "Tall Mockup" which includes /redfish/v1 in the mockup directory structure in case some of the URIs in the mockup do not start with /redfish/v1.
-
+ * If you wish to use a "Short" Mockup, use the `-S` modifier
 * make sure python34 is in your path
 * run redfishMockupServer from your windows command shell eg: `.\redfishMockupServer [-D <mockupDir>]`
 * Default hostname/IP is localhost:  127.0.0.1
