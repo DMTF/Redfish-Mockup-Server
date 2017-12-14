@@ -499,8 +499,8 @@ def main(argv):
                     sys.exit(1)
 
         if shortForm:
-            if os.path.isdir(mockDir) is not True:
-                    print("ERROR: Invalid Mockup Directory--does not exist", file=sys.stderr)
+            if os.path.isdir(mockDir) is not True or os.path.isfile(os.path.join(mockDir, "index.json")) is not True:
+                    print("ERROR: Invalid Mockup Directory--dir or index.json does not exist", file=sys.stderr)
                     sys.stderr.flush()
                     sys.exit(1)
 
