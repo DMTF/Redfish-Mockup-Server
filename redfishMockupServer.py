@@ -153,7 +153,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 self.send_response(404)
                 self.end_headers()
 
-            elif(self.path == '/redfish' and self.server.shortForm):
+            elif(self.path in ['/redfish', '/redfish/'] and self.server.shortForm):
                 self.wfile.write(json.dumps({'v1':'/redfish/v1'}, indent=4).encode())
                 self.send_response(200)
                 self.end_headers()
@@ -499,8 +499,8 @@ def main(argv):
                     sys.exit(1)
 
         if shortForm:
-            if os.path.isdir(mockDir) is not True:
-                    print("ERROR: Invalid Mockup Directory--does not exist", file=sys.stderr)
+            if os.path.isdir(mockDir) is not True or os.path.isfile(os.path.join(mockDir, "index.json")) is not True:
+                    print("ERROR: Invalid Mockup Directory--dir or index.json does not exist", file=sys.stderr)
                     sys.stderr.flush()
                     sys.exit(1)
 
