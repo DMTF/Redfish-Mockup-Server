@@ -155,9 +155,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 self.end_headers()
 
             elif(self.path in ['/redfish', '/redfish/'] and self.server.shortForm):
-                self.wfile.write(json.dumps({'v1':'/redfish/v1'}, indent=4).encode())
                 self.send_response(200)
                 self.end_headers()
+                self.wfile.write(json.dumps({'v1':'/redfish/v1'}, indent=4).encode())
 
             # if this location exists in memory or as file
             elif(os.path.isfile(fpath) or fpath in patchedLinks):
@@ -425,7 +425,7 @@ def usage(program):
         print("      -s            --ssl              # Places server in https, requires a certificate and key")
         print("      --cert <cert>                    # Specify a certificate for ssl server function")
         print("      --key <key>                      # Specify a key for ssl")
-        print("      -S            --shortform        # Apply shortform to mockup (allowing to omit /redfish/v1)")
+        print("      -S            --shortForm        # Apply shortform to mockup (allowing to omit /redfish/v1)")
         sys.stdout.flush()
 
 
