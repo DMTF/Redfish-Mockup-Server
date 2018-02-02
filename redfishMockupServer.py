@@ -3,7 +3,6 @@
 # License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/Redfish-Mockup-Server/LICENSE.md
 
 # redfishMockupServer.py
-# v0.9.3
 # tested and developed Python 3.4
 
 import urllib
@@ -19,9 +18,9 @@ import os
 import ssl
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-
 patchedLinks = dict()
 
+tool_version = "1.0.0"
 
 def get_cached_link(path):
     jsonData = None
@@ -68,7 +67,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
         '''
         returns index.json file for Serverthe specified URL
         '''
-        server_version = "RedfishMockupHTTPD_v0.9.3"
+        server_version = "RedfishMockupHTTPD_v" + tool_version
 
         # Headers only request
         def do_HEAD(self):
@@ -445,6 +444,7 @@ def main(argv):
         timefromJson = False
         headers = False
         shortForm=False
+        print("Redfish Mockup Server, version {}".format(tool_version))
         try:
                 opts, args = getopt.getopt(argv[1:],"hLTSsEH:P:D:t:X",["help","Load", "shortForm", "ssl","TestEtag","headers", "Host=", "Port=", "Dir=",
                                                                    "time=", "cert=", "key="])
