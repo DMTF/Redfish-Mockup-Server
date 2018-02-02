@@ -3,8 +3,10 @@
 ## [1.0.0] - 2018-02-02
 - Added support for HTTPS
 - Added support for using "short" mockups (ones without the /redfish/v1 resource)
+- Added support for submitting test events
+- Added support for PATCH and PUT
 
-## [0.9.7] - 2017-30-10
+## [0.9.7] - 2017-03-10
 - Added support to delay time from json for GET and HEAD API  
     - "-T" option to include delay in time. If option not specified, there is no delay in response. Checks for time.json.
     - "-t <time_in_seconds>" to specify default time if time.json is not present.
