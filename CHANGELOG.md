@@ -1,17 +1,19 @@
-
 # Change Log
 
-## [0.9.7] - 2017-030-10
+## [1.0.0] - 2018-02-02
+- Added support for HTTPS
+- Added support for using "short" mockups (ones without the /redfish/v1 resource)
 
--   Added support to delay time from json for GET and HEAD API  
+## [0.9.7] - 2017-30-10
+- Added support to delay time from json for GET and HEAD API  
     - "-T" option to include delay in time. If option not specified, there is no delay in response. Checks for time.json.
     - "-t <time_in_seconds>" to specify default time if time.json is not present.
--  Added Response Header support for GETs: 
+- Added Response Header support for GETs: 
     - Checks for headers.json and includes required headers from it.
     - Certain headers like ("Connection", "Keep-Alive", "Content-Length") are not included in GET request.
--  Added Support for HEAD Method
+- Added Support for HEAD Method
     - Checks for headers.json and includes required headers from it.
--  Changed TestETag option to "-E" from "-T" 
+- Changed TestETag option to "-E" from "-T" 
 
 ## [0.9.3] - 2016-12-05
 - -t <responseTime> option to specify a response delay for responses--to simulate a real system better
@@ -24,4 +26,3 @@
 
 ## [0.9.1] - 2016-09-06
 - Initial Public Release
-- 
