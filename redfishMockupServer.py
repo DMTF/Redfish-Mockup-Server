@@ -214,8 +214,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 time.sleep(responseTime)
 
                 if("content-length" in self.headers):
-                    len = int(self.headers["content-length"])
-                    dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                    lenth = int(self.headers["content-length"])
+                    dataa = json.loads(self.rfile.read(lenth).decode("utf-8"))
                     print("   PATCH: Data: {}".format(dataa))
 
                     rpath = clean_path(self.path)
@@ -272,6 +272,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 time.sleep(responseTime)
 
                 rpath = clean_path(self.path)
+                xpath = rpath
                 if self.server.shortForm:
                     rpath = rpath.replace('redfish/v1/', '')
                     rpath = rpath.replace('redfish/v1', '')
@@ -290,9 +291,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                             print(dataa)
                             print(type(dataa)) 
 
-
                             members = jsonData.get('Members')
-                            newpath = '/{}/{}'.format(rpath, len(members) + 1)
+                            newpath = '/{}/{}'.format(xpath, len(members) + 1)
                             members.append({'@odata.id': newpath})
 
                             jsonData['Members'] = members
@@ -300,6 +300,13 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
                             newfpath = os.path.join(newpath, 'index.json')
                             newfpath = apath + newfpath
+
+                            print(newfpath)
+
+                            if self.server.shortForm:
+                                newfpath = newfpath.replace('redfish/v1/', '')
+
+                            print(newfpath)
 
                             patchedLinks[newfpath] = dataa
                             patchedLinks[fpath] = jsonData
@@ -320,6 +327,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                             print(jsonData.get('Members'))
                             for member in jsonData.get('Members', []):
                                 entry = member['@odata.id']
+                                if self.server.shortForm:
+                                    entry = entry.replace('redfish/v1/', '')
                                 entrypath = os.path.join(apath + entry, 'index.json')
                                 success, jsonData = get_cached_link(entrypath)
                                 print(apath)
