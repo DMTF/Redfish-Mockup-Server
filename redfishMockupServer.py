@@ -33,7 +33,7 @@ def get_cached_link(path):
             return False, jsonData
     else:
         jsonData = patchedLinks[path]
-    return jsonData is not None, jsonData
+    return jsonData is not None and jsonData != '404', jsonData
 
 
 def dict_merge(dct, merge_dct):
@@ -362,13 +362,15 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 print("DELETE: Headers: {}".format(self.headers))
                 if("content-length" in self.headers):
                         len = int(self.headers["content-length"])
-                        dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                        #dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                        dataa = {}
                         print("   POST: Data: {}".format(dataa))
 
                 responseTime = self.server.responseTime
                 time.sleep(responseTime)
 
                 rpath = clean_path(self.path)
+                xpath = '/' + rpath
                 if self.server.shortForm:
                     rpath = rpath.replace('redfish/v1/', '')
                     rpath = rpath.replace('redfish/v1', '')
@@ -378,10 +380,11 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
                 success, jsonData = get_cached_link(fpath)
                 if success:
-                    if jsonData.get('Members') is not None:
+                    success, parentData = get_cached_link(parentpath)
+                    if success and parentData.get('Members') is not None:
                         patchedLinks[fpath] = '404'
-                        jsonData['Members'] = [x for x in jsonData['Members'] if not x['@odata.id'] == rpath]
-                        patchedLinks[parentpath] = jsonData
+                        parentData['Members'] = [x for x in parentData['Members'] if not x['@odata.id'] == xpath]
+                        patchedLinks[parentpath] = parentData
                         self.send_response(204)
                     else:
                         self.send_response(405)
