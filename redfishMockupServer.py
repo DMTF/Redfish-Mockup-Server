@@ -33,7 +33,7 @@ def get_cached_link(path):
             return False, jsonData
     else:
         jsonData = patchedLinks[path]
-    return jsonData is not None, jsonData
+    return jsonData is not None and jsonData != '404', jsonData
 
 
 def dict_merge(dct, merge_dct):
@@ -214,8 +214,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 time.sleep(responseTime)
 
                 if("content-length" in self.headers):
-                    len = int(self.headers["content-length"])
-                    dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                    lenth = int(self.headers["content-length"])
+                    dataa = json.loads(self.rfile.read(lenth).decode("utf-8"))
                     print("   PATCH: Data: {}".format(dataa))
 
                     rpath = clean_path(self.path)
@@ -265,13 +265,14 @@ class RfMockupServer(BaseHTTPRequestHandler):
         def do_POST(self):
                 print("   POST: Headers: {}".format(self.headers))
                 if("content-length" in self.headers):
-                        len = int(self.headers["content-length"])
-                        dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                        lenth = int(self.headers["content-length"])
+                        dataa = json.loads(self.rfile.read(lenth).decode("utf-8"))
                         print("   POST: Data: {}".format(dataa))
                 responseTime = self.server.responseTime
                 time.sleep(responseTime)
 
                 rpath = clean_path(self.path)
+                xpath = rpath
                 if self.server.shortForm:
                     rpath = rpath.replace('redfish/v1/', '')
                     rpath = rpath.replace('redfish/v1', '')
@@ -282,17 +283,52 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 # don't bother if this item exists
                 #   otherwise, check if its an action or a file
                 if os.path.isfile(fpath) or patchedLinks.get(fpath) is not None:
-                    self.send_response(409)
+                    success, jsonData = get_cached_link(fpath)
+                    if success:
+                        if jsonData.get('Members') is None:
+                            self.send_response(405)
+                        else:
+                            print(dataa)
+                            print(type(dataa)) 
+
+                            members = jsonData.get('Members')
+                            newpath = '/{}/{}'.format(xpath, len(members) + 1)
+                            members.append({'@odata.id': newpath})
+
+                            jsonData['Members'] = members
+                            jsonData['Members@odata.count'] = len(members)
+
+                            newfpath = os.path.join(newpath, 'index.json')
+                            newfpath = apath + newfpath
+
+                            print(newfpath)
+
+                            if self.server.shortForm:
+                                newfpath = newfpath.replace('redfish/v1/', '')
+
+                            print(newfpath)
+
+                            patchedLinks[newfpath] = dataa
+                            patchedLinks[fpath] = jsonData
+                            self.send_response(204)
+                    else:
+                        self.send_response(404)
+
                 else:
-                    if 'redfish/v1/EventService/Actions/EventService.SubmitTestEvent' == rpath:
+                    if 'EventService/Actions/EventService.SubmitTestEvent' in rpath:
                         eventpath = os.path.join(apath, 'redfish/v1/EventService/Subscriptions', 'index.json')
+                        if self.server.shortForm:
+                            eventpath = eventpath.replace('redfish/v1/', '')
                         success, jsonData = get_cached_link(eventpath)
                         print(eventpath)
                         if not success:
                             self.send_response(404)
                         else:
+                            print(jsonData.get('Members'))
                             for member in jsonData.get('Members', []):
                                 entry = member['@odata.id']
+                                if self.server.shortForm:
+                                    entry = entry.replace('redfish/v1/', '')
                                 entrypath = os.path.join(apath + entry, 'index.json')
                                 success, jsonData = get_cached_link(entrypath)
                                 print(apath)
@@ -315,19 +351,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                                 sys.stdout.flush()
                             self.send_response(204)
                     else:
-                        success, jsonData = get_cached_link(fpath)
-                        if success:
-                            if jsonData.get('Members') is None:
-                                self.send_response(405)
-                            else:
-                                print(dataa)
-                                print(type(dataa))
-                                patchedLinks[fpath] = dataa
-                                jsonData.get('Members').append({'@odata.id': rpath})
-                                patchedLinks[parentpath] = jsonData
-                                self.send_response(204)
-                        else:
-                            self.send_response(404)
+                        self.send_response(405)
 
                 self.end_headers()
 
@@ -338,13 +362,15 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 print("DELETE: Headers: {}".format(self.headers))
                 if("content-length" in self.headers):
                         len = int(self.headers["content-length"])
-                        dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                        #dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                        dataa = {}
                         print("   POST: Data: {}".format(dataa))
 
                 responseTime = self.server.responseTime
                 time.sleep(responseTime)
 
                 rpath = clean_path(self.path)
+                xpath = '/' + rpath
                 if self.server.shortForm:
                     rpath = rpath.replace('redfish/v1/', '')
                     rpath = rpath.replace('redfish/v1', '')
@@ -354,10 +380,11 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
                 success, jsonData = get_cached_link(fpath)
                 if success:
-                    if jsonData.get('Members') is not None:
+                    success, parentData = get_cached_link(parentpath)
+                    if success and parentData.get('Members') is not None:
                         patchedLinks[fpath] = '404'
-                        jsonData['Members'] = [x for x in jsonData['Members'] if not x['@odata.id'] == rpath]
-                        patchedLinks[parentpath] = jsonData
+                        parentData['Members'] = [x for x in parentData['Members'] if not x['@odata.id'] == xpath]
+                        patchedLinks[parentpath] = parentData
                         self.send_response(204)
                     else:
                         self.send_response(405)
