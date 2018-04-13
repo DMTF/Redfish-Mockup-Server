@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.1] - 2018-04-13
+- Made fixes for how POST and DELETE are handled with the Event Destination Collection
+- Made fixes to the Submit Test Event action
+
 ## [1.0.0] - 2018-02-02
 - Added support for HTTPS
 - Added support for using "short" mockups (ones without the /redfish/v1 resource)
