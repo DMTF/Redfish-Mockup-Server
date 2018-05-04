@@ -68,6 +68,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
         returns index.json file for Serverthe specified URL
         '''
         server_version = "RedfishMockupHTTPD_v" + tool_version
+        event_id = 1
 
         # Headers only request
         def do_HEAD(self):
@@ -322,34 +323,62 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         success, jsonData = get_cached_link(eventpath)
                         print(eventpath)
                         if not success:
+                            # Eventing not supported
                             self.send_response(404)
                         else:
-                            print(jsonData.get('Members'))
-                            for member in jsonData.get('Members', []):
-                                entry = member['@odata.id']
-                                if self.server.shortForm:
-                                    entry = entry.replace('redfish/v1/', '')
-                                entrypath = os.path.join(apath + entry, 'index.json')
-                                success, jsonData = get_cached_link(entrypath)
-                                print(apath)
-                                print(entrypath)
-                                if not success:
-                                    print('No such resource')
-                                else:
-                                    destination = jsonData.get('Destination', 'http://0.0.0.0')
-                                    print('target', destination)
-                                    print(dataa.get('EventType'), jsonData.get('EventTypes'))
-                                    if dataa.get('EventType', 'None') in jsonData.get('EventTypes', [])\
-                                            or jsonData.get('EventTypes') is None:
-                                        try:
-                                            r = requests.post(destination, timeout=20, data=dataa)
-                                            print('post complete', r.status_code)
-                                        except Exception as e:
-                                            print('post error', str(e))
+                            # Check if all of the parameters are given
+                            if ( ('EventType' not in dataa) or ('EventId' not in dataa) or
+                                 ('EventTimestamp' not in dataa) or ('Severity' not in dataa) or
+                                 ('Message' not in dataa) or ('MessageId' not in dataa) or
+                                 ('MessageArgs' not in dataa) or ('OriginOfCondition' not in dataa) ):
+                                self.send_response(400)
+                            else:
+                                # Need to reformat to make Origin Of Condition a proper link
+                                origin_of_cond = dataa['OriginOfCondition']
+                                dataa['OriginOfCondition'] = {}
+                                dataa['OriginOfCondition']['@odata.id'] = origin_of_cond
+
+                                # Go through each subscriber
+                                print(jsonData.get('Members'))
+                                for member in jsonData.get('Members', []):
+                                    entry = member['@odata.id']
+                                    if self.server.shortForm:
+                                        entry = entry.replace('redfish/v1/', '')
+                                    entrypath = os.path.join(apath + entry, 'index.json')
+                                    success, jsonData = get_cached_link(entrypath)
+                                    print(apath)
+                                    print(entrypath)
+                                    if not success:
+                                        print('No such resource')
                                     else:
-                                        print('event not in eventtypes')
-                                sys.stdout.flush()
-                            self.send_response(204)
+                                        # Sanity check the subscription for required properties
+                                        if ('Destination' in jsonData) and ('EventTypes' in jsonData):
+                                            print('Target', jsonData['Destination'])
+                                            print(dataa['EventType'], jsonData['EventTypes'])
+
+                                            # If the EventType in the request is one of interest to the subscriber, build an event payload
+                                            if dataa['EventType'] in jsonData['EventTypes']:
+                                                event_payload = {}
+                                                event_payload['@odata.type'] = '#Event.v1_2_1.Event'
+                                                event_payload['Id'] = str(self.event_id)
+                                                event_payload['Name'] = 'Test Event'
+                                                event_payload['Context'] = jsonData.get('Context', 'Default Context')
+                                                event_payload['Events'] = []
+                                                event_payload['Events'].append(dataa)
+                                                http_headers = {}
+                                                http_headers['Content-Type'] = 'application/json'
+
+                                                # Send the event
+                                                try:
+                                                    r = requests.post(jsonData['Destination'], timeout=20, data=json.dumps(event_payload), headers=http_headers)
+                                                    print('post complete', r.status_code)
+                                                except Exception as e:
+                                                    print('post error', str(e))
+                                            else:
+                                                print('event not in eventtypes')
+                                    sys.stdout.flush()
+                                self.send_response(204)
+                                self.event_id = self.event_id + 1
                     else:
                         self.send_response(405)
 
