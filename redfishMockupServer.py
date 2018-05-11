@@ -20,7 +20,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 patchedLinks = dict()
 
-tool_version = "1.0.1"
+tool_version = "1.0.2"
 
 def get_cached_link(path):
     jsonData = None
