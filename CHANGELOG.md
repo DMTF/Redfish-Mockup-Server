@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.0.2] - 2018-05-11
+- Corrected Submit Test Event Action; it now verifies all required parameters are given, and the format of the Event it sends matches the Event schema
+
 ## [1.0.1] - 2018-04-13
 - Made fixes for how POST and DELETE are handled with the Event Destination Collection
 - Made fixes to the Submit Test Event action
