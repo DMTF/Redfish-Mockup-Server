@@ -187,7 +187,10 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
                 if fpath not in patchedLinks:
                     f = open(fpath, "r")
-                    self.wfile.write(f.read().encode())
+                    json_obj = json.loads(f.read())
+                    # Strip the @Redfish.Copyright property
+                    json_obj.pop("@Redfish.Copyright", None)
+                    self.wfile.write(json.dumps(json_obj, sort_keys = True, indent = 4, separators = ( ",", ": " )).encode())
                     f.close()
                 else:
                     if patchedLinks[fpath] not in [None, '404']:
