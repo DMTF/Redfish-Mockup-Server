@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.0.3] - 2018-05-25
+- Added logic to remove the @Redfish.Copyright statement from payloads
+
 ## [1.0.2] - 2018-05-11
 - Corrected Submit Test Event Action; it now verifies all required parameters are given, and the format of the Event it sends matches the Event schema
 

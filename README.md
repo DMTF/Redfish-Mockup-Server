@@ -37,7 +37,7 @@ pip3 install requests
 
 * `redfishMockupServer -h`     -- gives help usage and exits
 
-* `redfishMockupServer [-H *HostIpAddress* ] [-P *port*] [-D <mockupDir>] [-H <host>] [-P <port>] [-T] [-t <responseTime>] [-X] [-E]
+* `redfishMockupServer [-H *HostIpAddress* ] [-P *port*] [-D <mockupDir>] [-H <host>] [-P <port>] [-T] [-t <responseTime>] [-X] [-E]`
   * default *HostIpAddress* is 127.0.0.1
   * default *port*         is 8000
   * *mockupDir* is absolute or relative to CWD if starting with . or ..
