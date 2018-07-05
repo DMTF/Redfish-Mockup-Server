@@ -218,8 +218,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 time.sleep(responseTime)
 
                 if("content-length" in self.headers):
-                    lenth = int(self.headers["content-length"])
-                    dataa = json.loads(self.rfile.read(lenth).decode("utf-8"))
+                    lenn = int(self.headers["content-length"])
+                    dataa = json.loads(self.rfile.read(lenn).decode("utf-8"))
                     print("   PATCH: Data: {}".format(dataa))
 
                     rpath = clean_path(self.path)
@@ -257,7 +257,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 time.sleep(responseTime)
 
                 if("content-length" in self.headers):
-                    len = int(self.headers["content-length"])
+                    lenn = int(self.headers["content-length"])
                     dataa = json.loads(self.rfile.read(len).decode("utf-8"))
                     print("   PUT: Data: {}".format(dataa))
 
@@ -269,14 +269,15 @@ class RfMockupServer(BaseHTTPRequestHandler):
         def do_POST(self):
                 print("   POST: Headers: {}".format(self.headers))
                 if("content-length" in self.headers):
-                        lenth = int(self.headers["content-length"])
-                        dataa = json.loads(self.rfile.read(lenth).decode("utf-8"))
+                        lenn = int(self.headers["content-length"])
+                        dataa = json.loads(self.rfile.read(lenn).decode("utf-8"))
                         print("   POST: Data: {}".format(dataa))
                 responseTime = self.server.responseTime
                 time.sleep(responseTime)
 
                 rpath = clean_path(self.path)
                 xpath = rpath
+                xpath = xpath[:-1] if xpath[-1] == '/' else xpath
                 if self.server.shortForm:
                     rpath = rpath.replace('redfish/v1/', '')
                     rpath = rpath.replace('redfish/v1', '')
@@ -296,7 +297,11 @@ class RfMockupServer(BaseHTTPRequestHandler):
                             print(type(dataa)) 
 
                             members = jsonData.get('Members')
-                            newpath = '/{}/{}'.format(xpath, len(members) + 1)
+                            n = 1
+                            newpath = '/{}/{}'.format(xpath, len(members) + n)
+                            while newpath in [m.get('@odata.id') for m in members]:
+                                n = n + 1
+                                newpath = '/{}/{}'.format(xpath, len(members) + n)
                             members.append({'@odata.id': newpath})
 
                             jsonData['Members'] = members
@@ -393,7 +398,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 """
                 print("DELETE: Headers: {}".format(self.headers))
                 if("content-length" in self.headers):
-                        len = int(self.headers["content-length"])
+                        lenn = int(self.headers["content-length"])
                         #dataa = json.loads(self.rfile.read(len).decode("utf-8"))
                         dataa = {}
                         print("   POST: Data: {}".format(dataa))
@@ -416,6 +421,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     if success and parentData.get('Members') is not None:
                         patchedLinks[fpath] = '404'
                         parentData['Members'] = [x for x in parentData['Members'] if not x['@odata.id'] == xpath]
+                        parentData['Members@odata.count'] = len(parentData['Members'])
                         patchedLinks[parentpath] = parentData
                         self.send_response(204)
                     else:
