@@ -320,6 +320,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
                             patchedLinks[newfpath] = dataa
                             patchedLinks[fpath] = jsonData
                             self.send_response(204)
+                            self.send_header("Location", newpath)
+                            self.send_header("Content-Length", "0")
+                            self.end_headers()
                     else:
                         self.send_response(404)
 
