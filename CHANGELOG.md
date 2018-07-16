@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.4] - 2018-07-16
+- Fixed behavior of how the URIs are managed when issuing DELETE to members of a collection
+- Added Location header in the service response when creating new resources
+
 ## [1.0.3] - 2018-05-25
 - Added logic to remove the @Redfish.Copyright statement from payloads
 
