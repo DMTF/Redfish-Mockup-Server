@@ -116,7 +116,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
             # there is no request data, so no need to dump that
             print("   GET: Headers: {}".format(self.headers))
             sys.stdout.flush()
-            dont_send = ["Connection", "Keep-Alive", "Content-Length"]
+            # specify headers to not send (use lowercase)
+            dont_send = ["connection", "keep-alive", "content-length", "transfer-encoding"]
             rfile = "index.json"
             rfileXml = "index.xml"
             rhfile = "headers.json"
@@ -178,7 +179,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         d = json.load(headers_data)
                     if isinstance(d["GET"], dict):
                         for k, v in d["GET"].items():
-                            if k not in dont_send:
+                            if k.lower() not in dont_send:
                                 self.send_header(str(k), str(v))
                 elif (os.path.isfile(fhpath) is False):
                     self.send_header("Content-Type", "application/json")
