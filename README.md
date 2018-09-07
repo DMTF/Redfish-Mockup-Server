@@ -1,4 +1,4 @@
-Copyright 2016-2018 Distributed Management Task Force, Inc. All rights reserved.
+Copyright 2016-2018 DMTF. All rights reserved.
 
 # redfishMockupServer
 
@@ -49,3 +49,10 @@ pip3 install requests
   * `-X` or `--headers` tells the mockup server to send headers from headers.json file
 * Example:    
 `.\redfishMockupServer -P 8001 -D ./MyServerMockup9 -X `   # to start another service on port 8001 from folder *./MyServerMockup9*
+
+## Release Process
+
+1. Update `CHANGELOG.md` with the list of changes since the last release
+2. Update the `tool_version` variable in `redfishMockupServer.py` to reflect the new tool version
+3. Push changes to Github
+4. Create a new release in Github

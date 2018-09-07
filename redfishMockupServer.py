@@ -1,5 +1,5 @@
 # Copyright Notice:
-# Copyright 2016 Distributed Management Task Force, Inc. All rights reserved.
+# Copyright 2016 DMTF. All rights reserved.
 # License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/Redfish-Mockup-Server/blob/master/LICENSE.md
 
 # redfishMockupServer.py
@@ -20,7 +20,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 patchedLinks = dict()
 
-tool_version = "1.0.4"
+tool_version = "1.0.5"
 
 def get_cached_link(path):
     jsonData = None
