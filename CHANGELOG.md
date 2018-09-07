@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.0.5] - 2018-09-07
+- Added Transfer-Encoding to the list of HTTP headers to not use
+
 ## [1.0.4] - 2018-07-16
 - Fixed behavior of how the URIs are managed when issuing DELETE to members of a collection
 - Added Location header in the service response when creating new resources
