@@ -22,15 +22,15 @@ patchedLinks = dict()
 
 tool_version = "1.0.5"
 
+
 def get_cached_link(path):
-    jsonData = None
     if path not in patchedLinks:
         if os.path.isfile(path):
             with open(path) as f:
                 jsonData = json.load(f)
                 f.close()
         else:
-            return False, jsonData
+            jsonData = None
     else:
         jsonData = patchedLinks[path]
     return jsonData is not None and jsonData != '404', jsonData
@@ -55,11 +55,13 @@ def dict_merge(dct, merge_dct):
                 dct[k] = merge_dct[k]
 
 
-def clean_path(path):
-    if(path[0] == '/'):
-        path = path[1:]
+def clean_path(path, isShort):
+    path = path.strip('/')
     path = path.split('?', 1)[0]
     path = path.split('#', 1)[0]
+    if isShort:
+        path = path.replace('redfish/v1/', '')
+        path = path.replace('redfish/v1', '')
     return path
 
 
@@ -75,11 +77,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
             print("Headers: ")
             sys.stdout.flush()
 
+            # construct path "mockdir/path/to/resource/headers.json"
             rfile = "headers.json"
-            rpath = clean_path(self.path)
-            if self.server.shortForm:
-                rpath = rpath.replace('redfish/v1/', '')
-                rpath = rpath.replace('redfish/v1', '')
+            rpath = clean_path(self.path, self.server.shortForm)
             apath = self.server.mockDir
             fpath = os.path.join(apath, rpath, rfile)
 
@@ -94,13 +94,15 @@ class RfMockupServer(BaseHTTPRequestHandler):
             sys.stdout.flush()
             print(self.server.headers)
 
-            if self.server.headers and (os.path.isfile(fpath) is True):
+            # If bool headers is true and headers.json exists...
+            if self.server.headers and (os.path.isfile(fpath)):
                 self.send_response(200)
                 with open(fpath) as headers_data:
                     d = json.load(headers_data)
                 if isinstance(d["GET"], dict):
                     for k, v in d["GET"].items():
-                        self.send_header(k, v)
+                        if k.lower() not in dont_send:
+                            self.send_header(k, v)
                 self.end_headers()
             elif (self.server.headers is False) or (os.path.isfile(fpath) is False):
                 self.send_response(200)
@@ -122,25 +124,21 @@ class RfMockupServer(BaseHTTPRequestHandler):
             rfileXml = "index.xml"
             rhfile = "headers.json"
 
-            rpath = clean_path(self.path)
-            if self.server.shortForm:
-                # print(rpath)
-                rpath = rpath.replace('redfish/v1/', '')
-                rpath = rpath.replace('redfish/v1', '')
-                # print(rpath)
-            apath = self.server.mockDir    # this is the real absolute path to the mockup directory
+            # construct path "mockdir/path/to/resource/<filename>"
+            # this is the resource path
+            rpath = clean_path(self.path, self.server.shortForm)
+            # this is the real absolute path to the mockup directory
+            apath = self.server.mockDir
             # form the path in the mockup of the file
             #      old only support mockup in CWD:  apath=os.path.abspath(rpath)
             fpath = os.path.join(apath, rpath, rfile)
             fhpath = os.path.join(apath, rpath, rhfile)
             fpathxml = os.path.join(apath, rpath, rfileXml)
             fpathdirect = os.path.join(apath, rpath)
-            print(fpath)
 
             # get the testEtagFlag and mockup directory path parameters passed in from the http server
             testEtagFlag = self.server.testEtagFlag
 
-            print(self.server.timefromJson)
             if self.server.timefromJson:
                 responseTime = self.getResponseTime('GET', apath, rpath)
                 try:
@@ -150,7 +148,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     time.sleep(float(self.server.responseTime))
 
             sys.stdout.flush()
- 
+
+            # handle resource paths that don't exist for shortForm
+            # '/' and '/redfish'
             if(self.path == '/' and self.server.shortForm):
                 self.send_response(404)
                 self.end_headers()
@@ -158,23 +158,27 @@ class RfMockupServer(BaseHTTPRequestHandler):
             elif(self.path in ['/redfish', '/redfish/'] and self.server.shortForm):
                 self.send_response(200)
                 self.end_headers()
-                self.wfile.write(json.dumps({'v1':'/redfish/v1'}, indent=4).encode())
+                self.wfile.write(json.dumps({'v1': '/redfish/v1'}, indent=4).encode())
 
             # if this location exists in memory or as file
             elif(os.path.isfile(fpath) or fpath in patchedLinks):
+                # if patchedLink is not deleted, else 404
+                # fallthrough case: will be 200 for files too
                 if patchedLinks.get(fpath) != '404':
                     self.send_response(200)
                 else:
                     self.send_response(404)
                 # special cases to test etag for testing
                 # if etag is returned then the patch to these resources should include this etag
-                if testEtagFlag is True:
+                if testEtagFlag:
                         if(self.path == "/redfish/v1/Systems/1"):
                                 self.send_header("Etag", "W/\"12345\"")
                         elif(self.path == "/redfish/v1/AccountService/Accounts/1"):
                                 self.send_header("Etag", "\"123456\"")
 
-                if(os.path.isfile(fhpath) is True):
+                # if headers exist... send information (except for chunk info)
+                # end headers here (always end headers after response)
+                if self.server.headers and (os.path.isfile(fhpath)):
                     with open(fhpath) as headers_data:
                         d = json.load(headers_data)
                     if isinstance(d["GET"], dict):
@@ -186,6 +190,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     self.send_header("OData-Version", "4.0")
                 self.end_headers()
 
+                # then grab output from file or patchedLinks
                 if fpath not in patchedLinks:
                     f = open(fpath, "r")
                     json_obj = json.loads(f.read())
@@ -197,7 +202,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     if patchedLinks[fpath] not in [None, '404']:
                         self.wfile.write(json.dumps(patchedLinks[fpath], indent=4).encode())
 
-            elif(os.path.isfile(fpathxml) is True or os.path.isfile(fpathdirect) is True):
+            # if XML...
+            elif(os.path.isfile(fpathxml) or os.path.isfile(fpathdirect)):
                 if os.path.isfile(fpathxml):
                     file_extension = 'xml'
                     f = open(fpathxml, "r")
@@ -223,15 +229,17 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     dataa = json.loads(self.rfile.read(lenn).decode("utf-8"))
                     print("   PATCH: Data: {}".format(dataa))
 
-                    rpath = clean_path(self.path)
-                    if self.server.shortForm:
-                        rpath = rpath.replace('redfish/v1/', '')
-                        rpath = rpath.replace('redfish/v1', '')
+                    # construct path "mockdir/path/to/resource/<filename>"
+                    rpath = clean_path(self.path, self.server.shortForm)
                     apath = self.server.mockDir    # this is the real absolute path to the mockup directory
                     fpath = os.path.join(apath, rpath, 'index.json')
 
                     # check if resource exists, otherwise 404
                     #   if it's a file, open it, if its in memory, grab it
+                    #   405 if Collection
+                    #   204 if patch success
+                    #   404 if payload DNE
+                    # end headers
                     success, jsonData = get_cached_link(fpath)
                     if success:
                         # If this is a collection, throw a 405
@@ -263,6 +271,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     print("   PUT: Data: {}".format(dataa))
 
                 # we don't support this service
+                #   405
+                # end headers
                 self.send_response(405)
 
                 self.end_headers()
@@ -276,18 +286,19 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 responseTime = self.server.responseTime
                 time.sleep(responseTime)
 
-                rpath = clean_path(self.path)
-                xpath = rpath
-                xpath = xpath[:-1] if xpath[-1] == '/' else xpath
-                if self.server.shortForm:
-                    rpath = rpath.replace('redfish/v1/', '')
-                    rpath = rpath.replace('redfish/v1', '')
+                # construct path "mockdir/path/to/resource/<filename>"
+                rpath = clean_path(self.path, self.server.shortForm)
                 apath = self.server.mockDir    # this is the real absolute path to the mockup directory
                 fpath = os.path.join(apath, rpath, 'index.json')
-                parentpath = os.path.join(apath, rpath.rsplit('/', 1)[0], 'index.json')
 
-                # don't bother if this item exists
-                #   otherwise, check if its an action or a file
+                parentpath = os.path.join(apath, rpath.rsplit('/', 1)[0], 'index.json')
+                xpath = rpath.rstrip('/')
+
+                # don't bother if this item exists, otherwise, check if its an action or a file
+                # if file
+                #   405 if not Collection
+                #   204 if success
+                #   404 if no file present
                 if os.path.isfile(fpath) or patchedLinks.get(fpath) is not None:
                     success, jsonData = get_cached_link(fpath)
                     if success:
@@ -295,8 +306,11 @@ class RfMockupServer(BaseHTTPRequestHandler):
                             self.send_response(405)
                         else:
                             print(dataa)
-                            print(type(dataa)) 
-
+                            print(type(dataa))
+                            # with members, form unique ID
+                            #   must NOT exist in Members
+                            #   add ID to members, change count
+                            #   store as necessary in patchedLinks
                             members = jsonData.get('Members')
                             n = 1
                             newpath = '/{}/{}'.format(xpath, len(members) + n)
@@ -327,6 +341,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     else:
                         self.send_response(404)
 
+                # eventing framework
                 else:
                     if 'EventService/Actions/EventService.SubmitTestEvent' in rpath:
                         eventpath = os.path.join(apath, 'redfish/v1/EventService/Subscriptions', 'index.json')
@@ -410,6 +425,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 responseTime = self.server.responseTime
                 time.sleep(responseTime)
 
+                # construct path
+                # xpath is URI as related to redfish @odata.id
                 rpath = clean_path(self.path)
                 xpath = '/' + rpath
                 if self.server.shortForm:
@@ -417,8 +434,14 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     rpath = rpath.replace('redfish/v1', '')
                 apath = self.server.mockDir    # this is the real absolute path to the mockup directory
                 fpath = os.path.join(apath, rpath, 'index.json')
+
                 parentpath = os.path.join(apath, rpath.rsplit('/', 1)[0], 'index.json')
 
+                # 404 if file doesn't exist
+                # 204 if success, override payload with 404
+                #   modify payload to exclude expected URI, subtract count
+                # 405 if parent is not Collection
+                # end headers
                 success, jsonData = get_cached_link(fpath)
                 if success:
                     success, parentData = get_cached_link(parentpath)
@@ -457,16 +480,16 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 path = os.path.join(path, word)
                 return path
 
- 
+
         # Response time calculation Algorithm
         def getResponseTime(self,method,apath,rpath):
             rfile = "time.json"
             fpath=os.path.join(apath,rpath, rfile)
-            if not any(x in method for x in ("GET", "HEAD","POST","PATCH","DELETE") ): 
+            if not any(x in method for x in ("GET", "HEAD","POST","PATCH","DELETE") ):
                 print ("Not a valid method")
                 return (0)
 
-            if( os.path.isfile(fpath) is True):
+            if( os.path.isfile(fpath)):
                 with open(fpath) as time_data:
                     d=json.load(time_data)
                     time_str = method + "_Time"
@@ -484,7 +507,7 @@ def usage(program):
         print("      -h --help      # prints usage ")
         print("      -L --Load      # <not implemented yet>: load and Dump json read from mockup in pretty format with indent=4")
         print("      -H <IpAddr>   --Host=<IpAddr>    # hostIP, default: 127.0.0.1")
-        print("      -P <port>     --Port=<port>      # port:  default is 8000")
+        print("      -p <port>     --port=<port>      # port:  default is 8000")
         print("      -D <dir>,     --Dir=<dir>        # Path to the mockup directory. It may be relative to CWD")
         print("      -X,           --headers          # Option to load headers or not from json files")
         print("      -t <delay>    --time=<delayTime> # Delay Time in seconds added to any request. Must be float or int.")
@@ -513,9 +536,10 @@ def main(argv):
         timefromJson = False
         headers = False
         shortForm=False
+        ssdpStart=False
         print("Redfish Mockup Server, version {}".format(tool_version))
         try:
-                opts, args = getopt.getopt(argv[1:],"hLTSsEH:P:D:t:X",["help","Load", "shortForm", "ssl","TestEtag","headers", "Host=", "Port=", "Dir=",
+                opts, args = getopt.getopt(argv[1:],"hLTSPsEH:p:D:t:X",["help","Load", "shortForm", "ssdp", "ssl","TestEtag","headers", "Host=", "Port=", "Dir=",
                                                                    "time=", "cert=", "key="])
         except getopt.GetoptError:
                 #usage()
@@ -534,7 +558,7 @@ def main(argv):
                         hostname=arg
                 elif opt in ("-X","--headers"):
                         headers=True
-                elif opt in ("-P", "--Port"):
+                elif opt in ("-p", "--port"):
                         port=int(arg)
                 elif opt in ("-D", "--Dir"):
                         mockDirPath=arg
@@ -552,6 +576,8 @@ def main(argv):
                         sslKey=arg
                 elif opt in ("-S", "--shortForm"):
                         shortForm=True
+                elif opt in ("-P", "--ssdp"):
+                        ssdpStart=True
                 else:
                         print('unhandled option', file=sys.stderr)
                         sys.exit(2)
@@ -567,7 +593,7 @@ def main(argv):
         if mockDirPath is None:
                 mockDirPath=os.getcwd()
 
-        #create the full path to the top directory holding the Mockup  
+        #create the full path to the top directory holding the Mockup
         mockDir=os.path.realpath(mockDirPath) #creates real full path including path for CWD to the -D<mockDir> dir path
         print ("Serving Mockup in abs real directory path:{}".format(mockDir))
 
@@ -586,6 +612,9 @@ def main(argv):
                     sys.exit(1)
 
         myServer=HTTPServer((hostname, port), RfMockupServer)
+
+        if ssdpStart:
+            mySDDP=RfSDDPServer((hostname, port))
 
         if sslMode:
             print("Using SSL with certfile: {}".format(sslCert))
