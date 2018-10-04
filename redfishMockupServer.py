@@ -645,7 +645,8 @@ def main(argv):
             #      old only support mockup in CWD:  apath=os.path.abspath(rpath)
             fpath = os.path.join(apath, rpath, 'index.json')
             success, item = get_cached_link(fpath)
-            mySDDP = RfSDDPServer(item, '{}:{}{}'.format(hostname, port, '/redfish/v1'), hostname)
+            protocol = '{}://'.format('https' if sslMode else 'http')
+            mySDDP = RfSDDPServer(item, '{}{}:{}{}'.format(protocol,  hostname, port, '/redfish/v1'), hostname)
 
         print("Serving Redfish mockup on port: {}".format(port))
         sys.stdout.flush()

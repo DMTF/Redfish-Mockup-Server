@@ -120,7 +120,7 @@ def main(argv=None):
     main program
     """
     hostname = "127.0.0.1"
-    location = "127.0.0.1"
+    location = "http://127.0.0.1"
 
     server = RfSDDPServer({}, '{}:{}{}'.format(location, '8000', '/redfish/v1'), hostname)
 
