@@ -13,15 +13,18 @@ import collections
 import json
 import requests
 import posixpath
+import threading
 
 import os
 import ssl
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from rfSsdpServer import RfSDDPServer
 
 patchedLinks = dict()
 
 tool_version = "1.0.5"
 
+dont_send = ["connection", "keep-alive", "content-length", "transfer-encoding"]
 
 def get_cached_link(path):
     if path not in patchedLinks:
@@ -502,6 +505,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         return (float(d[time_str]))
             return (self.server.responseTime)
 
+
 def usage(program):
         print("usage: {}   [-h][-P][-H <hostIpAddr>:<port>]".format(program))
         print("      -h --help      # prints usage ")
@@ -516,129 +520,145 @@ def usage(program):
         print("      -s            --ssl              # Places server in https, requires a certificate and key")
         print("      --cert <cert>                    # Specify a certificate for ssl server function")
         print("      --key <key>                      # Specify a key for ssl")
-        print("      -S            --shortForm        # Apply shortform to mockup (allowing to omit /redfish/v1)")
+        print("      -S            --shortForm        # Apply shortform to mockup (allowing to omit filepath /redfish/v1)")
+        print("      -P            --ssdp             # Make mockup ssdp discoverable (by redfish specification)")
         sys.stdout.flush()
 
 
 def main(argv):
-        hostname="127.0.0.1"
-        port=8000
-        load=False
-        program=argv[0]
+        hostname = "127.0.0.1"
+        port = 8000
+        load = False
+        program = argv[0]
         print(program)
-        mockDirPath=None
-        sslMode=False
-        sslCert=None
-        sslKey=None
-        mockDir=None
-        testEtagFlag=False
-        responseTime=0
+        mockDirPath = None
+        sslMode = False
+        sslCert = None
+        sslKey = None
+        mockDir = None
+        testEtagFlag = False
+        responseTime = 0
         timefromJson = False
         headers = False
-        shortForm=False
-        ssdpStart=False
+        shortForm = False
+        ssdpStart = False
         print("Redfish Mockup Server, version {}".format(tool_version))
         try:
-                opts, args = getopt.getopt(argv[1:],"hLTSPsEH:p:D:t:X",["help","Load", "shortForm", "ssdp", "ssl","TestEtag","headers", "Host=", "Port=", "Dir=",
-                                                                   "time=", "cert=", "key="])
+            opts, args = getopt.getopt(argv[1:], "hLTSPsEH:p:D:t:X", ["help", "Load", "shortForm", "ssdp", "ssl", "TestEtag", "headers", "Host=", "Port=", "Dir=",
+                                                                    "time=", "cert=", "key="])
         except getopt.GetoptError:
-                #usage()
-                print("Error parsing options", file=sys.stderr)
-                sys.stderr.flush()
-                usage(program)
-                sys.exit(2)
+            # usage()
+            print("Error parsing options", file=sys.stderr)
+            sys.stderr.flush()
+            usage(program)
+            sys.exit(2)
 
         for opt, arg in opts:
-                if opt in ("-h", "--help"):
-                        usage(program)
-                        sys.exit(0)
-                elif opt in ("L", "--Load"):
-                        load=True
-                elif opt in ("-H", "--Host"):
-                        hostname=arg
-                elif opt in ("-X","--headers"):
-                        headers=True
-                elif opt in ("-p", "--port"):
-                        port=int(arg)
-                elif opt in ("-D", "--Dir"):
-                        mockDirPath=arg
-                elif opt in ("-E", "--TestEtag"):
-                        testEtagFlag=True
-                elif opt in ("-t", "--time"):
-                        responseTime=arg
-                elif opt in ("-T"):
-                        timefromJson=True
-                elif opt in ("-s", "--ssl"):
-                        sslMode=True
-                elif opt in ("--cert",):
-                        sslCert=arg
-                elif opt in ("--key",):
-                        sslKey=arg
-                elif opt in ("-S", "--shortForm"):
-                        shortForm=True
-                elif opt in ("-P", "--ssdp"):
-                        ssdpStart=True
-                else:
-                        print('unhandled option', file=sys.stderr)
-                        sys.exit(2)
+            if opt in ("-h", "--help"):
+                usage(program)
+                sys.exit(0)
+            elif opt in ("L", "--Load"):
+                load = True
+            elif opt in ("-H", "--Host"):
+                hostname = arg
+            elif opt in ("-X", "--headers"):
+                headers = True
+            elif opt in ("-p", "--port"):
+                port = int(arg)
+            elif opt in ("-D", "--Dir"):
+                mockDirPath = arg
+            elif opt in ("-E", "--TestEtag"):
+                testEtagFlag = True
+            elif opt in ("-t", "--time"):
+                responseTime = arg
+            elif opt in ("-T"):
+                timefromJson = True
+            elif opt in ("-s", "--ssl"):
+                sslMode = True
+            elif opt in ("--cert",):
+                sslCert = arg
+            elif opt in ("--key",):
+                sslKey = arg
+            elif opt in ("-S", "--shortForm"):
+                shortForm = True
+            elif opt in ("-P", "--ssdp"):
+                ssdpStart = True
+            else:
+                print('unhandled option', file=sys.stderr)
+                sys.exit(2)
 
-        print ('program: ', program)
-        print ('Hostname:', hostname)
-        print ('Port:', port)
-        print ("dir path specified by user:{}".format(mockDirPath))
-        print ("response time: {} seconds".format(responseTime))
+        print('program: ', program)
+        print('Hostname:', hostname)
+        print('Port:', port)
+        print("dir path specified by user:{}".format(mockDirPath))
+        print("response time: {} seconds".format(responseTime))
         sys.stdout.flush()
 
         # check if mockup path was specified.  If not, use current working directory
         if mockDirPath is None:
-                mockDirPath=os.getcwd()
+            mockDirPath = os.getcwd()
 
-        #create the full path to the top directory holding the Mockup
-        mockDir=os.path.realpath(mockDirPath) #creates real full path including path for CWD to the -D<mockDir> dir path
-        print ("Serving Mockup in abs real directory path:{}".format(mockDir))
+        # create the full path to the top directory holding the Mockup
+        mockDir = os.path.realpath(mockDirPath)  # creates real full path including path for CWD to the -D<mockDir> dir path
+        print("Serving Mockup in abs real directory path:{}".format(mockDir))
 
         # check that we have a valid tall mockup--with /redfish in mockDir before proceeding
         if not shortForm:
-            slashRedfishDir=os.path.join(mockDir, "redfish")
+            slashRedfishDir = os.path.join(mockDir, "redfish")
             if os.path.isdir(slashRedfishDir) is not True:
-                    print("ERROR: Invalid Mockup Directory--no /redfish directory at top. Aborting", file=sys.stderr)
-                    sys.stderr.flush()
-                    sys.exit(1)
+                print("ERROR: Invalid Mockup Directory--no /redfish directory at top. Aborting", file=sys.stderr)
+                sys.stderr.flush()
+                sys.exit(1)
 
         if shortForm:
             if os.path.isdir(mockDir) is not True or os.path.isfile(os.path.join(mockDir, "index.json")) is not True:
-                    print("ERROR: Invalid Mockup Directory--dir or index.json does not exist", file=sys.stderr)
-                    sys.stderr.flush()
-                    sys.exit(1)
+                print("ERROR: Invalid Mockup Directory--dir or index.json does not exist", file=sys.stderr)
+                sys.stderr.flush()
+                sys.exit(1)
 
-        myServer=HTTPServer((hostname, port), RfMockupServer)
-
-        if ssdpStart:
-            mySDDP=RfSDDPServer((hostname, port))
+        myServer = HTTPServer((hostname, port), RfMockupServer)
 
         if sslMode:
             print("Using SSL with certfile: {}".format(sslCert))
             myServer.socket = ssl.wrap_socket(myServer.socket, certfile=sslCert, keyfile=sslKey, server_side=True)
 
         # save the test flag, and real path to the mockup dir for the handler to use
-        myServer.mockDir=mockDir
-        myServer.testEtagFlag=testEtagFlag
+        myServer.mockDir = mockDir
+        myServer.testEtagFlag = testEtagFlag
         myServer.headers = headers
         myServer.timefromJson = timefromJson
         myServer.shortForm = shortForm
         try:
-           myServer.responseTime=float(responseTime)
+            myServer.responseTime = float(responseTime)
         except ValueError as e:
-            print ("Enter a integer or float value")
+            print("Enter a integer or float value")
             sys.exit(2)
-        #myServer.me="HELLO"
+        # myServer.me="HELLO"
 
-        print( "Serving Redfish mockup on port: {}".format(port))
+        mySDDP = None
+        if ssdpStart:
+            # construct path "mockdir/path/to/resource/<filename>"
+            rpath = clean_path('/redfish/v1', myServer.shortForm)
+            # this is the real absolute path to the mockup directory
+            apath = myServer.mockDir
+            # form the path in the mockup of the file
+            #      old only support mockup in CWD:  apath=os.path.abspath(rpath)
+            fpath = os.path.join(apath, rpath, 'index.json')
+            success, item = get_cached_link(fpath)
+            mySDDP = RfSDDPServer(item, '{}:{}{}'.format(hostname, port, '/redfish/v1'), hostname)
+
+        print("Serving Redfish mockup on port: {}".format(port))
         sys.stdout.flush()
         try:
-                myServer.serve_forever()
+            if mySDDP is not None:
+                t2 = threading.Thread(target=mySDDP.start)
+                t2.daemon = True
+                t2.start()
+            print('running Server...')
+            myServer.serve_forever()
+
         except KeyboardInterrupt:
-                pass
+            pass
 
         myServer.server_close()
         print("Shutting down http server")
