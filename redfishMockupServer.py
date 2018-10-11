@@ -18,6 +18,7 @@ import threading
 import os
 import ssl
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib.parse import urlparse, urlunparse, parse_qs
 from rfSsdpServer import RfSDDPServer
 
 patchedLinks = dict()
@@ -25,6 +26,7 @@ patchedLinks = dict()
 tool_version = "1.0.5"
 
 dont_send = ["connection", "keep-alive", "content-length", "transfer-encoding"]
+
 
 def get_cached_link(path):
     if path not in patchedLinks:
@@ -51,8 +53,7 @@ def dict_merge(dct, merge_dct):
         :return: None
         """
         for k in merge_dct:
-            if (k in dct and isinstance(dct[k], dict)
-                    and isinstance(merge_dct[k], collections.Mapping)):
+            if (k in dct and isinstance(dct[k], dict) and isinstance(merge_dct[k], collections.Mapping)):
                 dict_merge(dct[k], merge_dct[k])
             else:
                 dct[k] = merge_dct[k]
@@ -122,7 +123,6 @@ class RfMockupServer(BaseHTTPRequestHandler):
             print("   GET: Headers: {}".format(self.headers))
             sys.stdout.flush()
             # specify headers to not send (use lowercase)
-            dont_send = ["connection", "keep-alive", "content-length", "transfer-encoding"]
             rfile = "index.json"
             rfileXml = "index.xml"
             rhfile = "headers.json"
@@ -139,6 +139,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
             fpathxml = os.path.join(apath, rpath, rfileXml)
             fpathdirect = os.path.join(apath, rpath)
 
+            scheme, netloc, path, params, query, fragment = urlparse(self.path)
+            query_pieces = parse_qs(query, keep_blank_values=True)
+
             # get the testEtagFlag and mockup directory path parameters passed in from the http server
             testEtagFlag = self.server.testEtagFlag
 
@@ -149,8 +152,6 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 except ValueError as e:
                     print("Time is not a float value. Sleeping with default response time.")
                     time.sleep(float(self.server.responseTime))
-
-            sys.stdout.flush()
 
             # handle resource paths that don't exist for shortForm
             # '/' and '/redfish'
@@ -167,10 +168,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
             elif(os.path.isfile(fpath) or fpath in patchedLinks):
                 # if patchedLink is not deleted, else 404
                 # fallthrough case: will be 200 for files too
-                if patchedLinks.get(fpath) != '404':
-                    self.send_response(200)
-                else:
-                    self.send_response(404)
+                self.send_response(200 if patchedLinks.get(fpath) != '404' else 404)
+
                 # special cases to test etag for testing
                 # if etag is returned then the patch to these resources should include this etag
                 if testEtagFlag:
@@ -197,13 +196,36 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 if fpath not in patchedLinks:
                     f = open(fpath, "r")
                     json_obj = json.loads(f.read())
-                    # Strip the @Redfish.Copyright property
-                    json_obj.pop("@Redfish.Copyright", None)
-                    self.wfile.write(json.dumps(json_obj, sort_keys = True, indent = 4, separators = ( ",", ": " )).encode())
+                    output_data = json_obj
                     f.close()
                 else:
                     if patchedLinks[fpath] not in [None, '404']:
-                        self.wfile.write(json.dumps(patchedLinks[fpath], indent=4).encode())
+                        output_data = patchedLinks[fpath]
+                    else:
+                        output_data = {}
+
+                # Strip the @Redfish.Copyright property
+                output_data.pop("@Redfish.Copyright", None)
+
+                if output_data.get('Members') is not None:
+                    my_members = output_data['Members']
+                    top_count = int(query_pieces.get('$top', [str(len(my_members))])[0])
+                    top_skip = int(query_pieces.get('$skip', ['0'])[0])
+
+                    my_members = my_members[top_skip:]
+                    if top_count < len(my_members):
+                        my_members = my_members[:top_count]
+                        query_out = {'$skip': top_skip + top_count, '$top': top_count}
+                        query_string = '&'.join(['{}={}'.format(k, v) for k, v in query_out.items()])
+                        output_data['Members@odata.nextLink'] = urlunparse(('', '', path, '', query_string, ''))
+                    else:
+                        pass
+
+                    output_data['Members'] = my_members
+                    pass
+
+                encoded_data = json.dumps(output_data, sort_keys=True, indent=4, separators=(",", ": ")).encode()
+                self.wfile.write(encoded_data)
 
             # if XML...
             elif(os.path.isfile(fpathxml) or os.path.isfile(fpathdirect)):
@@ -270,7 +292,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
                 if("content-length" in self.headers):
                     lenn = int(self.headers["content-length"])
-                    dataa = json.loads(self.rfile.read(len).decode("utf-8"))
+                    dataa = json.loads(self.rfile.read(lenn).decode("utf-8"))
                     print("   PUT: Data: {}".format(dataa))
 
                 # we don't support this service
@@ -294,7 +316,6 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 apath = self.server.mockDir    # this is the real absolute path to the mockup directory
                 fpath = os.path.join(apath, rpath, 'index.json')
 
-                parentpath = os.path.join(apath, rpath.rsplit('/', 1)[0], 'index.json')
                 xpath = rpath.rstrip('/')
 
                 # don't bother if this item exists, otherwise, check if its an action or a file
@@ -420,8 +441,6 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 """
                 print("DELETE: Headers: {}".format(self.headers))
                 if("content-length" in self.headers):
-                        lenn = int(self.headers["content-length"])
-                        #dataa = json.loads(self.rfile.read(len).decode("utf-8"))
                         dataa = {}
                         print("   POST: Data: {}".format(dataa))
 
@@ -470,8 +489,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 probably be diagnosed.)
                 """
                 # abandon query parameters
-                path = path.split('?',1)[0]
-                path = path.split('#',1)[0]
+                path = path.split('?', 1)[0]
+                path = path.split('#', 1)[0]
                 path = posixpath.normpath(urllib.unquote(path))
                 words = path.split('/')
                 words = filter(None, words)
@@ -479,31 +498,32 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 for word in words:
                         drive, word = os.path.splitdrive(word)
                         head, word = os.path.split(word)
-                        if word in (os.curdir, os.pardir): continue
+                        if word in (os.curdir, os.pardir):
+                            continue
                 path = os.path.join(path, word)
                 return path
 
-
         # Response time calculation Algorithm
-        def getResponseTime(self,method,apath,rpath):
-            rfile = "time.json"
-            fpath=os.path.join(apath,rpath, rfile)
-            if not any(x in method for x in ("GET", "HEAD","POST","PATCH","DELETE") ):
-                print ("Not a valid method")
-                return (0)
+        def getResponseTime(self, method, apath, rpath):
+                rfile = "time.json"
+                fpath = os.path.join(apath, rpath, rfile)
+                if not any(x in method for x in ("GET", "HEAD", "POST", "PATCH", "DELETE")):
+                    print("Not a valid method")
+                    return (0)
 
-            if( os.path.isfile(fpath)):
-                with open(fpath) as time_data:
-                    d=json.load(time_data)
-                    time_str = method + "_Time"
-                    if time_str in d:
-                        try:
-                            float(d[time_str])
-                        except Exception as e:
-                            print ("Time in the json file, not a float/int value. Reading the default time.")
-                            return (self.server.responseTime)
-                        return (float(d[time_str]))
-            return (self.server.responseTime)
+                if(os.path.isfile(fpath)):
+                    with open(fpath) as time_data:
+                        d = json.load(time_data)
+                        time_str = method + "_Time"
+                        if time_str in d:
+                            try:
+                                float(d[time_str])
+                            except Exception as e:
+                                print(
+                                    "Time in the json file, not a float/int value. Reading the default time.")
+                                return (self.server.responseTime)
+                            return (float(d[time_str]))
+                return (self.server.responseTime)
 
 
 def usage(program):
@@ -646,7 +666,7 @@ def main(argv):
             fpath = os.path.join(apath, rpath, 'index.json')
             success, item = get_cached_link(fpath)
             protocol = '{}://'.format('https' if sslMode else 'http')
-            mySDDP = RfSDDPServer(item, '{}{}:{}{}'.format(protocol,  hostname, port, '/redfish/v1'), hostname)
+            mySDDP = RfSDDPServer(item, '{}{}:{}{}'.format(protocol, hostname, port, '/redfish/v1'), hostname)
 
         print("Serving Redfish mockup on port: {}".format(port))
         sys.stdout.flush()
