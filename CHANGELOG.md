@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.6] - 2018-10-12
+- Added SSDP support within the service
+- Added support for $top and $skip
+
 ## [1.0.5] - 2018-09-07
 - Added Transfer-Encoding to the list of HTTP headers to not use
 
