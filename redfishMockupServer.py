@@ -23,7 +23,7 @@ from rfSsdpServer import RfSDDPServer
 
 patchedLinks = dict()
 
-tool_version = "1.0.5"
+tool_version = "1.0.6"
 
 dont_send = ["connection", "keep-alive", "content-length", "transfer-encoding"]
 
