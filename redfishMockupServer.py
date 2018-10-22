@@ -251,8 +251,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
                 if("content-length" in self.headers):
                     lenn = int(self.headers["content-length"])
-                    dataa = json.loads(self.rfile.read(lenn).decode("utf-8"))
-                    print("   PATCH: Data: {}".format(dataa))
+                    data_received = json.loads(self.rfile.read(lenn).decode("utf-8"))
+                    print("   PATCH: Data: {}".format(data_received))
 
                     # construct path "mockdir/path/to/resource/<filename>"
                     rpath = clean_path(self.path, self.server.shortForm)
@@ -273,9 +273,9 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         else:
                             # After getting resource, merge the data.
                             print(self.headers.get('content-type'))
-                            print(dataa)
+                            print(data_received)
                             print(jsonData)
-                            dict_merge(jsonData, dataa)
+                            dict_merge(jsonData, data_received)
                             print(jsonData)
                             # put into patchedLinks
                             patchedLinks[fpath] = jsonData
@@ -292,8 +292,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
                 if("content-length" in self.headers):
                     lenn = int(self.headers["content-length"])
-                    dataa = json.loads(self.rfile.read(lenn).decode("utf-8"))
-                    print("   PUT: Data: {}".format(dataa))
+                    data_received = json.loads(self.rfile.read(lenn).decode("utf-8"))
+                    print("   PUT: Data: {}".format(data_received))
 
                 # we don't support this service
                 #   405
@@ -306,8 +306,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 print("   POST: Headers: {}".format(self.headers))
                 if("content-length" in self.headers):
                         lenn = int(self.headers["content-length"])
-                        dataa = json.loads(self.rfile.read(lenn).decode("utf-8"))
-                        print("   POST: Data: {}".format(dataa))
+                        data_received = json.loads(self.rfile.read(lenn).decode("utf-8"))
+                        print("   POST: Data: {}".format(data_received))
                 responseTime = self.server.responseTime
                 time.sleep(responseTime)
 
@@ -329,18 +329,19 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         if jsonData.get('Members') is None:
                             self.send_response(405)
                         else:
-                            print(dataa)
-                            print(type(dataa))
+                            print(data_received)
+                            print(type(data_received))
                             # with members, form unique ID
                             #   must NOT exist in Members
                             #   add ID to members, change count
                             #   store as necessary in patchedLinks
                             members = jsonData.get('Members')
                             n = 1
-                            newpath = '/{}/{}'.format(xpath, len(members) + n)
+                            newpath_id = data_received.get('Id', 'Member{}'.format(n))
+                            newpath = '/{}/{}'.format(xpath, newpath_id)
                             while newpath in [m.get('@odata.id') for m in members]:
                                 n = n + 1
-                                newpath = '/{}/{}'.format(xpath, len(members) + n)
+                                newpath_id = data_received.get('Id', 'Member{}'.format(n))
                             members.append({'@odata.id': newpath})
 
                             jsonData['Members'] = members
@@ -356,7 +357,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
                             print(newfpath)
 
-                            patchedLinks[newfpath] = dataa
+                            patchedLinks[newfpath] = data_received
                             patchedLinks[fpath] = jsonData
                             self.send_response(204)
                             self.send_header("Location", newpath)
@@ -378,16 +379,22 @@ class RfMockupServer(BaseHTTPRequestHandler):
                             self.send_response(404)
                         else:
                             # Check if all of the parameters are given
-                            if ( ('EventType' not in dataa) or ('EventId' not in dataa) or
-                                 ('EventTimestamp' not in dataa) or ('Severity' not in dataa) or
-                                 ('Message' not in dataa) or ('MessageId' not in dataa) or
-                                 ('MessageArgs' not in dataa) or ('OriginOfCondition' not in dataa) ):
+                            if ( ('EventType' not in data_received) or ('EventId' not in data_received) or
+                                 ('EventTimestamp' not in data_received) or ('Severity' not in data_received) or
+                                 ('Message' not in data_received) or ('MessageId' not in data_received) or
+                                 ('MessageArgs' not in data_received) or ('OriginOfCondition' not in data_received) ):
                                 self.send_response(400)
                             else:
                                 # Need to reformat to make Origin Of Condition a proper link
-                                origin_of_cond = dataa['OriginOfCondition']
-                                dataa['OriginOfCondition'] = {}
-                                dataa['OriginOfCondition']['@odata.id'] = origin_of_cond
+                                origin_of_cond = data_received['OriginOfCondition']
+                                data_received['OriginOfCondition'] = {}
+                                data_received['OriginOfCondition']['@odata.id'] = origin_of_cond
+                                event_payload = {}
+                                event_payload['@odata.type'] = '#Event.v1_2_1.Event'
+                                event_payload['Name'] = 'Test Event'
+                                event_payload['Id'] = str(self.event_id)
+                                event_payload['Events'] = []
+                                event_payload['Events'].append(data_received)
 
                                 # Go through each subscriber
                                 print(jsonData.get('Members'))
@@ -396,37 +403,118 @@ class RfMockupServer(BaseHTTPRequestHandler):
                                     if self.server.shortForm:
                                         entry = entry.replace('redfish/v1/', '')
                                     entrypath = os.path.join(apath + entry, 'index.json')
-                                    success, jsonData = get_cached_link(entrypath)
+                                    success, subscription = get_cached_link(entrypath)
                                     print(apath)
                                     print(entrypath)
                                     if not success:
                                         print('No such resource')
                                     else:
                                         # Sanity check the subscription for required properties
-                                        if ('Destination' in jsonData) and ('EventTypes' in jsonData):
-                                            print('Target', jsonData['Destination'])
-                                            print(dataa['EventType'], jsonData['EventTypes'])
+                                        if ('Destination' in subscription) and ('EventTypes' in subscription):
+                                            print('Target', subscription['Destination'])
+                                            print(data_received['EventType'], subscription['EventTypes'])
 
                                             # If the EventType in the request is one of interest to the subscriber, build an event payload
-                                            if dataa['EventType'] in jsonData['EventTypes']:
-                                                event_payload = {}
-                                                event_payload['@odata.type'] = '#Event.v1_2_1.Event'
-                                                event_payload['Id'] = str(self.event_id)
-                                                event_payload['Name'] = 'Test Event'
-                                                event_payload['Context'] = jsonData.get('Context', 'Default Context')
-                                                event_payload['Events'] = []
-                                                event_payload['Events'].append(dataa)
+                                            if data_received['EventType'] in subscription['EventTypes']:
                                                 http_headers = {}
                                                 http_headers['Content-Type'] = 'application/json'
 
+                                                event_payload['Context'] = subscription.get('Context', 'Default Context')
+
                                                 # Send the event
                                                 try:
-                                                    r = requests.post(jsonData['Destination'], timeout=20, data=json.dumps(event_payload), headers=http_headers)
+                                                    r = requests.post(subscription['Destination'], timeout=20, data=json.dumps(event_payload), headers=http_headers)
                                                     print('post complete', r.status_code)
                                                 except Exception as e:
                                                     print('post error', str(e))
                                             else:
                                                 print('event not in eventtypes')
+                                    sys.stdout.flush()
+                                self.send_response(204)
+                                self.event_id = self.event_id + 1
+                    elif 'TelemetryService/Actions/TelemetryService.SubmitTestMetricReport' in rpath:
+                        eventpath = os.path.join(apath, 'redfish/v1/EventService/Subscriptions', 'index.json')
+                        if self.server.shortForm:
+                            eventpath = eventpath.replace('redfish/v1/', '')
+                        success, jsonData = get_cached_link(eventpath)
+                        print(eventpath)
+                        if not success:
+                            # Eventing not supported
+                            self.send_response(404)
+                        else:
+                            # Check if all of the parameters are given
+                            if ('Name' not in data_received) or ('Value' not in data_received):
+                                self.send_response(400)
+                            else:
+                                # If the EventType in the request is one of interest to the subscriber, build an event payload
+                                event_payload = {}
+                                value_list = []
+                                # event_payload['@Redfish.Copyright'] = 'Copyright 2014-2016 Distributed Management Task Force, Inc. (DMTF). All rights reserved.'
+                                event_payload['@odata.context'] = '/redfish/v1/$metadata#MetricReport.MetricReport'
+                                event_payload['@odata.type'] = '#MetricReport.v1_0_0.MetricReport'
+                                event_payload['@odata.id'] = '/redfish/v1/TelemetryService/MetricReports/' + data_received['Name']
+                                event_payload['Id'] = data_received['Name']
+                                event_payload['Name'] = data_received['Name']
+                                event_payload['EventTimestamp'] = data_received['EventTimestamp']
+                                event_payload['MetricReportDefinition'] = {
+                                    "@odata.id": "/redfish/v1/TelemetryService/MetricReportDefinitions/" + data_received[
+                                        'Name']}
+                                for tup in data_received['Value']:
+                                    item = {}
+                                    item['MemberID'] = tup[0]
+                                    item['MetricValue'] = tup[1]
+                                    item['TimeStamp'] = tup[2]
+                                    if len(tup) == 4:
+                                        item['MetricProperty'] = tup[3]
+                                    value_list.append(item)
+                                event_payload['MetricValues'] = value_list
+                                print(event_payload)
+                                # construct path "mockdir/path/to/resource/<filename>"
+                                apath = self.server.mockDir    # this is the real absolute path to the mockup directory
+                                event_rpath = clean_path(event_payload['@odata.id'], self.server.shortForm)
+                                event_fpath = os.path.join(apath, event_rpath, 'index.json')
+                                patchedLinks[event_fpath] = event_payload
+
+                                c_rpath = clean_path('/redfish/v1/TelemetryService/MetricReports', self.server.shortForm)
+                                c_fpath = os.path.join(apath, c_rpath, 'index.json')
+
+                                success, collection_payload = get_cached_link(c_fpath)
+                                if not success:
+                                    collection_payload = {'Members': []}
+                                    collection_payload['@odata.context'] = '/redfish/v1/$metadata#MetricReportCollection.MetricReportCollection'
+                                    collection_payload['@odata.type'] = '#MetricReportCollection.v1_0_0.MetricReportCollection'
+                                    collection_payload['@odata.id'] = '/redfish/v1/TelemetryService/MetricReports'
+                                    collection_payload['Name'] = 'MetricReports'
+
+                                if event_payload['@odata.id'] not in [member.get('@odata.id') for member in collection_payload['Members']]:
+                                    collection_payload['Members'].append({'@odata.id': event_payload['@odata.id']})
+                                collection_payload['Members@odata.count'] = len(collection_payload['Members'])
+                                patchedLinks[c_fpath] = collection_payload
+
+                                print(jsonData.get('Members'))
+                                for member in jsonData.get('Members', []):
+                                    entry = member['@odata.id']
+                                    if self.server.shortForm:
+                                        entry = entry.replace('redfish/v1/', '')
+                                    entrypath = os.path.join(apath + entry, 'index.json')
+                                    success, subscription = get_cached_link(entrypath)
+                                    print(apath)
+                                    print("entrypath", entrypath)
+                                    if not success:
+                                        print('No such resource')
+                                    else:
+                                        # Sanity check the subscription for required properties
+                                        if ('Destination' in subscription) and ('EventTypes' in subscription):
+                                            print('Target', subscription['Destination'])
+                                            http_headers = {}
+                                            http_headers['Content-Type'] = 'application/json'
+
+                                            try:
+                                                r = requests.post(subscription['Destination'], timeout=20,
+                                                                  data=json.dumps(event_payload), headers=http_headers)
+                                                print('post complete', r.status_code)
+                                            except Exception as e:
+                                                print('post error', str(e))
                                     sys.stdout.flush()
                                 self.send_response(204)
                                 self.event_id = self.event_id + 1
@@ -441,8 +529,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 """
                 print("DELETE: Headers: {}".format(self.headers))
                 if("content-length" in self.headers):
-                        dataa = {}
-                        print("   POST: Data: {}".format(dataa))
+                        data_received = {}
+                        print("   POST: Data: {}".format(data_received))
 
                 responseTime = self.server.responseTime
                 time.sleep(responseTime)
