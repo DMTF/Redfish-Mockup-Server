@@ -449,7 +449,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
                 # construct path
                 # xpath is URI as related to redfish @odata.id
-                rpath = clean_path(self.path)
+                rpath = clean_path(self.path, self.server.shortForm)
                 xpath = '/' + rpath
                 if self.server.shortForm:
                     rpath = rpath.replace('redfish/v1/', '')
