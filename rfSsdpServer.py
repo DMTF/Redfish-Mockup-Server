@@ -6,9 +6,15 @@
 
 import socket
 import sys
+import logging
 
 # based on https://github.com/ZeWaren/python-upnp-ssdp-example/blob/master/lib/ssdp.py
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+ch = logging.StreamHandler(sys.stdout)
+ch.setLevel(logging.INFO)
+logger.addHandler(ch)
 
 class RfSDDPServer():
     def addSearchTarget(self, target):
@@ -59,15 +65,15 @@ class RfSDDPServer():
         queries searching for Search Target (ST) of "upnp:rootdevice"
         """
         self.sock = sock
-        print('SDDP Server Created')
+        logger.info('SDDP Server Created')
 
     def start(self):
-        print('SDDP Server Running...')
+        logger.info('SDDP Server Running...')
         countTimeout = pcount = 0
         while True:
             try:
                 if countTimeout % 5 == 0:
-                    print('Ssdp Poll... {} pings'.format(pcount))
+                    logger.info('Ssdp Poll... {} pings'.format(pcount))
                     pcount = 0
                     countTimeout = 1
                 data, addr = self.sock.recvfrom(1024)
@@ -77,12 +83,12 @@ class RfSDDPServer():
                 countTimeout += 1
                 continue
             except Exception as e:
-                print('error occurred ' + str(e))
+                logger.info('error occurred ' + str(e))
                 pass
         pass
 
     def check(self, data, addr):
-        print('SSDP Packet received from {}'.format(addr))
+        logger.info('SSDP Packet received from {}'.format(addr))
         decoded = data.decode().replace('\r', '').split('\n')
         msgtype, decoded = decoded[0], decoded[1:]
         decodeddict = {x.split(':',  1)[0].upper(): x.split(':', 1)[1].strip(' ') for x in decoded if x != ''}
@@ -101,7 +107,7 @@ class RfSDDPServer():
                 response = '\r\n'.join(response)
 
                 self.sock.sendto(response.encode(), addr)
-                print('SSDP Packet sent to {}'.format(addr))
+                logger.info('SSDP Packet sent to {}'.format(addr))
 
 
 """
@@ -130,7 +136,7 @@ def main(argv=None):
         pass
 
     # on exit will auto close sockets
-    print("Shutting down Ssdp server")
+    logger.info("Shutting down Ssdp server")
     sys.stdout.flush()
 
 

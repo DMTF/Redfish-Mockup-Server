@@ -10,9 +10,14 @@ Copyright 2016-2018 DMTF. All rights reserved.
 
 ### Requirements
 
-In order to use this tool, please install the "requests" package for Python3.
+In order to use this tool, please install the "requests" and "grequests" package for Python3.
 
 pip3 install requests
+pip3 install grequests
+
+or
+
+pip3 install -r requirements.txt
 
 ### To start the server:
 
@@ -42,9 +47,6 @@ pip3 install requests
   * default *port*         is 8000
   * *mockupDir* is absolute or relative to CWD if starting with . or ..
   * -T option causes mockup server to include delay in reponse. Loads from time.json . If not, looks up the default delay time.
-  * -E option causes mockup server to generate etags on GETs for certain hard coded APIs for testing client patch etag code
-    * response header Etag: "W/12345" is returned on GET /redfish/v1/Systems/1
-    * response header Etag: "123456"  is returned on GET /redfish/v1/AccountService/Accounts/1
   * `-t <responseTime>` tells the mockup server to add `<responseTime>` default delay to each response.  Default is 0 sec. Must be float or int
   * `-X` or `--headers` tells the mockup server to send headers from headers.json file
 * Example:    
