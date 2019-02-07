@@ -11,6 +11,7 @@ import time
 import collections
 import json
 import threading
+import datetime
 
 import grequests
 
@@ -207,24 +208,28 @@ class RfMockupServer(BaseHTTPRequestHandler):
             else:
                 # Check if all of the parameters are given
                 if (('MetricReportName' in data_received) and ('MetricReportValues' in data_received)) or\
+                   (('MetricReportName' in data_received) and ('GeneratedMetricReportValues' in data_received)) or\
                         (('MetricName' in data_received) and ('MetricValues' in data_received)):
                     # If the EventType in the request is one of interest to the subscriber, build an event payload
-                    expected_keys = ['MetricId', 'MetricValue', 'Timestamp']
+                    expected_keys = ['MetricId', 'MetricValue', 'Timestamp', 'MetricProperty', 'MetricDefinition']
                     other_keys = ['MetricProperty']
                     my_name = data_received.get('MetricName',
                             data_received.get('MetricReportName'))
                     my_data = data_received.get('MetricValues',
-                            data_received.get('MetricReportValues'))
+                            data_received.get('MetricReportValues',
+                            data_received.get('GeneratedMetricReportValues')))
                     event_payload = {}
                     value_list = []
                     # event_payload['@Redfish.Copyright'] = 'Copyright 2014-2016 Distributed Management Task Force, Inc. (DMTF). All rights reserved.'
                     event_payload['@odata.context'] = '/redfish/v1/$metadata#MetricReport.MetricReport'
                     event_payload['@odata.type'] = '#MetricReport.v1_0_0.MetricReport'
-                    event_payload['@odata.id'] = '/redfish/v1/TelemetryService/MetricReports/' + data_received['MetricReportName']
+                    event_payload['@odata.id'] = '/redfish/v1/TelemetryService/MetricReports/' + my_name
                     event_payload['Id'] = my_name
                     event_payload['Name'] = my_name
                     event_payload['MetricReportDefinition'] = {
-                        "@odata.id": "/redfish/v1/TelemetryService/MetricReportDefinitions/" + data_received['MetricReportName']}
+                        "@odata.id": "/redfish/v1/TelemetryService/MetricReportDefinitions/" + my_name}
+                    now = datetime.datetime.now()
+                    event_payload['Timestamp'] = now.strftime('%Y-%m-%dT%H:%M:%S') + ('-%02d' % (now.microsecond / 10000))
 
                     for tup in my_data:
                         if all(x in tup for x in expected_keys):
