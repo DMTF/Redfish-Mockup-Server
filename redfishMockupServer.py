@@ -420,7 +420,13 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
                 if("content-length" in self.headers):
                     lenn = int(self.headers["content-length"])
-                    data_received = json.loads(self.rfile.read(lenn).decode("utf-8"))
+                    try:
+                        data_received = json.loads(self.rfile.read(lenn).decode("utf-8"))
+                    except ValueError:
+                        print ('Decoding JSON has failed, sending 405')
+                        data_received = None
+
+                if data_received:
                     logger.info("   PATCH: Data: {}".format(data_received))
 
                     # construct path "mockdir/path/to/resource/<filename>"
@@ -451,7 +457,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     else:
                         self.send_response(404)
                 else:
-                    self.send_response(400)
+                    self.send_response(405)
 
                 self.end_headers()
 
@@ -461,7 +467,11 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
                 if("content-length" in self.headers):
                     lenn = int(self.headers["content-length"])
-                    data_received = json.loads(self.rfile.read(lenn).decode("utf-8"))
+                    try:
+                        data_received = json.loads(self.rfile.read(lenn).decode("utf-8"))
+                    except ValueError:
+                        print ('Decoding JSON has failed, sending 400')
+                        data_received = None
                     logger.info("   PUT: Data: {}".format(data_received))
 
                 # we don't support this service
@@ -475,56 +485,60 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 logger.info("   POST: Headers: {}".format(self.headers))
                 if("content-length" in self.headers):
                     lenn = int(self.headers["content-length"])
-                    data_received = json.loads(self.rfile.read(lenn).decode("utf-8"))
-                    logger.info("   POST: Data: {}".format(data_received))
-                else:
-                    data_received = {}  # should have undefined behavior
+                    try:
+                        data_received = json.loads(self.rfile.read(lenn).decode("utf-8"))
+                    except ValueError:
+                        print ('Decoding JSON has failed, sending 405')
+                        data_received = None
                 self.try_to_sleep('POST', self.path)
 
-                # construct path "mockdir/path/to/resource/<filename>"
-                fpath = self.construct_path(self.path, 'index.json')
-                success, payload = self.get_cached_link(fpath)
+                if data_received:
+                    logger.info("   POST: Data: {}".format(data_received))
+                    # construct path "mockdir/path/to/resource/<filename>"
+                    fpath = self.construct_path(self.path, 'index.json')
+                    success, payload = self.get_cached_link(fpath)
 
-                # don't bother if this item exists, otherwise, check if its an action or a file
-                # if file
-                #   405 if not Collection
-                #   204 if success
-                #   404 if no file present
-                if success:
-                    if payload.get('Members') is None:
-                        self.send_response(405)
+                    # don't bother if this item exists, otherwise, check if its an action or a file
+                    # if file
+                    #   405 if not Collection
+                    #   204 if success
+                    #   404 if no file present
+                    if success:
+                        if payload.get('Members') is None:
+                            self.send_response(405)
+                        else:
+                            logger.info(data_received)
+                            logger.info(type(data_received))
+                            # with members, form unique ID
+                            #   must NOT exist in Members
+                            #   add ID to members, change count
+                            #   store as necessary in self.patchedLinks
+
+                            newpath = self.add_new_member(payload, data_received)
+
+                            newfpath = self.construct_path(newpath, 'index.json')
+
+                            logger.info(newfpath)
+
+                            self.patchedLinks[newfpath] = data_received
+                            self.patchedLinks[fpath] = payload
+                            self.send_response(204)
+                            self.send_header("Location", newpath)
+                            self.send_header("Content-Length", "0")
+                            self.end_headers()
+
+                    # eventing framework
                     else:
-                        logger.info(data_received)
-                        logger.info(type(data_received))
-                        # with members, form unique ID
-                        #   must NOT exist in Members
-                        #   add ID to members, change count
-                        #   store as necessary in self.patchedLinks
-
-                        newpath = self.add_new_member(payload, data_received)
-
-                        newfpath = self.construct_path(newpath, 'index.json')
-
-                        logger.info(newfpath)
-
-                        self.patchedLinks[newfpath] = data_received
-                        self.patchedLinks[fpath] = payload
-                        self.send_response(204)
-                        self.send_header("Location", newpath)
-                        self.send_header("Content-Length", "0")
-                        self.end_headers()
-
-                # eventing framework
+                        if 'EventService/Actions/EventService.SubmitTestEvent' in self.path:
+                            r_code = self.handle_eventing(data_received)
+                            self.send_response(r_code)
+                        elif 'TelemetryService/Actions/TelemetryService.SubmitTestMetricReport' in self.path:
+                            r_code = self.handle_telemetry(data_received)
+                            self.send_response(r_code)
+                        else:
+                            self.send_response(404)
                 else:
-                    if 'EventService/Actions/EventService.SubmitTestEvent' in self.path:
-                        r_code = self.handle_eventing(data_received)
-                        self.send_response(r_code)
-                    elif 'TelemetryService/Actions/TelemetryService.SubmitTestMetricReport' in self.path:
-                        r_code = self.handle_telemetry(data_received)
-                        self.send_response(r_code)
-                    else:
-                        self.send_response(404)
-
+                    self.send_response(405)
                 self.end_headers()
 
         def do_DELETE(self):
