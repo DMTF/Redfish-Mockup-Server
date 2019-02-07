@@ -428,7 +428,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     try:
                         data_received = json.loads(self.rfile.read(lenn).decode("utf-8"))
                     except ValueError:
-                        print ('Decoding JSON has failed, sending 405')
+                        print ('Decoding JSON has failed, sending 400')
                         data_received = None
 
                 if data_received:
@@ -462,7 +462,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     else:
                         self.send_response(404)
                 else:
-                    self.send_response(405)
+                    self.send_response(400)
 
                 self.end_headers()
 
