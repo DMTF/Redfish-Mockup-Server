@@ -1,4 +1,4 @@
-Copyright 2016-2018 DMTF. All rights reserved.
+Copyright 2016-2019 DMTF. All rights reserved.
 
 # redfishMockupServer
 

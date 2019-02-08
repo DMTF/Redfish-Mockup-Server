@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.7] - 2019-02-08
+- Fixed handling of PATCH/POST/PUT requests that do not contain a JSON body
+- Added support for the SubmitTestMetricReport action
+
 ## [1.0.6] - 2018-10-12
 - Added SSDP support within the service
 - Added support for $top and $skip
