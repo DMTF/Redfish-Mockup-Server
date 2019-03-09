@@ -21,36 +21,52 @@ pip3 install -r requirements.txt
 
 ### To start the server:
 
-* copy the ***redfishMockupServer.py*** file to the the folder you want to execute it from
-* use the `-D <mockupDir>` option to specify an absolute or relative path to the mockup dir from CWD
-* use the `-T` option to tell mockup server to include response delay in time.
-* use the `-t <responseTime>` option to change default delay in seconds to each response. Default is 0 sec. Must be float or int.
-* use the `-X` or `--headers` option to tell mockup server, to send headers. Loads from headers.json. If not, defaults are sent.
-* use the `-s` option to specify https protocol
- * In order for the server to function, you must also include `--cert` and `--key` files for the server to function
-* Note that the mockup directory must start with /redfish:  
- * "redfish" should be a sub-directory.   
- * This is a "Tall Mockup" which includes /redfish/v1 in the mockup directory structure in case some of the URIs in the mockup do not start with /redfish/v1.
- * If you wish to use a "Short" Mockup, use the `-S` modifier
-* make sure python34 is in your path
-* run redfishMockupServer from your windows command shell eg: `.\redfishMockupServer [-D <mockupDir>]`
-* Default hostname/IP is localhost:  127.0.0.1
-* Default port is:  8000
-* You can create multiple mockup servers running on multiple ports:
+* Copy the ***redfishMockupServer.py*** file to the the folder you want to execute it from.
+* Use the `-D <mockupDir>` option to specify an absolute or relative path to the mockup dir from CWD.
+* Use the `-T` option to tell mockup server to include response delay from the mockup time.json file.
+* Use the `-t <responseTime>` option to change default delay in seconds to each response. Default is 0 sec. Must be float or int.
+* Use the `-X` or `--headers` option to tell mockup server to send headers. Loads from headers.json. If not, defaults are sent.
+* Use the `-s` option to specify SSL (HTTPS) protocol.
+ * In order for the server to function, you must also specify `--cert` and `--key` files.
+* Note that the mockup directory will normally start with `/redfish`:
+ * `redfish` should be a sub-directory.
+ * This is a "Tall Mockup" which includes `/redfish/v1` at the top of the mockup directory structure.
+ * A "Short Mockup" does not include `/redfish/v1` at the top of the mockup tree.
+ * If you wish to use a "Short Mockup", use the `-S` option.
+* Make sure python version 3.4+ is in your path
+* Run redfishMockupServer from your command shell, e.g.: `python redfishMockupServer.py [-D <mockupDir>]`
+* Default hostname/IP is localhost: 127.0.0.1
+* Default port is: 8000
+* You can create multiple mockup servers running on different ports using the `-p` option.
+* See **Options** section below for additional options.
 
 ### Options:
 
-* `redfishMockupServer -h`     -- gives help usage and exits
+* `python redfishMockupServer.py -h` -- gives help usage and exits
 
-* `redfishMockupServer [-H *HostIpAddress* ] [-P *port*] [-D <mockupDir>] [-H <host>] [-P <port>] [-T] [-t <responseTime>] [-X] [-E]`
-  * default *HostIpAddress* is 127.0.0.1
-  * default *port*         is 8000
-  * *mockupDir* is absolute or relative to CWD if starting with . or ..
-  * -T option causes mockup server to include delay in reponse. Loads from time.json . If not, looks up the default delay time.
-  * `-t <responseTime>` tells the mockup server to add `<responseTime>` default delay to each response.  Default is 0 sec. Must be float or int
-  * `-X` or `--headers` tells the mockup server to send headers from headers.json file
+* Usage:
+
+```
+Usage: redfishMockupServer.py <options>
+  options:
+    -h, --help                               # Display usage syntax
+    -H <host>, --host <host>, --Host <host>  # Hostname or IP addr, default: 127.0.0.1
+    -p <port>, --port <port>, --Port <port>  # Host port, default: 8000
+    -D <dir>, --dir <dir>, --Dir <dir>       # Path to the mockup directory; may be relative to CWD
+    -X, --headers                            # Load headers from headers.json files
+    -t <delay>, --time <delay>               # Delay time in seconds added to request; must be float or int
+    -E, --test-etag, --TestEtag              # (unimplemented) etag testing
+    -T                                       # Delay response based on times in time.json files
+    -s, --ssl                                # Place server in SSL (HTTPS) mode; requires a certificate and key
+    --cert <cert>                            # Specify a certificate for SSL
+    --key <key>                              # Specify a key for SSL
+    -S, --short-form, --shortForm            # Apply short form to mockup (omit filepath /redfish/v1)
+    -P, --ssdp                               # Make mockup SSDP discoverable
+```
+
 * Example:    
-`.\redfishMockupServer -P 8001 -D ./MyServerMockup9 -X `   # to start another service on port 8001 from folder *./MyServerMockup9*
+ * Start another service on port 8001 from folder `./MyServerMockup9`:
+`python redfishMockupServer.py -p 8001 -D ./MyServerMockup9`
 
 ## Release Process
 

@@ -604,16 +604,16 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
 
 def usage(program):
-        logger.info("usage: {} <options>".format(program))
+        logger.info("Usage: {} <options>".format(program))
         logger.info("  options:")
         logger.info("    -h, --help                               # Display usage syntax")
         logger.info("    -H <host>, --host <host>, --Host <host>  # Hostname or IP addr, default: 127.0.0.1")
         logger.info("    -p <port>, --port <port>, --Port <port>  # Host port, default: 8000")
         logger.info("    -D <dir>, --dir <dir>, --Dir <dir>       # Path to the mockup directory; may be relative to CWD")
-        logger.info("    -X, --headers                            # Load headers from json files")
+        logger.info("    -X, --headers                            # Load headers from headers.json files")
         logger.info("    -t <delay>, --time <delay>               # Delay time in seconds added to request; must be float or int")
         logger.info("    -E, --test-etag, --TestEtag              # (unimplemented) etag testing")
-        logger.info("    -T                                       # Delay response based on times in time.json")
+        logger.info("    -T                                       # Delay response based on times in time.json files")
         logger.info("    -s, --ssl                                # Place server in SSL (HTTPS) mode; requires a certificate and key")
         logger.info("    --cert <cert>                            # Specify a certificate for SSL")
         logger.info("    --key <key>                              # Specify a key for SSL")
