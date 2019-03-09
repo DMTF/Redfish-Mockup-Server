@@ -604,20 +604,21 @@ class RfMockupServer(BaseHTTPRequestHandler):
 
 
 def usage(program):
-        logger.info("usage: {}   [-h][-P][-H <hostIpAddr>:<port>]".format(program))
-        logger.info("      -h --help      # logger.infos usage ")
-        logger.info("      -H <IpAddr>   --Host=<IpAddr>    # hostIP, default: 127.0.0.1")
-        logger.info("      -p <port>     --port=<port>      # port:  default is 8000")
-        logger.info("      -D <dir>,     --Dir=<dir>        # Path to the mockup directory. It may be relative to CWD")
-        logger.info("      -X,           --headers          # Option to load headers or not from json files")
-        logger.info("      -t <delay>    --time=<delayTime> # Delay Time in seconds added to any request. Must be float or int.")
-        logger.info("      -E            --TestEtag         # (unimplemented) etag testing--enable returning etag for certain APIs for testing.  See Readme")
-        logger.info("      -T                               # Option to delay response or not.")
-        logger.info("      -s            --ssl              # Places server in https, requires a certificate and key")
-        logger.info("      --cert <cert>                    # Specify a certificate for ssl server function")
-        logger.info("      --key <key>                      # Specify a key for ssl")
-        logger.info("      -S            --shortForm        # Apply shortform to mockup (allowing to omit filepath /redfish/v1)")
-        logger.info("      -P            --ssdp             # Make mockup ssdp discoverable (by redfish specification)")
+        logger.info("usage: {} <options>".format(program))
+        logger.info("  options:")
+        logger.info("    -h, --help                               # Display usage syntax")
+        logger.info("    -H <host>, --host <host>, --Host <host>  # Hostname or IP addr, default: 127.0.0.1")
+        logger.info("    -p <port>, --port <port>, --Port <port>  # Host port, default: 8000")
+        logger.info("    -D <dir>, --dir <dir>, --Dir <dir>       # Path to the mockup directory; may be relative to CWD")
+        logger.info("    -X, --headers                            # Load headers from json files")
+        logger.info("    -t <delay>, --time <delay>               # Delay time in seconds added to request; must be float or int")
+        logger.info("    -E, --test-etag, --TestEtag              # (unimplemented) etag testing")
+        logger.info("    -T                                       # Delay response based on times in time.json")
+        logger.info("    -s, --ssl                                # Place server in SSL (HTTPS) mode; requires a certificate and key")
+        logger.info("    --cert <cert>                            # Specify a certificate for SSL")
+        logger.info("    --key <key>                              # Specify a key for SSL")
+        logger.info("    -S, --short-form, --shortForm            # Apply short form to mockup (omit filepath /redfish/v1)")
+        logger.info("    -P, --ssdp                               # Make mockup SSDP discoverable")
 
 
 def main(argv):
@@ -638,11 +639,15 @@ def main(argv):
         ssdpStart = False
         logger.info("Redfish Mockup Server, version {}".format(tool_version))
         try:
-            opts, args = getopt.getopt(argv[1:], "hTSPsEH:p:D:t:X", ["help", "shortForm", "ssdp", "ssl", "TestEtag", "headers", "Host=", "Port=", "Dir=",
-                                                                    "time=", "cert=", "key="])
-        except getopt.GetoptError:
+            opts, args = getopt.getopt(argv[1:], "hTSPsEH:p:D:t:X",
+                                       ["help", "shortForm", "short-form",
+                                        "ssdp", "ssl", "TestEtag", "test-etag",
+                                        "headers", "Host=", "host=", "Port=",
+                                        "port=", "Dir=", "dir=", "time=",
+                                        "cert=", "key="])
+        except getopt.GetoptError as e:
             # usage()
-            logger.info("Error parsing options")
+            logger.info("Error parsing options: {}".format(e))
             sys.stderr.flush()
             usage(program)
             sys.exit(2)
@@ -651,15 +656,15 @@ def main(argv):
             if opt in ("-h", "--help"):
                 usage(program)
                 sys.exit(0)
-            elif opt in ("-H", "--Host"):
+            elif opt in ("-H", "--host", "--Host"):
                 hostname = arg
             elif opt in ("-X", "--headers"):
                 headers = True
-            elif opt in ("-p", "--port"):
+            elif opt in ("-p", "--port", "--Port"):
                 port = int(arg)
-            elif opt in ("-D", "--Dir"):
+            elif opt in ("-D", "--dir", "--Dir"):
                 mockDirPath = arg
-            elif opt in ("-E", "--TestEtag"):
+            elif opt in ("-E", "--test-etag", "--TestEtag"):
                 testEtagFlag = True
             elif opt in ("-t", "--time"):
                 responseTime = arg
@@ -671,12 +676,12 @@ def main(argv):
                 sslCert = arg
             elif opt in ("--key",):
                 sslKey = arg
-            elif opt in ("-S", "--shortForm"):
+            elif opt in ("-S", "--short-form", "--shortForm"):
                 shortForm = True
             elif opt in ("-P", "--ssdp"):
                 ssdpStart = True
             else:
-                logger.info('unhandled option')
+                logger.info('unhandled option: {}'.format(opt))
                 sys.exit(2)
 
         logger.info('program: {}'.format(program))
