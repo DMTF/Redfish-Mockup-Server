@@ -728,11 +728,21 @@ def main(argv):
 
         mySDDP = None
         if ssdpStart:
+            from gevent import monkey
+            monkey.patch_all()
             # construct path "mockdir/path/to/resource/<filename>"
-            fpath = myServer.construct_path('/redfish/v1', 'index.json')
-            success, item = myServer.get_cached_link(fpath)
+            path, filename, jsonData = '/redfish/v1', 'index.json', None
+            apath = myServer.mockDir
+            rpath = clean_path(path, myServer.shortForm)
+            fpath = os.path.join(apath, rpath, filename) if filename not in ['', None] else os.path.join(apath, rpath)
+            if os.path.isfile(fpath):
+                with open(fpath) as f:
+                    jsonData = json.load(f)
+                    f.close()
+            else:
+                jsonData = None
             protocol = '{}://'.format('https' if sslMode else 'http')
-            mySDDP = RfSDDPServer(item, '{}{}:{}{}'.format(protocol, hostname, port, '/redfish/v1'), hostname)
+            mySDDP = RfSDDPServer(jsonData, '{}{}:{}{}'.format(protocol, hostname, port, '/redfish/v1'), hostname)
 
         logger.info("Serving Redfish mockup on port: {}".format(port))
         try:
