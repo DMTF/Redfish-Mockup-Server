@@ -6,7 +6,7 @@
 # tested and developed Python 3.4
 
 import sys
-import getopt
+import argparse
 import time
 import collections
 import json
@@ -603,92 +603,53 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     return (self.server.responseTime)
 
 
-def usage(program):
-        logger.info("Usage: {} <options>".format(program))
-        logger.info("  options:")
-        logger.info("    -h, --help                               # Display usage syntax")
-        logger.info("    -H <host>, --host <host>, --Host <host>  # Hostname or IP addr, default: 127.0.0.1")
-        logger.info("    -p <port>, --port <port>, --Port <port>  # Host port, default: 8000")
-        logger.info("    -D <dir>, --dir <dir>, --Dir <dir>       # Path to the mockup directory; may be relative to CWD")
-        logger.info("    -X, --headers                            # Load headers from headers.json files")
-        logger.info("    -t <delay>, --time <delay>               # Delay time in seconds added to request; must be float or int")
-        logger.info("    -E, --test-etag, --TestEtag              # (unimplemented) etag testing")
-        logger.info("    -T                                       # Delay response based on times in time.json files")
-        logger.info("    -s, --ssl                                # Place server in SSL (HTTPS) mode; requires a certificate and key")
-        logger.info("    --cert <cert>                            # Specify a certificate for SSL")
-        logger.info("    --key <key>                              # Specify a key for SSL")
-        logger.info("    -S, --short-form, --shortForm            # Apply short form to mockup (omit filepath /redfish/v1)")
-        logger.info("    -P, --ssdp                               # Make mockup SSDP discoverable")
+def main():
 
-
-def main(argv):
-        hostname = "127.0.0.1"
-        port = 8000
-        program = argv[0]
-        logger.info(program)
-        mockDirPath = None
-        sslMode = False
-        sslCert = None
-        sslKey = None
-        mockDir = None
-        testEtagFlag = False
-        responseTime = 0
-        timefromJson = False
-        headers = False
-        shortForm = False
-        ssdpStart = False
         logger.info("Redfish Mockup Server, version {}".format(tool_version))
-        try:
-            opts, args = getopt.getopt(argv[1:], "hTSPsEH:p:D:t:X",
-                                       ["help", "shortForm", "short-form",
-                                        "ssdp", "ssl", "TestEtag", "test-etag",
-                                        "headers", "Host=", "host=", "Port=",
-                                        "port=", "Dir=", "dir=", "time=",
-                                        "cert=", "key="])
-        except getopt.GetoptError as e:
-            # usage()
-            logger.info("Error parsing options: {}".format(e))
-            sys.stderr.flush()
-            usage(program)
-            sys.exit(2)
 
-        for opt, arg in opts:
-            if opt in ("-h", "--help"):
-                usage(program)
-                sys.exit(0)
-            elif opt in ("-H", "--host", "--Host"):
-                hostname = arg
-            elif opt in ("-X", "--headers"):
-                headers = True
-            elif opt in ("-p", "--port", "--Port"):
-                port = int(arg)
-            elif opt in ("-D", "--dir", "--Dir"):
-                mockDirPath = arg
-            elif opt in ("-E", "--test-etag", "--TestEtag"):
-                testEtagFlag = True
-            elif opt in ("-t", "--time"):
-                responseTime = arg
-            elif opt in ("-T"):
-                timefromJson = True
-            elif opt in ("-s", "--ssl"):
-                sslMode = True
-            elif opt in ("--cert",):
-                sslCert = arg
-            elif opt in ("--key",):
-                sslKey = arg
-            elif opt in ("-S", "--short-form", "--shortForm"):
-                shortForm = True
-            elif opt in ("-P", "--ssdp"):
-                ssdpStart = True
-            else:
-                logger.info('unhandled option: {}'.format(opt))
-                sys.exit(2)
+        parser = argparse.ArgumentParser(description='Serve a static Redfish mockup.')
+        parser.add_argument('-H', '--host', '--Host', default='127.0.0.1',
+                            help='hostname or IP address (default 127.0.0.1)')
+        parser.add_argument('-p', '--port', '--Port', default=8000, type=int,
+                            help='host port (default 8000)')
+        parser.add_argument('-D', '--dir', '--Dir',
+                            help='path to mockup dir (may be relative to CWD)')
+        parser.add_argument('-E', '--test-etag', '--TestEtag',
+                            action='store_true',
+                            help='(unimplemented) etag testing')
+        parser.add_argument('-X', '--headers', action='store_true',
+                            help='load headers from headers.json files in mockup')
+        parser.add_argument('-t', '--time', default=0,
+                            help='delay in seconds added to responses (float or int)')
+        parser.add_argument('-T', action='store_true',
+                            help='delay response based on times in time.json files in mockup')
+        parser.add_argument('-s', '--ssl', action='store_true',
+                            help='place server in SSL (HTTPS) mode; requires a cert and key')
+        parser.add_argument('--cert', help='the certificate for SSL')
+        parser.add_argument('--key', help='the key for SSL')
+        parser.add_argument('-S', '--short-form', '--shortForm', action='store_true',
+                            help='apply short form to mockup (omit filepath /redfish/v1)')
+        parser.add_argument('-P', '--ssdp', action='store_true',
+                            help='make mockup SSDP discoverable')
 
-        logger.info('program: {}'.format(program))
+        args = parser.parse_args()
+        hostname = args.host
+        port = args.port
+        mockDirPath = args.dir
+        testEtagFlag = args.test_etag
+        headers = args.headers
+        responseTime = args.time
+        timefromJson = args.T
+        sslMode = args.ssl
+        sslCert = args.cert
+        sslKey = args.key
+        shortForm = args.short_form
+        ssdpStart = args.ssdp
+
         logger.info('Hostname: {}'.format(hostname))
         logger.info('Port: {}'.format(port))
-        logger.info("dir path specified by user:{}".format(mockDirPath))
-        logger.info("response time: {} seconds".format(responseTime))
+        logger.info("Mockup directory path specified: {}".format(mockDirPath))
+        logger.info("Response time: {} seconds".format(responseTime))
 
         # check if mockup path was specified.  If not, use current working directory
         if mockDirPath is None:
@@ -696,7 +657,7 @@ def main(argv):
 
         # create the full path to the top directory holding the Mockup
         mockDir = os.path.realpath(mockDirPath)  # creates real full path including path for CWD to the -D<mockDir> dir path
-        logger.info("Serving Mockup in abs real directory path:{}".format(mockDir))
+        logger.info("Serving Mockup in absolute path: {}".format(mockDir))
 
         # check that we have a valid tall mockup--with /redfish in mockDir before proceeding
         if not shortForm:
@@ -727,7 +688,7 @@ def main(argv):
         try:
             myServer.responseTime = float(responseTime)
         except ValueError as e:
-            logger.info("Enter a integer or float value")
+            logger.info("Enter an integer or float value")
             sys.exit(2)
         # myServer.me="HELLO"
 
@@ -757,7 +718,7 @@ def main(argv):
 
 # the below is only executed if the program is run as a script
 if __name__ == "__main__":
-        main(sys.argv)
+        main()
 
 '''
 TODO:
