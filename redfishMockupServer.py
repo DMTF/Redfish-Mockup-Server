@@ -13,7 +13,7 @@ import json
 import threading
 import datetime
 
-import grequests
+import requests
 
 import os
 import ssl
@@ -698,15 +698,14 @@ def main():
             monkey.patch_all()
             # construct path "mockdir/path/to/resource/<filename>"
             path, filename, jsonData = '/redfish/v1', 'index.json', None
-            apath = myServer.mockDir
             rpath = clean_path(path, myServer.shortForm)
-            fpath = os.path.join(apath, rpath, filename) if filename not in ['', None] else os.path.join(apath, rpath)
-            if os.path.isfile(fpath):
-                with open(fpath) as f:
-                    jsonData = json.load(f)
-                    f.close()
-            else:
-                jsonData = None
+            # this is the real absolute path to the mockup directory
+            apath = myServer.mockDir
+            # form the path in the mockup of the file
+            #      old only support mockup in CWD:  apath=os.path.abspath(rpath)
+            #fpath = os.path.join(apath, rpath, filename) if filename not in ['', None] else os.path.join(apath, rpath)
+            fpath = myServer.construct_path(path, filename)
+            success, item = myServer.get_cached_link(fpath)
             protocol = '{}://'.format('https' if sslMode else 'http')
             mySDDP = RfSDDPServer(jsonData, '{}{}:{}{}'.format(protocol, hostname, port, '/redfish/v1'), hostname)
 

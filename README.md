@@ -76,6 +76,13 @@ optional arguments:
   -P, --ssdp            make mockup SSDP discoverable
 ```
 
+* `redfishMockupServer [-H *HostIpAddress* ] [-D <mockupDir>] [-H <host>] [-p <port>] [-T] [-t <responseTime>] [-X] [-E]`
+  * default *HostIpAddress* is 127.0.0.1
+  * default *port*         is 8000
+  * *mockupDir* is absolute or relative to CWD if starting with . or ..
+  * -T option causes mockup server to include delay in reponse. Loads from time.json . If not, looks up the default delay time.
+  * `-t <responseTime>` tells the mockup server to add `<responseTime>` default delay to each response.  Default is 0 sec. Must be float or int
+  * `-X` or `--headers` tells the mockup server to send headers from headers.json file
 * Example:    
  * Start another service on port 8001 from folder _./MyServerMockup9_:
 `python redfishMockupServer.py -p 8001 -D ./MyServerMockup9`

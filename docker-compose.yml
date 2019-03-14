@@ -1,0 +1,15 @@
+version: "3.2"
+services:
+
+  redfish-mockup-server:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: redfish-mockup-server:latest
+    ports:
+      - "8111:8111"
+    container_name: redfish-mockup-server
+    environment:
+      - MODELPORT=8111
+    volumes:
+      - /tmp/mockup/model:/mockup/model
