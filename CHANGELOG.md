@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.0.8] - 2019-03-26
+- Fixed some issues with command line argument handling
+- Fixed SSDP functionality
+- Fixed issues with pathing on Windows
+
 ## [1.0.7] - 2019-02-08
 - Fixed handling of PATCH/POST/PUT requests that do not contain a JSON body
 - Added support for the SubmitTestMetricReport action
