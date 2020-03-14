@@ -16,14 +16,14 @@ ch = logging.StreamHandler(sys.stdout)
 ch.setLevel(logging.INFO)
 logger.addHandler(ch)
 
-class RfSDDPServer():
+class RfSSDPServer():
     def addSearchTarget(self, target):
         self.searchtargets.append(target)
 
     def __init__(self, root, location, ip=None, port=1900, timeout=5):
         """__init__
 
-        Initialize an SDDP server
+        Initialize an SSDP server
 
         :param root: /redfish/v1 payload
         :param location: http location of server
@@ -65,10 +65,10 @@ class RfSDDPServer():
         queries searching for Search Target (ST) of "upnp:rootdevice"
         """
         self.sock = sock
-        logger.info('SDDP Server Created')
+        logger.info('SSDP Server Created')
 
     def start(self):
-        logger.info('SDDP Server Running...')
+        logger.info('SSDP Server Running...')
         countTimeout = pcount = 0
         while True:
             try:
@@ -128,7 +128,7 @@ def main(argv=None):
     hostname = "127.0.0.1"
     location = "http://127.0.0.1"
 
-    server = RfSDDPServer({}, '{}:{}{}'.format(location, '8000', '/redfish/v1'), hostname)
+    server = RfSSDPServer({}, '{}:{}{}'.format(location, '8000', '/redfish/v1'), hostname)
 
     try:
         server.start()
