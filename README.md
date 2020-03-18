@@ -1,88 +1,171 @@
-Copyright 2016-2019 DMTF. All rights reserved.
+Copyright 2016-2020 DMTF. All rights reserved.
 
-# redfishMockupServer
+# The Redfish mockup server
 
-## About
+The Redfish mockup server, `redfishMockupServer.py`, runs at a specified IP address and port or at the default IP address and port, `127.0.0.1:8000`, and serves Redfish GET, PATCH, POST, and DELETE requests and implements the `SubmitTestEvent` action.
 
-***redfishMockupServer*** is a short python 3.4+ program that can be copied into folder at top of any redfish mockup and can serve redfish requests on the specified IP/port.  As a server, it may receive GET, PATCH, POST and DELETE commands, and implements the SubmitTestEvent action.
+---
 
-## Usage
+* [Install prerequisite software](#install-prerequisite-software)
+* [Install the Redfish mockup server](#install-the-redfish-mockup-server)
+* [Start the server](#start-the-server)
+* [redfishMockupServer usage](#redfishMockupServer-usage)
+* [Release process](#release-process)
 
-### Requirements
+## Install prerequisite software
 
-In order to use this tool, please install the "requests" and "grequests" package for Python3.
+* **Python&nbsp;3.4&nbsp;or&nbsp;later**
 
-pip3 install requests
-pip3 install grequests
+    If Python 3.4 or later is not already installed, [download Python](https://www.python.org/downloads/ "https://www.python.org/downloads/") for your operating system.
 
-or
+    Verify the Python installation:
+        
+    ```
+    $ python --version
+    ```
 
-pip3 install -r requirements.txt
+    Ensure that Python 3.4 or later is in your path.
+* **[pip](https://pip.pypa.io/en/stable/ "https://pip.pypa.io/en/stable/")**
 
-### To start the server:
+    If pip is not installed, install it:
+    
+    ```
+    $ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+    $ python get-pip.py
+    ```
 
-* Copy the ***redfishMockupServer.py*** file to the the folder you want to execute it from.
-* Use the `-D <mockupDir>` option to specify an absolute or relative path to the mockup dir from CWD.
-* Use the `-T` option to tell mockup server to include response delay from the mockup time.json file.
-* Use the `-t <responseTime>` option to change default delay in seconds to each response. Default is 0 seconds. Must be float or int.
-* Use the `-X` or `--headers` option to tell mockup server to send headers. Loads from headers.json. If not, standard headers are sent.
-* Use the `-s` option to specify SSL (HTTPS) protocol.
- * In order for the server to function, you must also specify `--cert` and `--key` files.
-* Note that the mockup directory will normally start with `/redfish`:
- * `redfish` should be a sub-directory.
- * This is a "Tall Mockup" which includes `/redfish/v1` at the top of the mockup directory structure.
- * A "Short Mockup" does not include `/redfish/v1` at the top of the mockup tree.
- * If you wish to use a "Short Mockup", use the `-S` option.
-* Make sure python version 3.4+ is in your path
-* Run redfishMockupServer from your command shell, e.g.: `python redfishMockupServer.py [-D <mockupDir>]`
-* Default hostname/IP is localhost: 127.0.0.1
-* Default port is: 8000
-* You can create multiple mockup servers running on different ports using the `-p` option.
-* See **Options** section below for additional options.
+    Upgrade pip and then verify the pip installation:
+    
+    ```
+    $ pip install --upgrade pip
+    $ pip --version
+    ```
+* **Required Python packages**
 
-### Options:
+    Install the required Python packages:
 
-* `python redfishMockupServer.py -h` -- gives help usage and exits
+    ```
+    $ pip install -r requirements.txt
+    ```
 
-* Usage:
+## Install the Redfish mockup server
+
+Copy `redfishMockupServer.py` into the root of a Redfish mockup directory structure.
+
+> **Note:** Although a mockup directory structure normally starts with `/redfish`, `/redfish` must be a subdirectory of the mockup directory structure.
+
+## Start the server
+
+To start the server, run `redfishMockupServer.py` from your command shell:
 
 ```
-usage: redfishMockupServer.py [-h] [-H HOST] [-p PORT] [-D DIR] [-E] [-X]
-                              [-t TIME] [-T] [-s] [--cert CERT] [--key KEY]
-                              [-S] [-P]
-
-Serve a static Redfish mockup.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -H HOST, --host HOST, --Host HOST
-                        hostname or IP address (default 127.0.0.1)
-  -p PORT, --port PORT, --Port PORT
-                        host port (default 8000)
-  -D DIR, --dir DIR, --Dir DIR
-                        path to mockup dir (may be relative to CWD)
-  -E, --test-etag, --TestEtag
-                        (unimplemented) etag testing
-  -X, --headers         load headers from headers.json files in mockup
-  -t TIME, --time TIME  delay in seconds added to responses (float or int)
-  -T                    delay response based on times in time.json files in
-                        mockup
-  -s, --ssl             place server in SSL (HTTPS) mode; requires a cert and
-                        key
-  --cert CERT           the certificate for SSL
-  --key KEY             the key for SSL
-  -S, --short-form, --shortForm
-                        apply short form to mockup (omit filepath /redfish/v1)
-  -P, --ssdp            make mockup SSDP discoverable
+$ python redfishMockupServer.py -D <DIR>
 ```
 
-* Example:    
- * Start another service on port 8001 from folder _./MyServerMockup9_:
-`python redfishMockupServer.py -p 8001 -D ./MyServerMockup9`
+where
 
-## Release Process
+* `-D <DIR>` is the absolute or relative path to the mockup directory from the current working directory (CWD).
 
-1. Update `CHANGELOG.md` with the list of changes since the last release
-2. Update the `tool_version` variable in `redfishMockupServer.py` to reflect the new tool version
-3. Push changes to Github
-4. Create a new release in Github
+For example, if you copy `redfishMockupServer.py` to the `MyServerMockup9` folder, run this command to start the server on port 8001:
+
+```
+$ python redfishMockupServer.py -p 8001 -D ./MyServerMockup9
+```
+
+> **Note:** You can run the server in *tall* or *short* mode:
+> 
+> | Mode | Description | Note |
+> |:-----|:------------|:-----|
+> | Tall  | Includes `/redfish/v1` at the top of the mockup directory structure. | Default is tall mode. |
+> | Short | Does not include `/redfish/v1` at the top of the mockup directory structure. | Use the `-S` option to run in short mode. |
+
+## redfishMockupServer usage
+
+```
+redfishMockupServer.py [-h] [-H <HOST>] [-p <PORT>] [-D <DIR>] [-E] [-X]
+                       [-t <TIME>] [-T] [-s --cert <CERT> -key <KEY>]
+                       [-S] [-P]
+```
+
+where
+
+<table>
+  <thead>
+    <tr align="left" valign="top">
+      <th>Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr align="left" valign="top">
+      <td><code>-h</code></td>
+      <td>Show usage information and exit.</td>
+      <td></td>
+    </tr>
+    <tr align="left" valign="top">
+      <td><code>-H &lt;HOST&gt;</code></td>
+      <td>Host name or IP address.</td>
+      <td><code>localhost</code><br /><code>127.0.0.1</code></td>
+    </tr>
+    <tr align="left" valign="top">
+      <td><code>-p &lt;PORT&gt;</code></td>
+      <td>Port or ports. You can specify the <code>p</code> option multiple times to create multiple mockup servers that run on different ports.</td>
+      <td><code>8000</code></td>
+    </tr>
+    <tr align="left" valign="top">
+      <td><code>-D &lt;DIR&gt;</code></td>
+      <td>Absolute or relative path to the mockup directory from the current working directory (CWD).</td>
+      <td></td>
+    </tr>
+    <tr align="left" valign="top">
+      <td><code>-E</code></td>
+      <td>Not implemented. ETag testing.</td>
+      <td></td>
+    </tr>
+    <tr align="left" valign="top">
+      <td><code>-X</code></td>
+      <td>Send headers from the <code>headers.json</code> file.</td>
+      <td>Send&nbsp;standard&nbsp;headers&nbsp;&nbsp;</td>
+    </tr>
+    <tr align="left" valign="top">
+      <td><code>-t &lt;TIME&gt;</code></td>
+      <td>Delay, in seconds, added to each response. Value must be a float or an integer.</td>
+      <td><code>0</code></td>
+    </tr>
+    <tr align="left" valign="top">
+      <td><code>-T</code></td>
+      <td>Response delay from the <code>time.json</code> file.</td>
+      <td></td>
+    </tr>
+    <tr align="left" valign="top">
+      <td><code>-s --cert &lt;CERT&gt; -key &lt;KEY&gt;</code></td>
+      <td>Run server in Secure Sockets Layer (SSL) or HTTPS mode, where
+        <ul>
+          <li><code>--cert &lt;CERT&gt;</code>. The certificate file for SSL.</li>
+          <li><code>--key &lt;KEY&gt;</code>. The key file for SSL.</li>
+        </ul>
+      </td>
+      <td>Non-SSL or HTTP mode</td>
+    </tr>
+    <tr align="left" valign="top">
+      <td><code>-S</code></td>
+      <td>Run in short mode, or omit the <code>/redfish/v1</code> file path.</td>
+      <td>Long mode</td>
+    </tr>
+    <tr align="left" valign="top">
+      <td><code>-P</code></td>
+      <td>Make the mockup Simple Service Discovery Protocol (SSDP) discoverable.</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+## Release process
+
+To create a release of the Redfish mockup server:
+
+1. Update `CHANGELOG.md` with the list of changes since the last release.
+1. Update the `tool_version` variable in `redfishMockupServer.py` to the new version of the tool.
+1. Push changes to GitHub.
+1. Create a release in GitHub.
