@@ -82,12 +82,36 @@ $ python redfishMockupServer.py -p 8001 -D ./MyServerMockup9
 ## redfishMockupServer usage
 
 ```
-redfishMockupServer.py [-h] [-H <HOST>] [-p <PORT>] [-D <DIR>] [-E] [-X]
-                       [-t <TIME>] [-T] [-s --cert <CERT> -key <KEY>]
-                       [-S] [-P]
+usage: redfishMockupServer.py [-h] [-H HOST] [-p PORT] [-D DIR] [-E] [-X]
+                              [-t TIME] [-T] [-s] [--cert CERT] [--key KEY]
+                              [-S] [-P]
+
+Serve a static Redfish mockup.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -H HOST, --host HOST, --Host HOST
+                        hostname or IP address (default 127.0.0.1)
+  -p PORT, --port PORT, --Port PORT
+                        host port (default 8000)
+  -D DIR, --dir DIR, --Dir DIR
+                        path to mockup dir (may be relative to CWD)
+  -E, --test-etag, --TestEtag
+                        (unimplemented) etag testing
+  -X, --headers         load headers from headers.json files in mockup
+  -t TIME, --time TIME  delay in seconds added to responses (float or int)
+  -T                    delay response based on times in time.json files in
+                        mockup
+  -s, --ssl             place server in SSL (HTTPS) mode; requires a cert and
+                        key
+  --cert CERT           the certificate for SSL
+  --key KEY             the key for SSL
+  -S, --short-form, --shortForm
+                        apply short form to mockup (omit filepath /redfish/v1)
+  -P, --ssdp            make mockup SSDP discoverable
 ```
 
-where
+<!-- where
 
 <table>
   <thead>
@@ -159,7 +183,7 @@ where
       <td></td>
     </tr>
   </tbody>
-</table>
+</table> -->
 
 ## Release process
 
