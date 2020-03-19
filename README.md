@@ -64,7 +64,7 @@ $ python redfishMockupServer.py -D <DIR>
 
 where
 
-* `-D <DIR>` is the absolute or relative path to the mockup directory from the current working directory (CWD).
+* `-D <DIR>` is the absolute or relative path to the mockup directory from the current working directory (CWD). Default is the CWD.
 
 For example, if you copy `redfishMockupServer.py` to the `MyServerMockup9` folder, run this command to start the server on port 8001:
 
