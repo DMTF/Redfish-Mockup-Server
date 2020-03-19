@@ -16,14 +16,14 @@ ch = logging.StreamHandler(sys.stdout)
 ch.setLevel(logging.INFO)
 logger.addHandler(ch)
 
-class RfSDDPServer():
+class RfSSDPServer():
     def addSearchTarget(self, target):
         self.searchtargets.append(target)
 
     def __init__(self, root, location, ip=None, port=1900, timeout=5):
         """__init__
 
-        Initialize an SDDP server
+        Initialize an SSDP server
 
         :param root: /redfish/v1 payload
         :param location: http location of server
@@ -52,12 +52,20 @@ class RfSDDPServer():
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)  # ttl 2
+        sock.settimeout(timeout)
+
+        # To receive a multicast datagram, it is necessary to advise the kernel which
+        # multicast groups we are interested in and ask the kernel to "join" those multicast groups
+        # Depending on the underlying hardware, multicast datagrams are filtered
+        # by the hardware or by the IP layer (and, in some cases, by both)
+        # Only those with a destination group previously registered via a join are accepted
+        # (ref: https://www.tldp.org/HOWTO/Multicast-HOWTO-2.html)
+        # adding this membership, causes other applications to receive data from the kernel as well
         addr = socket.inet_aton('239.255.255.250')  # multicast address
         interface = socket.inet_aton(self.ip)
-        cmd = socket.IP_ADD_MEMBERSHIP
-        sock.setsockopt(socket.IPPROTO_IP, cmd, addr + interface)
+        sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, addr + interface)
+
         sock.bind((self.ip, self.port))
-        sock.settimeout(timeout)
         """
         Redfish Service Search Target (ST): "urn:dmtf-org:service:redfish-rest:1"
         For ssdp, "ssdp:all".
@@ -65,10 +73,10 @@ class RfSDDPServer():
         queries searching for Search Target (ST) of "upnp:rootdevice"
         """
         self.sock = sock
-        logger.info('SDDP Server Created')
+        logger.info('SSDP Server Created')
 
     def start(self):
-        logger.info('SDDP Server Running...')
+        logger.info('SSDP Server Running...')
         countTimeout = pcount = 0
         while True:
             try:
@@ -128,7 +136,7 @@ def main(argv=None):
     hostname = "127.0.0.1"
     location = "http://127.0.0.1"
 
-    server = RfSDDPServer({}, '{}:{}{}'.format(location, '8000', '/redfish/v1'), hostname)
+    server = RfSSDPServer({}, '{}:{}{}'.format(location, '8000', '/redfish/v1'), hostname)
 
     try:
         server.start()
