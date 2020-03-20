@@ -20,7 +20,7 @@ import ssl
 import logging
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, urlunparse, parse_qs
-from rfSsdpServer import RfSDDPServer
+from rfSsdpServer import RfSSDPServer
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -692,7 +692,7 @@ def main():
             sys.exit(2)
         # myServer.me="HELLO"
 
-        mySDDP = None
+        mySSDP = None
         if ssdpStart:
             from gevent import monkey
             monkey.patch_all()
@@ -708,12 +708,12 @@ def main():
             else:
                 jsonData = None
             protocol = '{}://'.format('https' if sslMode else 'http')
-            mySDDP = RfSDDPServer(jsonData, '{}{}:{}{}'.format(protocol, hostname, port, '/redfish/v1'), hostname)
+            mySSDP = RfSSDPServer(jsonData, '{}{}:{}{}'.format(protocol, hostname, port, '/redfish/v1'), hostname)
 
         logger.info("Serving Redfish mockup on port: {}".format(port))
         try:
-            if mySDDP is not None:
-                t2 = threading.Thread(target=mySDDP.start)
+            if mySSDP is not None:
+                t2 = threading.Thread(target=mySSDP.start)
                 t2.daemon = True
                 t2.start()
             logger.info('running Server...')
