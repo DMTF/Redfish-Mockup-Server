@@ -4,15 +4,7 @@ Copyright 2016-2020 DMTF. All rights reserved.
 
 The Redfish mockup server, `redfishMockupServer.py`, runs at a specified IP address and port or at the default IP address and port, `127.0.0.1:8000`, and serves Redfish GET, PATCH, POST, and DELETE requests and implements the `SubmitTestEvent` action.
 
----
-
-* [Install prerequisite software](#install-prerequisite-software)
-* [Install the Redfish mockup server](#install-the-redfish-mockup-server)
-* [Start the server](#start-the-server)
-* [redfishMockupServer usage](#redfishMockupServer-usage)
-* [Release process](#release-process)
-
-## Install prerequisite software
+## Prerequisite software
 
 * **Python 3.4 or later**
 
@@ -48,12 +40,6 @@ The Redfish mockup server, `redfishMockupServer.py`, runs at a specified IP addr
     $ pip install -r requirements.txt
     ```
 
-## Install the Redfish mockup server
-
-Copy `redfishMockupServer.py` into the root of a Redfish mockup directory structure.
-
-> **Note:** Although a mockup directory structure normally starts with `/redfish`, `/redfish` must be a subdirectory of the mockup directory structure.
-
 ## Start the server
 
 To start the server, run `redfishMockupServer.py` from your command shell:
@@ -72,12 +58,12 @@ For example, if you copy `redfishMockupServer.py` to the `MyServerMockup9` folde
 $ python redfishMockupServer.py -p 8001 -D ./MyServerMockup9
 ```
 
-> **Note:** You can run the server in *tall* or *short* form:
+> **Note:** You can run the server can accept *tall* or *short* mockups:
 > 
-> | Form | Description | Note |
-> |:-----|:------------|:-----|
-> | Tall  | Includes `/redfish/v1` at the top of the mockup directory structure. | Default is tall form. |
-> | Short | Does not include `/redfish/v1` at the top of the mockup directory structure. | Use the `-S` option to run in short form. |
+> | Form  | Description | Note |
+> | :---  | :---        | :--- |
+> | Tall  | The version resource, `/redfish`, is at the top of the mockup directory structure. | Default is tall form. |
+> | Short | The service root resource, `/redfish/v1/`, is at the top of the mockup directory structure. | Use the `-S` option to run in short form. |
 
 ## redfishMockupServer usage
 
@@ -116,6 +102,6 @@ optional arguments:
 To create a release of the Redfish mockup server:
 
 1. Update `CHANGELOG.md` with the list of changes since the last release.
-1. Update the `tool_version` variable in `redfishMockupServer.py` to the new version of the tool.
-1. Push changes to GitHub.
-1. Create a release in GitHub.
+2. Update the `tool_version` variable in `redfishMockupServer.py` to the new version of the tool.
+3. Push changes to GitHub.
+4. Create a release in GitHub.

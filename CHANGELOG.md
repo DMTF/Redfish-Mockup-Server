@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.0.9] - 2020-03-21
+- Made corrections to the spelling of SSDP in the code
+
 ## [1.0.8] - 2019-03-26
 - Fixed some issues with command line argument handling
 - Fixed SSDP functionality
