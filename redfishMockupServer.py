@@ -490,14 +490,22 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 logger.info("   POST: Headers: {}".format(self.headers))
                 if("content-length" in self.headers):
                     lenn = int(self.headers["content-length"])
-                    try:
-                        data_received = json.loads(self.rfile.read(lenn).decode("utf-8"))
-                    except ValueError:
-                        print ('Decoding JSON has failed, sending 405')
-                        data_received = None
+                    if lenn == 0:
+                        data_received = {}
+                    else:
+                        try:
+                            data_received = json.loads(self.rfile.read(lenn).decode("utf-8"))
+                        except ValueError:
+                            print ('Decoding JSON has failed, sending 400')
+                            data_received = None
+                else:
+                    self.send_response(411)
+                    self.end_headers()
+                    return
+
                 self.try_to_sleep('POST', self.path)
 
-                if data_received:
+                if data_received is not None:
                     logger.info("   POST: Data: {}".format(data_received))
                     # construct path "mockdir/path/to/resource/<filename>"
                     fpath = self.construct_path(self.path, 'index.json')
@@ -532,18 +540,44 @@ class RfMockupServer(BaseHTTPRequestHandler):
                             self.send_header("Content-Length", "0")
                             self.end_headers()
 
-                    # eventing framework
+                    # Actions framework
                     else:
+                        # SubmitTestEvent
                         if 'EventService/Actions/EventService.SubmitTestEvent' in self.path:
                             r_code = self.handle_eventing(data_received)
                             self.send_response(r_code)
+                        # SubmitTestMetricReport
                         elif 'TelemetryService/Actions/TelemetryService.SubmitTestMetricReport' in self.path:
                             r_code = self.handle_telemetry(data_received)
                             self.send_response(r_code)
+                        # All other actions (no data checking or response data)
+                        elif '/Actions/' in self.path:
+                            fpath = self.construct_path(self.path.split('/Actions/', 1)[0], 'index.json')
+                            success, payload = self.get_cached_link(fpath)
+                            if success:
+                                action_found = False
+                                try:
+                                    for action in payload['Actions']:
+                                        if action == 'Oem':
+                                            for oem_action in payload['Actions'][action]:
+                                                if payload['Actions'][action][oem_action]['target'] == self.path:
+                                                    action_found = True
+                                        else:
+                                            if payload['Actions'][action]['target'] == self.path:
+                                                action_found = True
+                                except:
+                                    pass
+                                if action_found:
+                                    self.send_response(204)
+                                else:
+                                    self.send_response(404)
+                            else:
+                                self.send_response(404)
+                        # Not found
                         else:
                             self.send_response(404)
                 else:
-                    self.send_response(405)
+                    self.send_response(400)
                 self.end_headers()
 
         def do_DELETE(self):
