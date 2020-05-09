@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.1.0] - 2020-05-09
+- Added ability to POST to actions shown in the mockups so that a 2xx code is returned
+
 ## [1.0.9] - 2020-03-21
 - Made corrections to the spelling of SSDP in the code
 
