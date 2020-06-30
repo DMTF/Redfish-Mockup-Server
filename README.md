@@ -2,68 +2,97 @@ Copyright 2016-2020 DMTF. All rights reserved.
 
 # The Redfish mockup server
 
-The Redfish mockup server, `redfishMockupServer.py`, runs at a specified IP address and port or at the default IP address and port, `127.0.0.1:8000`, and serves Redfish GET, PATCH, POST, and DELETE requests and implements the `SubmitTestEvent` action.
+The Redfish mockup server, `redfishMockupServer.py`, serves Redfish GET, PATCH, POST, and DELETE requests against a Redfish mockup bundle, and implements the `SubmitTestEvent` action.
+
+The server runs at either:
+
+* An IP address and port that you specify when you run the server.
+* The default IP address and port, `127.0.0.1:8000`.
 
 ## Prerequisite software
 
-* **Python 3.4 or later**
+You must install [Python 3.4 or later](#python-34-or-later), [pip](#pip), and [Python packages](#python-packages).
 
-    If Python 3.4 or later is not already installed, [download Python](https://www.python.org/downloads/ "https://www.python.org/downloads/") for your operating system.
+### Python 3.4 or later
 
-    Verify the Python installation:
-        
+1. Verify your Python installation:
+
     ```
     $ python --version
     ```
 
-    Ensure that Python 3.4 or later is in your path.
-* **[pip](https://pip.pypa.io/en/stable/ "https://pip.pypa.io/en/stable/")**
+1. If Python 3.4 or later is not installed, [download Python](https://www.python.org/downloads/ "https://www.python.org/downloads/") for your operating system and verify the Python installation again.
 
-    If pip is not installed, install it:
-    
+1. Ensure that Python 3.4 or later is in your path:
+
+    ```
+    $ echo $PATH
+    ```
+### pip
+
+1. Verify your pip installation:
+
+    ```
+    $ pip --version
+    ```
+
+1. If [pip](https://pip.pypa.io/en/stable/ "https://pip.pypa.io/en/stable/") is not installed, install it:
+
     ```
     $ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-    $ python get-pip.py
+    $ python3 get-pip.py
     ```
 
-    Upgrade pip and then verify the pip installation:
-    
+1. Upgrade pip and verify the installation again:
+
     ```
     $ pip install --upgrade pip
     $ pip --version
     ```
-* **Required Python packages**
 
-    Install the required Python packages:
+### Python packages
 
-    ```
-    $ pip install -r requirements.txt
-    ```
+Install the Python packages:
+
+```
+$ pip install -r requirements.txt
+```
+
+## Get a Redfish mockup bundle
+
+1. Go to [Redfish Mockup Bundle](https://www.dmtf.org/dsp/DSP2043 "https://www.dmtf.org/dsp/DSP2043") to get the Redfish mockup bundle.
+1. Click the **Redfish Mockup Bundle** link and save the bundle to your preferred location.
 
 ## Start the server
 
 To start the server, run `redfishMockupServer.py` from your command shell:
 
 ```
-$ python redfishMockupServer.py -D <DIR>
+$ python3 redfishMockupServer.py -S -D <DIR>
 ```
 
 where
 
-* `-D <DIR>` is the absolute or relative path to the mockup directory from the current working directory (CWD). Default is the CWD.
+* `-D <DIR>` is the absolute or relative path from the current working directory (CWD) to the directory where you placed the Redfish mockup bundle.
 
-For example, if you copy `redfishMockupServer.py` to the `MyServerMockup9` folder, run this command to start the server on port 8001:
+    Default is the CWD.
+* `-S`. Runs the server in *short* form.
+
+    The form determines whether the server expects the version resource or the service root resource at the top of the mockup directory structure:
+
+    | Form  | At the top of the mockup directory structure |
+    | :---  | :---        |
+    | Tall  | The version resource, `/redfish`. | Default is tall form. |
+    | Short | The service root resource, `/redfish/v1/`.<br/><br/>Use the `-S` option to run in short form. |
+
+## Example
+
+For example, if you copy the DSP2043_2019.1 bundle to a `DSP2043_2019.1` directory that is parallel with the `Redfish-Mockup-Server` directory, run this command to start the server in short form on port 8001:
 
 ```
-$ python redfishMockupServer.py -p 8001 -D ./MyServerMockup9
+$ cd Redfish-Mockup-Server
+$ python3 redfishMockupServer.py -S -D ../DSP2043_2019.1/public-localstorage
 ```
-
-> **Note:** You can run the server can accept *tall* or *short* mockups:
-> 
-> | Form  | Description | Note |
-> | :---  | :---        | :--- |
-> | Tall  | The version resource, `/redfish`, is at the top of the mockup directory structure. | Default is tall form. |
-> | Short | The service root resource, `/redfish/v1/`, is at the top of the mockup directory structure. | Use the `-S` option to run in short form. |
 
 ## redfishMockupServer usage
 
