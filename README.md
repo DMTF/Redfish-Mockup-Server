@@ -75,13 +75,17 @@ $ python3 redfishMockupServer.py -S -D <DIR>
 
 where
 
-* `-S`. Runs the server in *short* form. The form determines what the server expects at the top of the mockup directory structure:
+* `-S`. Runs the server in *short* form. Default is long form.
+
+    The form indicates what the server expects at the top of the mockup directory structure:
 
     | Form  | At&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;mockup&nbsp;directory&nbsp;structure |
     | :---  | :---        |
-    | Tall  | The version resource, `/redfish`. | Default is tall form. |
+    | Tall  | The version resource, `/redfish`. |
     | Short | The service root resource, `/redfish/v1/`. Use the `-S` option to run in short form. |
-* `-D <DIR>`. Absolute or relative path from the current working directory (CWD) to the Redfish mockup bundle directory. Default is the CWD.
+* `-D <DIR>`. Absolute or relative path from the current working directory (CWD) to the Redfish mockup bundle directory.
+
+    Default is the CWD.
 
 ## Example
 
