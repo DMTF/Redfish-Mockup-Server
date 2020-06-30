@@ -11,9 +11,11 @@ The server runs at either:
 
 ## Prerequisite software
 
-You must install [Python 3.4 or later](#python-34-or-later), [pip](#pip), and [Python packages](#python-packages).
+You must install [Python 3](#python-3), [pip](#pip), and [Python packages](#python-packages).
 
-### Python 3.4 or later
+### Python 3
+
+You must install Python 3.4 or later.
 
 1. Verify your Python installation:
 
@@ -23,7 +25,7 @@ You must install [Python 3.4 or later](#python-34-or-later), [pip](#pip), and [P
 
 1. If Python 3.4 or later is not installed, [download Python](https://www.python.org/downloads/ "https://www.python.org/downloads/") for your operating system and verify the Python installation again.
 
-1. Ensure that Python 3.4 or later is in your path:
+1. Ensure that Python is in your path:
 
     ```
     $ echo $PATH
@@ -73,17 +75,13 @@ $ python3 redfishMockupServer.py -S -D <DIR>
 
 where
 
-* `-D <DIR>`. Absolute or relative path from the current working directory (CWD) to the directory where you placed the Redfish mockup bundle.
-
-    Default is the CWD.
-* `-S`. Runs the server in *short* form.
-
-    The form determines whether the server expects the version resource or the service root resource at the top of the mockup directory structure:
+* `-S`. Runs the server in *short* form. The form determines what the server expects at the top of the mockup directory structure:
 
     | Form  | At&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;mockup&nbsp;directory&nbsp;structure |
     | :---  | :---        |
     | Tall  | The version resource, `/redfish`. | Default is tall form. |
     | Short | The service root resource, `/redfish/v1/`. Use the `-S` option to run in short form. |
+* `-D <DIR>`. Absolute or relative path from the current working directory (CWD) to the Redfish mockup bundle directory. Default is the CWD.
 
 ## Example
 
