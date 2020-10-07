@@ -565,6 +565,17 @@ class RfMockupServer(BaseHTTPRequestHandler):
                                         else:
                                             if payload['Actions'][action]['target'] == self.path:
                                                 action_found = True
+                                                if 'ResetType' in data_received:
+                                                    if data_received['ResetType'] in ('ForceOff', 'GracefulShutdown'):
+                                                        payload['PowerState'] = "Off"
+                                                    elif data_received['ResetType'] in ('On', 'ForceOn'):
+                                                        payload['PowerState'] = "On"
+                                                    elif data_received['ResetType'] in ('ForceRestart', 'GracefulRestart'):
+                                                        if payload['PowerState'] == "On":
+                                                            payload['PowerState'] == "Off"
+                                                        else:
+                                                            payload['PowerState'] == "On"
+                                                self.patchedLinks[fpath] = payload
                                 except:
                                     pass
                                 if action_found:
