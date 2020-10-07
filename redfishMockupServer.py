@@ -565,7 +565,11 @@ class RfMockupServer(BaseHTTPRequestHandler):
                                         else:
                                             if payload['Actions'][action]['target'] == self.path:
                                                 action_found = True
-                                                if 'ResetType' in data_received:
+                                                if 'ResetType' in data_received and 'ResetType@Redfish.AllowableValues' in payload['Actions'][action]:
+                                                    if data_received['ResetType'] not in payload['Actions'][action]['ResetType@Redfish.AllowableValues']:
+                                                        action_found = False
+                                                        continue
+
                                                     if data_received['ResetType'] in ('ForceOff', 'GracefulShutdown'):
                                                         payload['PowerState'] = "Off"
                                                     elif data_received['ResetType'] in ('On', 'ForceOn'):
