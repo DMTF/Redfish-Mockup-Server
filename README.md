@@ -4,7 +4,14 @@ Copyright 2016-2020 DMTF. All rights reserved.
 
 The Redfish mockup server, `redfishMockupServer.py`, runs at a specified IP address and port or at the default IP address and port, `127.0.0.1:8000`, and serves Redfish GET, PATCH, POST, and DELETE requests and implements the `SubmitTestEvent` action.
 
-## Prerequisite software
+## Running The Redfish mockup server inside docker
+
+    ```
+    $ docker build -t redfish-mockup-server:latest .
+    $ docker run --rm -it -v /absolute/path-to-mockup/directory:/mymockup redfish-mockup-server:latest -D /mymockup
+    ```
+
+## Prerequisite software (only when running ouside of docker)
 
 * **Python 3.4 or later**
 
