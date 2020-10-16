@@ -394,6 +394,16 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     else:
                         pass
 
+                    # Handle Expand Query
+                    expand = query_pieces.get('$expand', [''])[0]
+                    # TBD: for now ignoring levels and links (asterisk, period, tilde)
+                    if expand:
+                        subfpaths = [self.construct_path(mem['@odata.id'], 'index.json') for mem in my_members]
+                        subpayloads = [self.get_cached_link(path) for path in subfpaths]
+                        subokpayloads = [data for res, data in subpayloads if res]
+                        # Strip the @Redfish.Copyright property
+                        my_members = [{k: v for k, v in subpayload.items() if k != "@Redfish.Copyright" } for subpayload in subokpayloads]
+
                     output_data['Members'] = my_members
                     pass
 
