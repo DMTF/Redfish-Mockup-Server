@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.1.1] - 2020-10-19
+- Added Dockerfile to run the server as a Docker container
+- Added expand support for resource collections
+
 ## [1.1.0] - 2020-05-09
 - Added ability to POST to actions shown in the mockups so that a 2xx code is returned
 
