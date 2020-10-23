@@ -9,9 +9,7 @@ The server runs at either:
 * An IP address and port that you specify when you start the server.
 * The default IP address and port, `127.0.0.1:8000`.
 
-<a id="server-form"></a>
-
-The server runs in *tall* or *short* form, which indicates what the server expects at the top of the mockup directory structure:
+<a id="server-form"></a>The server runs in *tall* or *short* form, which indicates what the server expects at the top of the mockup directory structure:
 
 * **Tall**. (Default.) The mockup directory structure, the version resource, `/redfish`.
 * **Short**. The mockup directory structure, the service root resource, `/redfish/v1/`. 
