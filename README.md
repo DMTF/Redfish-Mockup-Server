@@ -2,75 +2,145 @@ Copyright 2016-2020 DMTF. All rights reserved.
 
 # The Redfish mockup server
 
-The Redfish mockup server, `redfishMockupServer.py`, runs at a specified IP address and port or at the default IP address and port, `127.0.0.1:8000`, and serves Redfish GET, PATCH, POST, and DELETE requests and implements the `SubmitTestEvent` action.
+The Redfish mockup server, `redfishMockupServer.py`, serves Redfish `GET`, `PATCH`, `POST`, and `DELETE` requests against a Redfish mockup bundle, and implements the `SubmitTestEvent` action.
 
-## Running The Redfish mockup server inside docker
+The server runs at either:
 
-    ```
-    $ docker build -t redfish-mockup-server:latest .
-    $ docker run --rm -it -v /absolute/path-to-mockup/directory:/mymockup redfish-mockup-server:latest -D /mymockup
-    ```
+* An IP address and port that you specify when you start the server.
+* The default IP address and port, `127.0.0.1:8000`.
 
-## Prerequisite software (only when running ouside of docker)
+<a id="server-form"></a>
 
-* **Python 3.4 or later**
+The server runs in *tall* or *short* form, which indicates what the server expects at the top of the mockup directory structure:
 
-    If Python 3.4 or later is not already installed, [download Python](https://www.python.org/downloads/ "https://www.python.org/downloads/") for your operating system.
+* **Tall**. (Default.) The mockup directory structure, the version resource, `/redfish`.
+* **Short**. The mockup directory structure, the service root resource, `/redfish/v1/`. 
 
-    Verify the Python installation:
-        
-    ```
+    > **Note:** To run in short form, specify the `-S` option when you start the server.
+
+## Contents
+
+* [Run the Redfish mockup server inside docker](#run-the-redfish-mockup-server-inside-docker)
+* [Run the Redfish mockup server outside docker &mdash; Prerequisite software](#prerequisite-software--for-running-outside-docker-only-)
+    + [Python 3](#python-3)
+    + [pip](#pip)
+    + [Python packages](#python-packages)
+    + [Redfish mockup server](#redfish-mockup-server)
+    + [Redfish Mockup Bundle](#redfish-mockup-bundle)
+* [Start the Redfish mockup server](#start-the-redfish-mockup-server)
+* [redfishMockupServer usage](#redfishmockupserver-usage)
+* [Release process](#release-process)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+## Run the Redfish mockup server inside docker
+
+```
+$ docker build -t redfish-mockup-server:latest .
+$ docker run --rm -it -v /absolute/path-to-mockup/directory:/mymockup redfish-mockup-server:latest -D /mymockup
+```
+
+## Run the Redfish mockup server outside docker &mdash; Prerequisite software
+
+You must install [Python 3](#python-3), [pip](#pip), and [Python packages](#python-packages).
+
+Then, you must [clone the Redfish mockup server](#clone-the-redfish-mockup-server) and [save the Redfish Mockup Bundle](#save-the-redfish-mockup-bundle) to your local machine.
+
+### Python 3
+
+1. Verify your Python installation:
+
+    ```bash
     $ python --version
     ```
 
-    Ensure that Python 3.4 or later is in your path.
-* **[pip](https://pip.pypa.io/en/stable/ "https://pip.pypa.io/en/stable/")**
+1. If Python 3.4 or later is not installed, download [Python](https://www.python.org/downloads/ "https://www.python.org/downloads/") for your operating system and verify the Python installation again:
 
-    If pip is not installed, install it:
-    
+    ```bash
+    $ python --version
     ```
+
+1. Ensure that Python is in your path:
+
+    ```bash
+    $ echo $PATH
+    ```
+
+### pip
+
+1. Verify your pip installation:
+
+    ```bash
+    $ pip --version
+    ```
+
+1. If pip is not installed, install it:
+
+    ```bash
     $ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-    $ python get-pip.py
+    $ python3 get-pip.py
     ```
 
-    Upgrade pip and then verify the pip installation:
-    
-    ```
+1. Upgrade pip and verify the installation again:
+
+    ```bash
     $ pip install --upgrade pip
     $ pip --version
     ```
-* **Required Python packages**
 
-    Install the required Python packages:
+### Python packages
 
-    ```
+1. Install Python packages:
+
+    ```bash
     $ pip install -r requirements.txt
     ```
 
-## Start the server
+<a id="clone-the-redfish-mockup-server"></a>
 
-To start the server, run `redfishMockupServer.py` from your command shell:
+### Redfish mockup server
 
-```
-$ python redfishMockupServer.py -D <DIR>
-```
+Clone the [Redfish mockup server repository](https://github.com/dmtf/Redfish-Mockup-Server "https://github.com/dmtf/Redfish-Mockup-Server"):
 
-where
-
-* `-D <DIR>` is the absolute or relative path to the mockup directory from the current working directory (CWD). Default is the CWD.
-
-For example, if you copy `redfishMockupServer.py` to the `MyServerMockup9` folder, run this command to start the server on port 8001:
-
-```
-$ python redfishMockupServer.py -p 8001 -D ./MyServerMockup9
+```bash
+$ git clone git@github.com:DMTF/Redfish-Mockup-Server.git
 ```
 
-> **Note:** You can run the server can accept *tall* or *short* mockups:
-> 
-> | Form  | Description | Note |
-> | :---  | :---        | :--- |
-> | Tall  | The version resource, `/redfish`, is at the top of the mockup directory structure. | Default is tall form. |
-> | Short | The service root resource, `/redfish/v1/`, is at the top of the mockup directory structure. | Use the `-S` option to run in short form. |
+<a id="save-the-redfish-mockup-bundle"></a>
+ 
+### Redfish Mockup Bundle
+
+DSP2043 *Redfish Mockup Bundle* provides mockups of various Redfish service implementations that show typical Redfish examples.
+
+Go to the [All Published Versions of DSP2043](https://www.dmtf.org/dsp/DSP2043 "https://www.dmtf.org/dsp/DSP2043") page and in the **Title** column, click the **Redfish Mockup Bundle** link and save the ZIP file to your preferred location.
+
+## Start the Redfish mockup server
+
+The server runs at either:
+
+* An IP address and port that you specify when you start the server.
+* The default IP address and port, `127.0.0.1:8000`.
+
+1. Get the latest Redfish mockup server usage information:
+
+    ```bash
+    $ python3 redfishMockupServer.py --help
+    ```
+
+1. Start the server in [*short* form](#server-form) against the mockup in `-D <DIR>`:
+
+    ```bash
+    $ python3 redfishMockupServer.py -S -D <DIR>
+    ```
+
+    > **Note:** If you omit the `-S` option, the server runs in tall form by default.
+
+For example, if you copy the `DSP2043_2019.1` bundle to a `DSP2043_2019.1` directory that is parallel with the `Redfish-Mockup-Server` directory, you can start the server in short form on port 8000, as follows:
+
+```bash
+$ cd Redfish-Mockup-Server
+$ python3 redfishMockupServer.py -S -D ../DSP2043_2019.1/public-localstorage
+```
 
 ## redfishMockupServer usage
 
@@ -109,6 +179,6 @@ optional arguments:
 To create a release of the Redfish mockup server:
 
 1. Update `CHANGELOG.md` with the list of changes since the last release.
-2. Update the `tool_version` variable in `redfishMockupServer.py` to the new version of the tool.
-3. Push changes to GitHub.
-4. Create a release in GitHub.
+1. Update the `tool_version` variable in `redfishMockupServer.py` to the new version of the tool.
+1. Push changes to GitHub.
+1. Create a release in GitHub.
