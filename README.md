@@ -106,7 +106,7 @@ $ git clone git@github.com:DMTF/Redfish-Mockup-Server.git
 
 <a id="save-the-redfish-mockup-bundle"></a>
  
-### Redfish Mockup Bundle
+### Redfish mockup bundle
 
 DSP2043 *Redfish Mockup Bundle* provides mockups of various Redfish service implementations that show typical Redfish examples.
 
