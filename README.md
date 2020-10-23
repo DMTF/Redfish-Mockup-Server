@@ -21,7 +21,7 @@ The server runs in *tall* or *short* form, which indicates what the server expec
 ## Contents
 
 * [Run the Redfish mockup server inside docker](#run-the-redfish-mockup-server-inside-docker)
-* [Run the Redfish mockup server outside docker &mdash; Prerequisite software](#prerequisite-software--for-running-outside-docker-only-)
+* [Run the Redfish mockup server outside docker: Prerequisite software](#run-the-redfish-mockup-server-outside-docker-prerequisite-software)
     + [Python 3](#python-3)
     + [pip](#pip)
     + [Python packages](#python-packages)
@@ -31,8 +31,6 @@ The server runs in *tall* or *short* form, which indicates what the server expec
 * [redfishMockupServer usage](#redfishmockupserver-usage)
 * [Release process](#release-process)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 ## Run the Redfish mockup server inside docker
 
 ```
@@ -40,7 +38,7 @@ $ docker build -t redfish-mockup-server:latest .
 $ docker run --rm -it -v /absolute/path-to-mockup/directory:/mymockup redfish-mockup-server:latest -D /mymockup
 ```
 
-## Run the Redfish mockup server outside docker &mdash; Prerequisite software
+## Run the Redfish mockup server outside docker: Prerequisite software
 
 You must install [Python 3](#python-3), [pip](#pip), and [Python packages](#python-packages).
 
