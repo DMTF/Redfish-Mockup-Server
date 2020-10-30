@@ -5,6 +5,7 @@
 # redfishMockupServer.py
 # tested and developed Python 3.4
 
+import re
 import sys
 import argparse
 import time
@@ -128,13 +129,16 @@ class RfMockupServer(BaseHTTPRequestHandler):
         def add_new_member(self, payload, data_received):
             members = payload.get('Members')
             n = 1
-            newpath_id = data_received.get('Id', 'Member')
+            pattern = re.sub(r'\d+$', '{id}', members[0].get('@odata.id').replace(self.path, '').strip('/')) if len(members) else 'Member{id}'
+            newpath_id = data_received.get('Id', pattern.format(id=n))
             newpath = '/'.join([ self.path, newpath_id ])
             while newpath in [m.get('@odata.id') for m in members]:
                 n = n + 1
-                newpath_id = data_received.get('Id', 'Member') + str(n)
+                newpath_id = data_received.get('Id', pattern.format(id=n))
                 newpath = '/'.join([ self.path, newpath_id ])
             members.append({'@odata.id': newpath})
+            data_received['@odata.id'] = newpath
+            data_received['Id'] = newpath_id
 
             payload['Members'] = members
             payload['Members@odata.count'] = len(members)
