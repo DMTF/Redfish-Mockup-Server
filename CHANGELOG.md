@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.1.2] - 2020-10-30
+- Made enhancement to collection management to fill in `Id` and `@odata.id` properly
+
 ## [1.1.1] - 2020-10-19
 - Added Dockerfile to run the server as a Docker container
 - Added expand support for resource collections
