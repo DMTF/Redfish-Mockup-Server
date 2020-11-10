@@ -1,0 +1,13 @@
+{
+    "@odata.type": "#EventDestination.v1_7_0.EventDestination",
+    "Id": "1",
+    "Name": "EventSubscription 1",
+    "Destination": "http://www.dnsname.com/Destination1",
+    "EventTypes": [
+        "Alert"
+    ],
+    "Context": "WebUser3",
+    "Protocol": "Redfish",
+    "@odata.id": "/redfish/v1/EventService/Subscriptions/1",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

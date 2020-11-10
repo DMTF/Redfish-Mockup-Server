@@ -1,0 +1,100 @@
+{
+    "@odata.type": "#ActionInfo.v1_1_2.ActionInfo",
+    "Id": "GenerateCSRActionInfo",
+    "Name": "Generate CSR Action Info",
+    "Parameters": [
+        {
+            "Name": "CommonName",
+            "Required": true,
+            "DataType": "String"
+        },
+        {
+            "Name": "AlternativeNames",
+            "Required": false,
+            "DataType": "StringArray"
+        },
+        {
+            "Name": "Organization",
+            "Required": true,
+            "DataType": "String"
+        },
+        {
+            "Name": "OrganizationalUnit",
+            "Required": true,
+            "DataType": "String"
+        },
+        {
+            "Name": "City",
+            "Required": true,
+            "DataType": "String"
+        },
+        {
+            "Name": "State",
+            "Required": true,
+            "DataType": "String"
+        },
+        {
+            "Name": "Country",
+            "Required": true,
+            "DataType": "String"
+        },
+        {
+            "Name": "Email",
+            "Required": false,
+            "DataType": "String"
+        },
+        {
+            "Name": "KeyPairAlgorithm",
+            "Required": true,
+            "DataType": "String",
+            "AllowableValues": [
+                "TPM_ALG_RSA",
+                "TPM_ALG_ECDSA"
+            ]
+        },
+        {
+            "Name": "KeyBitLength",
+            "Required": false,
+            "DataType": "Number"
+        },
+        {
+            "Name": "KeyCurveId",
+            "Required": false,
+            "DataType": "String",
+            "AllowableValues": [
+                "TPM_ECC_NIST_P256",
+                "TPM_ECC_NIST_P384",
+                "TPM_ECC_NIST_P521"
+            ]
+        },
+        {
+            "Name": "CertificateCollection",
+            "Required": true,
+            "DataType": "Object"
+        },
+        {
+            "Name": "KeyUsage",
+            "Required": false,
+            "DataType": "StringArray",
+            "AllowableValues": [
+                "DigitalSignature",
+                "NonRepudiation",
+                "KeyEncipherment",
+                "DataEncipherment",
+                "KeyAgreement",
+                "KeyCertSign",
+                "CRLSigning",
+                "EncipherOnly",
+                "DecipherOnly",
+                "ServerAuthentication",
+                "ClientAuthentication",
+                "CodeSigning",
+                "EmailProtection",
+                "OCSPSigning"
+            ]
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/CertificateService/GenerateCSRActionInfo",
+    "@Redfish.Copyright": "Copyright 2018-2019 DMTF. All rights reserved."
+}

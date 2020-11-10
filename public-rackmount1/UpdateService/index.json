@@ -1,0 +1,39 @@
+{
+    "@odata.type": "#UpdateService.v1_8_0.UpdateService",
+    "Id": "UpdateService",
+    "Name": "Update service",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK",
+        "HealthRollup": "OK"
+    },
+    "ServiceEnabled": true,
+    "HttpPushUri": "/FWUpdate",
+    "HttpPushUriOptions": {
+        "HttpPushUriApplyTime": {
+            "ApplyTime": "Immediate",
+            "ApplyTime@Redfish.AllowableValues": [
+                "Immediate",
+                "OnReset",
+                "AtMaintenanceWindowStart",
+                "InMaintenanceWindowOnReset"
+            ],
+            "MaintenanceWindowStartTime": "2018-12-01T03:00:00+06:00",
+            "MaintenanceWindowDurationInSeconds": 600
+        }
+    },
+    "HttpPushUriOptionsBusy": false,
+    "FirmwareInventory": {
+        "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory"
+    },
+    "Actions": {
+        "#UpdateService.SimpleUpdate": {
+            "target": "/redfish/v1/UpdateService/Actions/SimpleUpdate",
+            "@Redfish.ActionInfo": "/redfish/v1/UpdateService/SimpleUpdateActionInfo"
+        },
+        "Oem": {}
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/UpdateService",
+    "@Redfish.Copyright": "Copyright 2018-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

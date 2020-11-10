@@ -1,0 +1,31 @@
+{
+    "@odata.type": "#Memory.v1_9_0.Memory",
+    "Id": "DIMM1",
+    "Name": "DIMM Slot 1",
+    "RankCount": 2,
+    "MaxTDPMilliWatts": [
+        12000
+    ],
+    "CapacityMiB": 32768,
+    "DataWidthBits": 64,
+    "BusWidthBits": 72,
+    "ErrorCorrection": "MultiBitECC",
+    "MemoryLocation": {
+        "Socket": 1,
+        "MemoryController": 1,
+        "Channel": 1,
+        "Slot": 1
+    },
+    "MemoryType": "DRAM",
+    "MemoryDeviceType": "DDR4",
+    "BaseModuleType": "RDIMM",
+    "MemoryMedia": [
+        "DRAM"
+    ],
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/Memory/DIMM1",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

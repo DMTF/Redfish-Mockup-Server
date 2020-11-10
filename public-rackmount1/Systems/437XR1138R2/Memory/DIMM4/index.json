@@ -1,0 +1,16 @@
+{
+    "@odata.type": "#Memory.v1_9_0.Memory",
+    "Id": "DIMM4",
+    "Name": "DIMM Slot 4",
+    "MemoryLocation": {
+        "Socket": 2,
+        "MemoryController": 2,
+        "Channel": 1,
+        "Slot": 4
+    },
+    "Status": {
+        "State": "Absent"
+    },
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/Memory/DIMM4",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

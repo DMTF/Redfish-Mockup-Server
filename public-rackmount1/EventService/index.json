@@ -1,0 +1,42 @@
+{
+    "@odata.type": "#EventService.v1_5_0.EventService",
+    "Id": "EventService",
+    "Name": "Event Service",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "ServiceEnabled": true,
+    "DeliveryRetryAttempts": 3,
+    "DeliveryRetryIntervalSeconds": 60,
+    "EventTypesForSubscription": [
+        "StatusChange",
+        "ResourceUpdated",
+        "ResourceAdded",
+        "ResourceRemoved",
+        "Alert"
+    ],
+    "Subscriptions": {
+        "@odata.id": "/redfish/v1/EventService/Subscriptions"
+    },
+    "Actions": {
+        "#EventService.SubmitTestEvent": {
+            "target": "/redfish/v1/EventService/Actions/EventService.SubmitTestEvent",
+            "@Redfish.ActionInfo": "/redfish/v1/EventService/SubmitTestEventActionInfo"
+        },
+        "Oem": {}
+    },
+    "SMTP": {
+        "ServiceEnabled": true,
+        "Port": 25,
+        "ServerAddress": "smtp.contoso.com",
+        "FromAddress": "no_reply@contoso.com",
+        "ConnectionProtocol": "AutoDetect",
+        "Authentication": "AutoDetect",
+        "Username": "employee123",
+        "Password": null
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/EventService",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

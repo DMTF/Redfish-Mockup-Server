@@ -1,0 +1,70 @@
+{
+    "@odata.type": "#ProcessorMetrics.v1_0_2.ProcessorMetrics",
+    "Id": "Metrics",
+    "Description": "Processor Metrics",
+    "Name": "Processor Metrics",
+    "BandwidthPercent": 62,
+    "AverageFrequencyMHz": 2400,
+    "ThrottlingCelsius": 65,
+    "TemperatureCelsius": 41,
+    "ConsumedPowerWatt": 82,
+    "FrequencyRatio": 0.00432,
+    "Cache": [
+        {
+            "Level": "3",
+            "CacheMiss": 0.12,
+            "HitRatio": 0.719,
+            "CacheMissesPerInstruction": 0.00088,
+            "OccupancyBytes": 3030144,
+            "OccupancyPercent": 90.1
+        }
+    ],
+    "LocalMemoryBandwidthBytes": 18253611008,
+    "RemoteMemoryBandwidthBytes": 81788928,
+    "KernelPercent": 2.3,
+    "UserPercent": 34.7,
+    "CoreMetrics": [
+        {
+            "CoreId": "core0",
+            "InstructionsPerCycle": 1.16,
+            "UnhaltedCycles": 6254383746,
+            "MemoryStallCount": 58372,
+            "IOStallCount": 2634872,
+            "CoreCache": [
+                {
+                    "Level": "2",
+                    "CacheMiss": 0.472,
+                    "HitRatio": 0.57,
+                    "CacheMissesPerInstruction": 0.00346,
+                    "OccupancyBytes": 198231,
+                    "OccupancyPercent": 77.4
+                }
+            ],
+            "CStateResidency": [
+                {
+                    "Level": "C0",
+                    "Residency": 1.13
+                },
+                {
+                    "Level": "C1",
+                    "Residency": 26
+                },
+                {
+                    "Level": "C3",
+                    "Residency": 0.00878
+                },
+                {
+                    "Level": "C6",
+                    "Residency": 0.361
+                },
+                {
+                    "Level": "C7",
+                    "Residency": 72.5
+                }
+            ]
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/Processors/FPGA1/ProcessorMetrics",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

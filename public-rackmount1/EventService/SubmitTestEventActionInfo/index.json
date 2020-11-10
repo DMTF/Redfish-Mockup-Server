@@ -1,0 +1,62 @@
+{
+    "@odata.type": "#ActionInfo.v1_1_2.ActionInfo",
+    "Id": "SubmitTestEventActionInfo",
+    "Name": "SubmitTestEvent Action Info",
+    "Parameters": [
+        {
+            "Name": "EventType",
+            "Required": false,
+            "DataType": "String",
+            "AllowableValues": [
+                "StatusChange",
+                "ResourceUpdated",
+                "ResourceAdded",
+                "ResourceRemoved",
+                "Alert",
+                "Other"
+            ]
+        },
+        {
+            "Name": "EventId",
+            "Required": false,
+            "DataType": "String"
+        },
+        {
+            "Name": "EventTimestamp",
+            "Required": false,
+            "DataType": "String"
+        },
+        {
+            "Name": "Severity",
+            "Required": false,
+            "DataType": "String"
+        },
+        {
+            "Name": "Message",
+            "Required": false,
+            "DataType": "String"
+        },
+        {
+            "Name": "MessageId",
+            "Required": true,
+            "DataType": "String"
+        },
+        {
+            "Name": "MessageArgs",
+            "Required": false,
+            "DataType": "StringArray"
+        },
+        {
+            "Name": "OriginOfCondition",
+            "Required": false,
+            "DataType": "String"
+        },
+        {
+            "Name": "EventGroupId",
+            "Required": false,
+            "DataType": "Number"
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/EventService/SubmitTestEventActionInfo"
+}
