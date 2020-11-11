@@ -19,7 +19,6 @@ import grequests
 import os
 import ssl
 import logging
-import socket
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, urlunparse, parse_qs
 from rfSsdpServer import RfSSDPServer
@@ -694,11 +693,6 @@ def main():
         sslKey = args.key
         shortForm = args.short_form
         ssdpStart = args.ssdp
-
-        # If inside a Docker container, expose on all interfaces
-        if os.environ.get('INSIDE_DOCKER_CONTAINER', False):
-            hostname=socket.gethostbyname(socket.gethostname())
-            port=8000
 
         # check if mockup path was specified.  If not, use the built-in mockup
         if mockDirPath is None:
