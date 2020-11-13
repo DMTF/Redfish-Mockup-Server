@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.1.4] - 2020-11-13
+- Added built-in "public-rackmount1" mockup
+
 ## [1.1.2] - 2020-10-30
 - Made enhancement to collection management to fill in `Id` and `@odata.id` properly
 
