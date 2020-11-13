@@ -1,0 +1,28 @@
+{
+    "@odata.type": "#ManagerAccount.v1_5_0.ManagerAccount",
+    "Id": "2",
+    "Name": "Employee #457",
+    "Description": "This user is both a Redfish administrator and a SNMPv3 user.",
+    "Enabled": true,
+    "Password": null,
+    "UserName": "contoso_employee457",
+    "RoleId": "Administrator",
+    "Locked": false,
+    "AccountTypes": [
+        "Redfish",
+        "SNMP"
+    ],
+    "SNMP": {
+        "AuthenticationKey": null,
+        "AuthenticationProtocol": "None",
+        "EncryptionKey": null,
+        "EncryptionProtocol": "CFB128_AES128"
+    },
+    "Links": {
+        "Role": {
+            "@odata.id": "/redfish/v1/AccountService/Roles/Administrator"
+        }
+    },
+    "@odata.id": "/redfish/v1/AccountService/Accounts/2",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

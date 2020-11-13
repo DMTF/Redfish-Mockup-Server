@@ -1,0 +1,20 @@
+{
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. All rights reserved.",
+    "@odata.id": "/redfish/v1/Registries/Base.1.5.0",
+    "@odata.type": "#MessageRegistryFile.v1_1_3.MessageRegistryFile",
+    "Id": "Base.1.5.0",
+    "Name": "Base Message Registry File",
+    "Description": "Base Message Registry File locations",
+    "Languages": [
+        "en"
+    ],
+    "Registry": "Base.1.5.0",
+    "Location": [
+        {
+            "Language": "en",
+            "PublicationUri": "http://redfish.dmtf.org/registries/Base.1.5.0.json",
+            "Uri": "/redfish/v1/Registries/Base.1.5.0.json"
+        }
+    ],
+    "Oem": {}
+}

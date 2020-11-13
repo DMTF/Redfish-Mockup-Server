@@ -1,0 +1,64 @@
+{
+    "@odata.type": "#Chassis.v1_11_0.Chassis",
+    "Id": "1U",
+    "Name": "Computer System Chassis",
+    "ChassisType": "RackMount",
+    "AssetTag": "Chicago-45Z-2381",
+    "Manufacturer": "Contoso",
+    "Model": "3500RX",
+    "SKU": "8675309",
+    "SerialNumber": "437XR1138R2",
+    "PartNumber": "224071-J23",
+    "PowerState": "On",
+    "IndicatorLED": "Lit",
+    "HeightMm": 44.45,
+    "WidthMm": 431.8,
+    "DepthMm": 711,
+    "WeightKg": 15.31,
+    "Location": {
+        "PostalAddress": {
+            "Country": "US",
+            "Territory": "OR",
+            "City": "Portland",
+            "Street": "1001 SW 5th Avenue",
+            "HouseNumber": 1100,
+            "Name": "DMTF",
+            "PostalCode": "97204"
+        },
+        "Placement": {
+            "Row": "North",
+            "Rack": "WEB43",
+            "RackOffsetUnits": "EIA_310",
+            "RackOffset": 12
+        }
+    },
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Thermal": {
+        "@odata.id": "/redfish/v1/Chassis/1U/Thermal"
+    },
+    "Power": {
+        "@odata.id": "/redfish/v1/Chassis/1U/Power"
+    },
+    "Links": {
+        "ComputerSystems": [
+            {
+                "@odata.id": "/redfish/v1/Systems/437XR1138R2"
+            }
+        ],
+        "ManagedBy": [
+            {
+                "@odata.id": "/redfish/v1/Managers/BMC"
+            }
+        ],
+        "ManagersInChassis": [
+            {
+                "@odata.id": "/redfish/v1/Managers/BMC"
+            }
+        ]
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -1,0 +1,38 @@
+{
+    "@odata.type": "#ActionInfo.v1_1_2.ActionInfo",
+    "Id": "SimpleUpdateActionInfo",
+    "Name": "Simple Update Action Info",
+    "Parameters": [
+        {
+            "Name": "ImageURI",
+            "Required": true,
+            "DataType": "String"
+        },
+        {
+            "Name": "TransferProtocol",
+            "Required": false,
+            "DataType": "String",
+            "AllowableValues": [
+                "FTP",
+                "SFTP",
+                "HTTP",
+                "HTTPS",
+                "SCP",
+                "TFTP"
+            ]
+        },
+        {
+            "Name": "Username",
+            "Required": false,
+            "DataType": "String"
+        },
+        {
+            "Name": "Password",
+            "Required": false,
+            "DataType": "String"
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/UpdateService/SimpleUpdateActionInfo",
+    "@Redfish.Copyright": "Copyright 2018-2019 DMTF. All rights reserved."
+}

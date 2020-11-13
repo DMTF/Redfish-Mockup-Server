@@ -1,0 +1,79 @@
+{
+    "@odata.type": "#ManagerNetworkProtocol.v1_5_0.ManagerNetworkProtocol",
+    "Id": "NetworkProtocol",
+    "Name": "Manager Network Protocol",
+    "Description": "Manager Network Service",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "HostName": "web483-bmc",
+    "FQDN": "web483-bmc.dmtf.org",
+    "HTTP": {
+        "ProtocolEnabled": true,
+        "Port": 80
+    },
+    "HTTPS": {
+        "ProtocolEnabled": true,
+        "Port": 443,
+        "Certificates": {
+            "@odata.id": "/redfish/v1/Managers/BMC/NetworkProtocol/HTTPS/Certificates"
+        }
+    },
+    "IPMI": {
+        "ProtocolEnabled": true,
+        "Port": 623
+    },
+    "SSH": {
+        "ProtocolEnabled": true,
+        "Port": 22
+    },
+    "SNMP": {
+        "ProtocolEnabled": true,
+        "EnableSNMPv1": true,
+        "EnableSNMPv2c": false,
+        "EnableSNMPv3": true,
+        "Port": 161,
+        "CommunityStrings": [
+            {
+                "Name": "Read-only community",
+                "CommunityString": null,
+                "AccessMode": "Limited"
+            },
+            {
+                "Name": "Full access community",
+                "CommunityString": null,
+                "AccessMode": "Full"
+            }
+        ],
+        "EngineId": {
+            "PrivateEnterpriseId": "00 00 01 9C",
+            "EnterpriseSpecificMethod": "00 11 22 33 44 55 66 77"
+        },
+        "HideCommunityStrings": true,
+        "AuthenticationProtocol": "HMAC_SHA96",
+        "EncryptionProtocol": "CFB128_AES128"
+    },
+    "VirtualMedia": {
+        "ProtocolEnabled": true,
+        "Port": 17988
+    },
+    "SSDP": {
+        "ProtocolEnabled": true,
+        "Port": 1900,
+        "NotifyMulticastIntervalSeconds": 600,
+        "NotifyTTL": 5,
+        "NotifyIPv6Scope": "Site"
+    },
+    "Telnet": {
+        "ProtocolEnabled": true,
+        "Port": 23
+    },
+    "KVMIP": {
+        "ProtocolEnabled": true,
+        "Port": 5288
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Managers/BMC/NetworkProtocol",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

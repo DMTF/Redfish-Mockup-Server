@@ -1,0 +1,15 @@
+{
+    "@odata.type": "#CertificateLocations.v1_0_2.CertificateLocations",
+    "Id": "CertificateLocations",
+    "Name": "Certificate Locations",
+    "Links": {
+        "Certificates": [
+            {
+                "@odata.id": "/redfish/v1/Managers/BMC/NetworkProtocol/HTTPS/Certificates/1"
+            }
+        ]
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/CertificateService/CertificateLocations",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

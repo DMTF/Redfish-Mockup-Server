@@ -1,0 +1,25 @@
+{
+    "@odata.type": "#EventDestination.v1_7_0.EventDestination",
+    "Id": "2",
+    "Name": "SNMPv3 EventSubscription",
+    "Destination": "contoso_user@snmp_server.contoso.com",
+    "ResourceTypes": [
+        "Certificate",
+        "Volume",
+        "Thermal",
+        "VirtualMedia",
+        "Power"
+    ],
+    "Context": "My_SNMPv3_Events",
+    "Protocol": "SNMPv3",
+    "SubscriptionType": "SNMPInform",
+    "SNMP": {
+        "TrapCommunity": null,
+        "AuthenticationKey": null,
+        "AuthenticationProtocol": "HMAC_SHA96",
+        "EncryptionKey": null,
+        "EncryptionProtocol": "CFB128_AES128"
+    },
+    "@odata.id": "/redfish/v1/EventService/Subscriptions/2",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

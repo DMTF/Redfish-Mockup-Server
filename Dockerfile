@@ -10,9 +10,10 @@ RUN pip install --upgrade pip && \
 
 # Copy server files
 COPY rfSsdpServer.py redfishMockupServer.py /usr/src/app/
+ADD public-rackmount1 /usr/src/app/public-rackmount1
 
 # Env settings
 EXPOSE 8000
 HEALTHCHECK CMD curl --fail http://127.0.0.1:8000/redfish/v1 || exit 1
 WORKDIR /usr/src/app
-ENTRYPOINT ["python", "/usr/src/app/redfishMockupServer.py"]
+ENTRYPOINT ["python", "/usr/src/app/redfishMockupServer.py", "-H", "0.0.0.0"]

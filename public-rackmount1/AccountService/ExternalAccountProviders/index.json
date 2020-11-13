@@ -1,0 +1,12 @@
+{
+    "@odata.type": "#ExternalAccountProviderCollection.ExternalAccountProviderCollection",
+    "Name": "External Account Provider Collection",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/AccountService/ExternalAccountProviders/ExternalRedfishService"
+        }
+    ],
+    "@odata.id": "/redfish/v1/AccountService/ExternalAccountProviders",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

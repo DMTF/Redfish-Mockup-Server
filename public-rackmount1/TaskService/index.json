@@ -1,0 +1,19 @@
+{
+    "@odata.type": "#TaskService.v1_1_4.TaskService",
+    "Id": "TaskService",
+    "Name": "Tasks Service",
+    "DateTime": "2015-03-13T04:14:33+06:00",
+    "CompletedTaskOverWritePolicy": "Manual",
+    "LifeCycleEventOnTaskStateChange": true,
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "ServiceEnabled": true,
+    "Tasks": {
+        "@odata.id": "/redfish/v1/TaskService/Tasks"
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/TaskService",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -694,14 +694,15 @@ def main():
         shortForm = args.short_form
         ssdpStart = args.ssdp
 
+        # check if mockup path was specified.  If not, use the built-in mockup
+        if mockDirPath is None:
+            mockDirPath = 'public-rackmount1'
+            shortForm = True
+
         logger.info('Hostname: {}'.format(hostname))
         logger.info('Port: {}'.format(port))
         logger.info("Mockup directory path specified: {}".format(mockDirPath))
         logger.info("Response time: {} seconds".format(responseTime))
-
-        # check if mockup path was specified.  If not, use current working directory
-        if mockDirPath is None:
-            mockDirPath = os.getcwd()
 
         # create the full path to the top directory holding the Mockup
         mockDir = os.path.realpath(mockDirPath)  # creates real full path including path for CWD to the -D<mockDir> dir path

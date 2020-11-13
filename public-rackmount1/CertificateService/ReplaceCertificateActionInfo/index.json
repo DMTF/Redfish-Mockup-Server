@@ -1,0 +1,28 @@
+{
+    "@odata.type": "#ActionInfo.v1_1_2.ActionInfo",
+    "Id": "ReplaceCertificateActionInfo",
+    "Name": "Replace Certificate Action Info",
+    "Parameters": [
+        {
+            "Name": "CertificateString",
+            "Required": true,
+            "DataType": "String"
+        },
+        {
+            "Name": "CertificateType",
+            "Required": true,
+            "DataType": "String",
+            "AllowableValues": [
+                "PEM"
+            ]
+        },
+        {
+            "Name": "CertificateUri",
+            "Required": true,
+            "DataType": "Object"
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/CertificateService/GenerateCSRActionInfo",
+    "@Redfish.Copyright": "Copyright 2018-2019 DMTF. All rights reserved."
+}

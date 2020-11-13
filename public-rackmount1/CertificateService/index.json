@@ -1,0 +1,21 @@
+{
+    "@odata.type": "#CertificateService.v1_0_2.CertificateService",
+    "Id": "CertificateService",
+    "Name": "Certificate Service",
+    "Actions": {
+        "#CertificateService.GenerateCSR": {
+            "target": "/redfish/v1/CertificateService/Actions/CertificateService.GenerateCSR",
+            "@Redfish.ActionInfo": "/redfish/v1/CertificateService/GenerateCSRActionInfo"
+        },
+        "#CertificateService.ReplaceCertificate": {
+            "target": "/redfish/v1/CertificateService/Actions/CertificateService.ReplaceCertificate",
+            "@Redfish.ActionInfo": "/redfish/v1/CertificateService/ReplaceCertificateActionInfo"
+        }
+    },
+    "CertificateLocations": {
+        "@odata.id": "/redfish/v1/CertificateService/CertificateLocations"
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/CertificateService",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

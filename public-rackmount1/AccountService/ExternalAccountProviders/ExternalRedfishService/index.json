@@ -1,0 +1,30 @@
+{
+    "@odata.type": "#ExternalAccountProvider.v1_1_2.ExternalAccountProvider",
+    "Id": "ExternalRedfishService",
+    "Name": "Remote Redfish Service",
+    "Description": "Remote Redfish Service providing additional Accounts to this Redfish Service",
+    "AccountProviderType": "RedfishService",
+    "ServiceAddresses": [
+        "http://redfish.dmtf.org/redfish/v1/AccountService"
+    ],
+    "Authentication": {
+        "AuthenticationType": "Token",
+        "Token": null
+    },
+    "RemoteRoleMapping": [
+        {
+            "RemoteGroup": "Admin",
+            "LocalRole": "Administrator"
+        },
+        {
+            "RemoteGroup": "Operator",
+            "LocalRole": "Operator"
+        },
+        {
+            "RemoteGroup": "ReadOnly",
+            "LocalRole": "ReadOnly"
+        }
+    ],
+    "@odata.id": "/redfish/v1/AccountService/ExternalAccountProviders/ExternalRedfishService",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}
