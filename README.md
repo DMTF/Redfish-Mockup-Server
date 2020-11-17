@@ -63,7 +63,8 @@ If no mockup is specified, the mockup server will serve the DMTF's "public-rackm
 
 If running as a Docker container, you can either:
 * Pull the container from Docker Hub: `docker pull dmtf/redfish-mockup-server:latest`
-* Build a container from source: `docker build -t dmtf/redfish-mockup-server:latest .`
+* Build a container from local source: `docker build -t dmtf/redfish-mockup-server:latest .`
+* Build a container from Github: `docker build -t dmtf/redfish-mockup-server:latest https://github.com/DMTF/Redfish-Mockup-Server.git`
 
 The following will run the container using the built-in "public-rackmount1" mockup:
 ```bash
