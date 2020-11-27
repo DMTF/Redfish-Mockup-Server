@@ -4,25 +4,29 @@ Copyright 2016-2020 DMTF. All rights reserved.
 
 ## About
 
-The Redfish Mockup Server serves Redfish requests against a Redfish mockup.
-The server runs at a specified IP address and port or at `127.0.0.1:8000`, which is the default IP address and port.
+The Redfish Mockup Server serves Redfish requests against a Redfish mockup. The server runs at either a specified IP address and port or the default IP address and port, `127.0.0.1:8000`.
 
-Sample mockups published by the DMTF can be found here: [https://www.dmtf.org/dsp/DSP2043](https://www.dmtf.org/dsp/DSP2043).
-The [Redfish-Mockup-Creator](https://github.com/DMTF/Redfish-Mockup-Creator) can be used to create a mockup from an existing service.
+You can find DMTF-published sample mockups at [All Published Versions of DSP2043](https://www.dmtf.org/dsp/DSP2043 "https://www.dmtf.org/dsp/DSP2043").
+
+To create a mockup from a service, use the [Redfish-Mockup-Creator](https://github.com/DMTF/Redfish-Mockup-Creator "https://github.com/DMTF/Redfish-Mockup-Creator").
 
 ## Requirements
 
-If running the mockup server natively on your system:
-* Install [Python 3](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/)
-* Install required Python packages: `pip install -r requirements.txt`
+To run the mockup server natively on your system:
 
-If running the mockup server as a Docker container:
-* Install [Docker](https://www.docker.com/get-started)
+* Install [Python 3](https://www.python.org/downloads/ "https://www.python.org/downloads/") and [pip](https://pip.pypa.io/en/stable/installing/ "https://pip.pypa.io/en/stable/installing").
+* Install required Python packages: `pip install -r requirements.txt`
+* See the [Native system example](#native-system-example).
+
+To run the mockup server as a Docker container:
+
+* Install [Docker](https://www.docker.com/get-started "https://www.docker.com/get-started").
+* See the [Docker container example](#docker-container-example).
 
 ## Usage
 
 ```
-Redfish Mockup Server, version 1.1.1
+Redfish Mockup Server, version 1.1.4
 usage: redfishMockupServer.py [-h] [-H HOST] [-p PORT] [-D DIR] [-E] [-X]
                               [-t TIME] [-T] [-s] [--cert CERT] [--key KEY]
                               [-S] [-P]
@@ -52,36 +56,56 @@ optional arguments:
   -P, --ssdp            make mockup SSDP discoverable
 ```
 
-Example: `python redfishMockupServer.py -D /home/user/redfish-mockup`
+### Description
 
-The mockup server will start an HTTP server with the given address and port specified by the *HOST* and *PORT* arguments.
-The mockup server will provide Redfish resources in the mockup directory specified by the *DIR* argument.
-If the mockup does not contain the representation of the `/redfish` resource, the *short-form* argument will need to be provided by the user.
-If no mockup is specified, the mockup server will serve the DMTF's "public-rackmount1" mockup.
+The mockup server starts an HTTP server at the `-H HOST` host and `-p PORT` port. The mockup server provides Redfish resources in the `-D DIR` mockup directory.
 
-## Docker Container
+If the mockup does not contain the representation of the `/redfish` resource, you must provide the `--short-form` argument. If you omit the mockup, the mockup server serves DMTF's `public-rackmount1` mockup.
 
-If running as a Docker container, you can either:
-* Pull the container from Docker Hub: `docker pull dmtf/redfish-mockup-server:latest`
-* Build a container from local source: `docker build -t dmtf/redfish-mockup-server:latest .`
-* Build a container from Github: `docker build -t dmtf/redfish-mockup-server:latest https://github.com/DMTF/Redfish-Mockup-Server.git`
+### Native system example
 
-The following will run the container using the built-in "public-rackmount1" mockup:
+```bash
+python redfishMockupServer.py -D /home/user/redfish-mockup
+```
+
+### Docker container example
+
+To run as a Docker container, use one of these actions to pull or build the container:
+
+* Pull the container from Docker Hub:
+
+    ```bash
+    docker pull dmtf/redfish-mockup-server:latest
+    ```
+* Build a container from local source:
+
+    ```bash
+    docker build -t dmtf/redfish-mockup-server:latest .
+    ```
+* Build a container from GitHub:
+
+    ```bash
+    docker build -t dmtf/redfish-mockup-server:latest https://github.com/DMTF/Redfish-Mockup-Server.git
+    ```
+
+This command runs the container with the built-in `public-rackmount1` mockup:
+
 ```bash
 docker run --rm dmtf/redfish-mockup-server:latest
 ```
 
-The following will run the container using a specified mockup, where `<PathToMockup>` is the path to the mockup directory:
-```bash
-docker run --rm -v <PathToMockup>:/mockup dmtf/redfish-mockup-server:latest -D /mockup
-```
-
-## Release Process
-
-Run the `release.sh` script to publish a new version.
+This command runs the container with a specified mockup, where `<path-to-mockup>` is the path to the mockup directory:
 
 ```bash
-sh release.sh <NewVersion>
+docker run --rm -v <path-to-mockup>:/mockup dmtf/redfish-mockup-server:latest -D /mockup
 ```
 
-Enter the release notes when prompted; an empty line signifies no more notes to add.
+## Release process
+
+To publish a new version, run the `release.sh` script, where `<new-version>` is the new version number:
+
+```bash
+sh release.sh <new-version>
+```
+
+When prompted, type the release notes. To indicate the end of notes, enter an an empty line.
