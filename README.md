@@ -16,12 +16,10 @@ To run the mockup server natively on your system:
 
 * Install [Python 3](https://www.python.org/downloads/ "https://www.python.org/downloads/") and [pip](https://pip.pypa.io/en/stable/installing/ "https://pip.pypa.io/en/stable/installing").
 * Install required Python packages: `pip install -r requirements.txt`
-* See the [Native system example](#native-system-example).
 
 To run the mockup server as a Docker container:
 
 * Install [Docker](https://www.docker.com/get-started "https://www.docker.com/get-started").
-* See the [Docker container example](#docker-container-example).
 
 ## Usage
 
