@@ -383,6 +383,13 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 output_data = payload
                 output_data.pop("@Redfish.Copyright", None)
 
+                # Query Subscriptions should not return HttpHeaders.
+                if 'EventService/Subscriptions' in self.path:
+                   if output_data.get('HttpHeaders') is not None:
+                      # This array is null or an empty array in responses. 
+                      # An empty array is the preferred return value on read operations.
+                      output_data['HttpHeaders'] = []
+
                 # Query evaluate
                 if output_data.get('Members') is not None:
                     my_members = output_data['Members']
