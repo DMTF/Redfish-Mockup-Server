@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.1.5] - 2021-02-15
+- Made changes to hide `HttpHeaders` contents in event subscriptions
+
 ## [1.1.4] - 2020-11-13
 - Added built-in "public-rackmount1" mockup
 
