@@ -377,7 +377,6 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 else:
                     self.send_header("Content-Type", "application/json")
                     self.send_header("OData-Version", "4.0")
-                self.end_headers()
 
                 # Strip the @Redfish.Copyright property
                 output_data = payload
@@ -419,6 +418,11 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     pass
 
                 encoded_data = json.dumps(output_data, sort_keys=True, indent=4, separators=(",", ": ")).encode()
+
+                if not (self.server.headers and (os.path.isfile(fpath_headers))):
+                    self.send_header("Content-Length", len(encoded_data))
+                self.end_headers()
+                
                 self.wfile.write(encoded_data)
 
             # if XML...
