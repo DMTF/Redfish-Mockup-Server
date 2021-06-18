@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.1.6] - 2021-06-18
+- Added Content-Length header to responses
+
 ## [1.1.5] - 2021-02-15
 - Made changes to hide `HttpHeaders` contents in event subscriptions
 
