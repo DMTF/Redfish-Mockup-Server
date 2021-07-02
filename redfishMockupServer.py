@@ -364,8 +364,14 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 else:
                     self.send_header("Content-Type", "application/json")
                     self.send_header("OData-Version", "4.0")
+
+                encoded_data = json.dumps({'v1': '/redfish/v1'}, indent=4).encode()
+
+                if not (self.server.headers and (os.path.isfile(fpath_headers))):
+                    self.send_header("Content-Length", len(encoded_data))
                 self.end_headers()
-                self.wfile.write(json.dumps({'v1': '/redfish/v1'}, indent=4).encode())
+
+                self.wfile.write(encoded_data)
 
             # if this location exists in memory or as file
             elif(success):
