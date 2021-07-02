@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.1.7] - 2021-07-02
+- Added Content-Length header to responses for statically built /redfish
+
 ## [1.1.6] - 2021-06-18
 - Added Content-Length header to responses
 
