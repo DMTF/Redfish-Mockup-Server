@@ -16,7 +16,7 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: dmtf/redfish-mockup-server
-          tag-match-latest: false
+          tag-latest: false
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
