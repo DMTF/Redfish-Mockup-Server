@@ -294,6 +294,88 @@ class RfMockupServer(BaseHTTPRequestHandler):
         server_version = "RedfishMockupHTTPD_v" + tool_version
         event_id = 1
 
+        # Helper method to check if a dict is just an "@odata.id"
+        # Returns value of odata_id_dict["@odata.id"]
+        def __check_if_dict_is_odataid_only(self, odata_id_dict):
+            if "@odata.id" in odata_id_dict and len(odata_id_dict) == 1:
+                return odata_id_dict["@odata.id"]
+            return None
+
+        # Expand the data based on Redfish $expand spec
+        # Note: Not handling '*' type for payload annotations
+        def handle_expand_query(self, data, expand_type, levels):
+            # Create a stack to handle diving deeper in the JSON data
+            stack = [(data, levels)]
+            while stack:
+                current_data, expand_level = stack.pop();
+                # If expand level is less than 1 then we've completed expansion
+                if expand_level < 1:
+                    continue
+
+                # For each key, value, expand dictionaries and list items
+                # If an item is expanded, reduce the level of expansion to do
+                # on item and add it to the stack
+                for key, value in current_data.items():
+                    # Ignore values that aren't lists or dicts
+                    if not isinstance(value, list) and \
+                       not isinstance(value, dict):
+                        continue
+
+                    # Skipping "Links" based on expand type
+                    if expand_type == '.' and key == 'Links':
+                        continue
+
+                    # If value is an object, check if just odata.id and expand
+                    if isinstance(value, dict):
+                        # Track if value was expanded
+                        expanded = False
+                        odata_id = self.__check_if_dict_is_odataid_only(value)
+                        if odata_id:
+                            path = self.construct_path(odata_id, 'index.json')
+                            res, response_data = self.get_cached_link(path)
+                            if res:
+                                # Remove copyright information
+                                response_data.pop('@Redfish.Copyright', None)
+                                current_data[key] = response_data
+                                # Mark value as expanded
+                                expanded = True
+                        # Add the current data to expand on
+                        remove_level = 1 if expanded else 0
+                        stack.append((current_data[key],
+                                      expand_level - remove_level))
+                    else:
+                        # Value is a list, expand each item if possible and add
+                        # to stack
+
+                        # Reserve space for replacement list
+                        for index, array_item in enumerate(value):
+                            if isinstance(array_item, dict):
+                                # Track if array_item was expanded
+                                expanded = False
+                                odata_id = \
+                                        self.__check_if_dict_is_odataid_only(
+                                                array_item)
+                                if odata_id:
+                                    path = self.construct_path(odata_id,
+                                                               'index.json')
+                                    res, response_data = \
+                                            self.get_cached_link(path)
+                                    if res:
+                                        # Remove copyright information
+                                        response_data.pop('@Redfish.Copyright',
+                                                          None)
+                                        value[index] = response_data
+                                        expanded = True
+                                # Add dictionary array items to stack to
+                                # continue expand
+                                # Remove a level if the item was expanded
+                                remove_level = 1 if expanded else 0
+                                stack.append((value[index],
+                                            expand_level - remove_level))
+
+                        # Copy current value back into the current data
+                        current_data[key] = value
+
         # Headers only request
         def do_HEAD(self):
             """do_HEAD"""
@@ -410,18 +492,18 @@ class RfMockupServer(BaseHTTPRequestHandler):
                     else:
                         pass
 
-                    # Handle Expand Query
-                    expand = query_pieces.get('$expand', [''])[0]
-                    # TBD: for now ignoring levels and links (asterisk, period, tilde)
-                    if expand:
-                        subfpaths = [self.construct_path(mem['@odata.id'], 'index.json') for mem in my_members]
-                        subpayloads = [self.get_cached_link(path) for path in subfpaths]
-                        subokpayloads = [data for res, data in subpayloads if res]
-                        # Strip the @Redfish.Copyright property
-                        my_members = [{k: v for k, v in subpayload.items() if k != "@Redfish.Copyright" } for subpayload in subokpayloads]
-
                     output_data['Members'] = my_members
                     pass
+
+                # Handling expand
+                expand_str = query_pieces.get('$expand', [''])[0]
+                expand = re.match('([\\.~\\*])(\\(\\$levels=(\\d+)\\))?',
+                                  expand_str)
+                if expand:
+                    regex_groups = expand.groups()
+                    expand_type = regex_groups[0]
+                    levels = int(regex_groups[2]) if regex_groups[1] else 1
+                    self.handle_expand_query(output_data, expand_type, levels)
 
                 encoded_data = json.dumps(output_data, sort_keys=True, indent=4, separators=(",", ": ")).encode()
 
