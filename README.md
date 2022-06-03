@@ -100,10 +100,8 @@ docker run --rm -v <path-to-mockup>:/mockup dmtf/redfish-mockup-server:latest -D
 
 ## Release process
 
-To publish a new version, run the `release.sh` script, where `<new-version>` is the new version number:
-
-```bash
-sh release.sh <new-version>
-```
-
-When prompted, type the release notes. To indicate the end of notes, enter an an empty line.
+1. Go to the "Actions" page
+2. Select the "Release and Publish" workflow
+3. Click "Run workflow"
+4. Fill out the form
+5. Click "Run workflow"
