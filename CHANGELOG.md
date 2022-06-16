@@ -1,7 +1,7 @@
 # Change Log
 
 ## [1.1.8] - 2022-06-03
-- Added baseline support for the '' query parameter
+- Added baseline support for the '$expand' query parameter
 
 ## [1.1.7] - 2021-07-02
 - Added Content-Length header to responses for statically built /redfish
