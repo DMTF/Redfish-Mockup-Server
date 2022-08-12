@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.1.9] - 2022-08-12
+- Added SIGTERM handler to close the server
+
 ## [1.1.8] - 2022-06-03
 - Added baseline support for the '$expand' query parameter
 
