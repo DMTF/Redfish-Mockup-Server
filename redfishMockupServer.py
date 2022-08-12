@@ -13,6 +13,7 @@ import collections
 import json
 import threading
 import datetime
+import signal
 
 import grequests
 
@@ -822,6 +823,12 @@ def main():
                 sys.exit(1)
 
         myServer = HTTPServer((hostname, port), RfMockupServer)
+
+        def sigterm_handler(signal_number, frame):
+            logger.info("SIGTERM: Shutting down http server")
+            myServer.server_close()
+            sys.exit(0)
+        signal.signal(signal.SIGTERM, sigterm_handler)
 
         if sslMode:
             logger.info("Using SSL with certfile: {}".format(sslCert))
