@@ -515,20 +515,41 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 self.wfile.write(encoded_data)
 
             # if XML...
-            elif(os.path.isfile(fpath_xml) or os.path.isfile(fpath_direct)):
-                if os.path.isfile(fpath_xml):
-                    file_extension = 'xml'
-                    f = open(fpath_xml, "r")
-                elif os.path.isfile(fpath_direct):
-                    filename, file_extension = os.path.splitext(fpath_direct)
-                    file_extension = file_extension.strip('.')
-                    f = open(fpath_direct, "r")
+            elif os.path.isfile(fpath_xml):
+                f = open(fpath_xml, "r")
                 self.send_response(200)
-                self.send_header("Content-Type", "application/" + file_extension + ";odata.metadata=minimal;charset=utf-8")
+                self.send_header("Content-Type", "application/xml;odata.metadata=minimal;charset=utf-8")
                 self.send_header("OData-Version", "4.0")
                 self.end_headers()
                 self.wfile.write(f.read().encode())
                 f.close()
+
+            elif os.path.isfile(fpath_direct):
+                self.send_response(200)
+                with open(fpath_direct, 'rb') as f:
+                    content = f.read()
+
+                try:
+                    decoded_content = content.decode()
+                except ValueError:
+                    # If the file is binary, send it as octet-stream.
+                    self.send_header("Content-Type", "application/octet-stream;"
+                                     "odata.metadata=minimal")
+                    self.send_header("OData-Version", "4.0")
+                    self.end_headers()
+                    self.wfile.write(content)
+                else:
+                    # The file is text.
+                    file_extension = os.path.splitext(fpath_direct)[1]
+                    if file_extension == "":
+                        mime_type = "text/plain"
+                    else:
+                        mime_type = "application/" + file_extension[1:]
+                    self.send_header("Content-Type", mime_type + ";odata.metadata=minimal;charset=utf-8")
+                    self.send_header("OData-Version", "4.0")
+                    self.end_headers()
+                    self.wfile.write(decoded_content.encode("utf-8"))
+
             else:
                 self.send_response(404)
                 self.end_headers()
