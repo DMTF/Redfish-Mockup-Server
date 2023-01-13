@@ -9,7 +9,7 @@ import re
 import sys
 import argparse
 import time
-import collections
+import collections.abc
 import json
 import threading
 import datetime
@@ -47,7 +47,7 @@ def dict_merge(dct, merge_dct):
         :return: None
         """
         for k in merge_dct:
-            if (k in dct and isinstance(dct[k], dict) and isinstance(merge_dct[k], collections.Mapping)):
+            if (k in dct and isinstance(dct[k], dict) and isinstance(merge_dct[k], collections.abc.Mapping)):
                 dict_merge(dct[k], merge_dct[k])
             else:
                 dct[k] = merge_dct[k]
