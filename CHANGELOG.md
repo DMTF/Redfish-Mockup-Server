@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.2.0] - 2023-01-13
+- Import Mapping from collections.abc to support Python 3.10
+
 ## [1.1.9] - 2022-08-12
 - Added SIGTERM handler to close the server
 
