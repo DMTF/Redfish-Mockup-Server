@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.2.1] - 2023-01-20
+- Added support for binary files in a mockup
+
 ## [1.2.0] - 2023-01-13
 - Import Mapping from collections.abc to support Python 3.10
 
