@@ -1,0 +1,19 @@
+{
+    "@odata.type": "#PowerSupply.v1_5_0.PowerSupply",
+    "Id": "Bay2",
+    "Name": "Power Supply Bay 2",
+    "Status": {
+        "State": "Absent"
+    },
+    "PowerSupplyType": "DC",
+    "HotPluggable": false,
+    "Location": {
+        "PartLocation": {
+            "ServiceLabel": "PSU 2",
+            "LocationType": "Bay",
+            "LocationOrdinalValue": 1
+        }
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem/PowerSupplies/Bay2",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

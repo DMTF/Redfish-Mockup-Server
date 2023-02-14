@@ -1,0 +1,17 @@
+{
+    "@odata.type": "#PortCollection.PortCollection",
+    "Name": "Port Collection",
+    "Description": "USB Port Collection",
+    "Members@odata.count": 2,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/437XR1138R2/USBControllers/USB2/Ports/1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/437XR1138R2/USBControllers/USB2/Ports/2"
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/USBControllers/USB2/Ports",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

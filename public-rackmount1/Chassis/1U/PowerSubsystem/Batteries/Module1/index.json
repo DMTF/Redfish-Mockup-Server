@@ -1,0 +1,47 @@
+{
+    "@odata.type": "#Battery.v1_2_0.Battery",
+    "Id": "Module1",
+    "Name": "Battery 1",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Actions": {
+        "#Battery.SelfTest": {
+            "target": "/redfish/v1/Chassis/1U/PowerSubsystem/Batteries/Module1/Actions/Battery.SelfTest"
+        },
+        "#Battery.Calibrate": {
+            "target": "/redfish/v1/Chassis/1U/PowerSubsystem/Batteries/Module1/Actions/Battery.Calibrate"
+        }
+    },
+    "Location": {
+        "PartLocation": {
+            "ServiceLabel": "Battery 1",
+            "LocationType": "Bay",
+            "LocationOrdinalValue": 0
+        }
+    },
+    "Model": "RKS-440DC",
+    "Manufacturer": "Contoso Power",
+    "FirmwareVersion": "1.00",
+    "Version": "A05",
+    "ProductionDate": "2019-10-01T06:00:00Z",
+    "SerialNumber": "3488247",
+    "PartNumber": "23456-133",
+    "SparePartNumber": "93284-133",
+    "LocationIndicatorActive": false,
+    "HotPluggable": true,
+    "CapacityRatedWattHours": 20,
+    "CapacityActualWattHours": 19.41,
+    "MaxDischargeRateAmps": 10,
+    "StateOfHealthPercent": {
+        "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/Battery1StateOfHealth",
+        "Reading": 91
+    },
+    "ChargeState": "Idle",
+    "Metrics": {
+        "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem/Batteries/Module1/Metrics"
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem/Batteries/Module1",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

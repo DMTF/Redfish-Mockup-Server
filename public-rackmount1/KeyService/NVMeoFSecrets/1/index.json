@@ -1,0 +1,17 @@
+{
+    "@odata.type": "#Key.v1_2_0.Key",
+    "Id": "1",
+    "Name": "NVMeoF key 1, host subsystem",
+    "KeyType": "NVMeoF",
+    "KeyString": "DHHC-1:00:ia6zGodOr4SEG0Zzaw398rpY0wqipUWj4jWjUh4HWUz6aQ2n:",
+    "NVMeoF": {
+        "NQN": "nqn.corp.com:nvme:host-subsystem-0001",
+        "SecurityProtocolType": "DHHC",
+        "SecureHashAllowList": [
+            "SHA384",
+            "SHA512"
+        ]
+    },
+    "@odata.id": "/redfish/v1/KeyService/NVMeoFSecrets/1",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

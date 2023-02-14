@@ -1,0 +1,19 @@
+{
+    "@odata.type": "#Control.v1_2_0.Control",
+    "Id": "CPU1Freq",
+    "Name": "CPU #1 Frequency Range",
+    "PhysicalContext": "CPU",
+    "ControlType": "Frequency",
+    "ControlMode": "Automatic",
+    "SettingMin": 2000,
+    "SettingMax": 2400,
+    "SetPointUnits": "Hz",
+    "AllowableMin": 1500,
+    "AllowableMax": 3700,
+    "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U/Controls/CPU1Freq",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

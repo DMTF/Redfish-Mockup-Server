@@ -1,0 +1,21 @@
+{
+    "@odata.type": "#FanCollection.FanCollection",
+    "Name": "Fan Club",
+    "Members@odata.count": 4,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/ThermalSubsystem/Fans/Bay1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/ThermalSubsystem/Fans/Bay2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/ThermalSubsystem/Fans/CPU1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/ThermalSubsystem/Fans/CPU2"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Chassis/1U/ThermalSubsystem/Fans",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

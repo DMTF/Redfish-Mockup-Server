@@ -1,0 +1,41 @@
+{
+    "@odata.type": "#Port.v1_8_0.Port",
+    "Id": "2",
+    "Name": "USB Port 2",
+    "Description": "USB Port 2",
+    "Enabled": true,
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "PortId": "2",
+    "PortProtocol": "USB",
+    "PortType": "BidirectionalPort",
+    "CurrentSpeedGbps": 0,
+    "Width": 1,
+    "MaxSpeedGbps": 10,
+    "CurrentProtocolVersion": null,
+    "CapableProtocolVersions": [
+        "1.0",
+        "1.1",
+        "2.0",
+        "3.0",
+        "3.1"
+    ],
+    "Location": {
+        "PartLocation": {
+            "ServiceLabel": "USB 2",
+            "LocationOrdinalValue": 2,
+            "LocationType": "Connector",
+            "Orientation": "TopToBottom",
+            "Reference": "Front"
+        }
+    },
+    "Actions": {
+        "Oem": {}
+    },
+    "Links": {},
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/USBControllers/USB1/Ports/2",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

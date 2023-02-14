@@ -1,0 +1,19 @@
+{
+    "@odata.type": "#SignatureCollection.SignatureCollection",
+    "Name": "Signature Collection",
+    "Members@odata.count": 3,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/dbx/Signatures/1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/dbx/Signatures/2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/dbx/Signatures/3"
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/dbx/Signatures",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

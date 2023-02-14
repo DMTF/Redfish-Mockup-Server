@@ -1,0 +1,19 @@
+{
+    "@odata.type": "#ComponentIntegrityCollection.ComponentIntegrityCollection",
+    "Name": "ComponentIntegrity Collection",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/ComponentIntegrity/SS-SPDM-0"
+        },
+        {
+            "@odata.id": "/redfish/v1/ComponentIntegrity/USB-Integrity"
+        },
+        {
+            "@odata.id": "/redfish/v1/ComponentIntegrity/TPM-0"
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/ComponentIntegrity",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

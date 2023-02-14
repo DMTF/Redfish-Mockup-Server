@@ -1,0 +1,32 @@
+{
+    "@odata.type": "#Certificate.v1_6_0.Certificate",
+    "Id": "3",
+    "Name": "Microsoft Corporation Windows Production Certificate",
+    "CertificateString": "-----BEGIN CERTIFICATE-----\nMIIF1zCCA7+gAwIBAgIKYQd2VgAAAAAACDANBgkqhkiG9w0BAQsFADCBiDELMAkG\nA1UEBhMCVVMxEzARBgNVBAgTCldhc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQx\nHjAcBgNVBAoTFU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjEyMDAGA1UEAxMpTWljcm9z\nb2Z0IFJvb3QgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IDIwMTAwHhcNMTExMDE5MTg0\nMTQyWhcNMjYxMDE5MTg1MTQyWjCBhDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCldh\nc2hpbmd0b24xEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoTFU1pY3Jvc29mdCBD\nb3Jwb3JhdGlvbjEuMCwGA1UEAxMlTWljcm9zb2Z0IFdpbmRvd3MgUHJvZHVjdGlv\nbiBQQ0EgMjAxMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAN0Mu6Lk\nLgnj58X3lmm8ACG9aTMz760Ey1SA7gaDu8UghNn30ovzOLCrpK0tfGJ5Bf/jSj8E\nNSBw48Tna+CcwDZ16Yox3Y1w5dw3tXRGlihbh2AjLL/cR6Vn91EnnnLrB6bJuR47\nUzV85dPsJ7mHHP65ySMJb6hGkcFuljxB08ujP10Cak3saR8lKFw2//1DFQqU4Bm0\nz9/CEuLCWyfuJ3gwi1sqCWsiiVNgFizAaB1TuuxJ851hjIVoCXNEXX2iVCvdefcV\nzzVdbBwrXM68nCOLb261Jtk2E8NP1ieuuTI7QZIs4cfNd+iqVE73XAsEh2W0Qxio\nsuBtGXfsWiT6SAMCAwEAAaOCAUMwggE/MBAGCSsGAQQBgjcVAQQDAgEAMB0GA1Ud\nDgQWBBSpKQI5jhbEl3jNkPmeT5rhfFWvUzAZBgkrBgEEAYI3FAIEDB4KAFMAdQBi\nAEMAQTALBgNVHQ8EBAMCAYYwDwYDVR0TAQH/BAUwAwEB/zAfBgNVHSMEGDAWgBTV\n9lbLj+iiXGJo0T2UkFvXzpoYxDBWBgNVHR8ETzBNMEugSaBHhkVodHRwOi8vY3Js\nLm1pY3Jvc29mdC5jb20vcGtpL2NybC9wcm9kdWN0cy9NaWNSb29DZXJBdXRfMjAx\nMC0wNi0yMy5jcmwwWgYIKwYBBQUHAQEETjBMMEoGCCsGAQUFBzAChj5odHRwOi8v\nd3d3Lm1pY3Jvc29mdC5jb20vcGtpL2NlcnRzL01pY1Jvb0NlckF1dF8yMDEwLTA2\nLTIzLmNydDANBgkqhkiG9w0BAQsFAAOCAgEAFPx8cVGlecJusu85Prw8Ug9uKz8Q\nE3P+qGjQSKY0TYqWBSbuMUaQYXnW/zguRWv0wOUouNodj4rbCdcax0wKNmZqjOwb\n1wSQqBgXpJu54kAyNnbEwVrGv+QEwOoW06zDaO9irN1UbFAwWKbrfP6Up06O9Ox8\nhnNXwlIhczRa86OKVsgE2gcJ7fiL4870fo6u8PYLigj7P8kdcn9TuOu+Y+DjPTFl\nsIHl8qzNFqSfPaixm8JC0JCEX1Qd/4nquh1HkG+wc05Bn0CfX+WhKrIRkXOKISjw\nzt5zOV8+q1xg7N8DEKjTCen09paFtn9RiGZHGY2isBI9gSpoBXe7kUxie7bBB8e6\neoc0Aw5LYnqZ6cr8zko3yS2kV3wc/j3cuA9a+tbEswKFAjrqs9lu5GkhN96B0fZ1\nGQVn05NXXikbOcjuLeHN5EVzW9DSznqrFhmCRljQXp2Bs2evbDXyvOU/JOI1ogp1\nBvYYVpnUeCzRBRvr0IgBnaoQ8QXfun4sY7cGmyMhxPl4bOJYFwY2K5ESA8yk2fIt\nuvmUnUDtGEXxzopcaz6rA9NwGCoKauBfR9HVYwoy8q/XNh8qcFrlQlkIcUtXun6D\ngfAhPPQcwcW5kJMOiEWThumxIJm+mMvFlaRdYtagYwggvXUQd30980W5n5efy1eA\nbzOpBM93pGIcWX4=\n-----END CERTIFICATE-----",
+    "CertificateType": "PEM",
+    "Issuer": {
+        "Country": "US",
+        "State": "Washington",
+        "City": "Redmond",
+        "Organization": "Microsoft Corporation",
+        "CommonName": "Microsoft Root Certificate Authority 2010"
+    },
+    "Subject": {
+        "Country": "US",
+        "State": "Washington",
+        "City": "Redmond",
+        "Organization": "Microsoft Corporation",
+        "CommonName": "Microsoft Windows Production PCA 2011"
+    },
+    "ValidNotBefore": "2011-10-19T11:41:42Z",
+    "ValidNotAfter": "2026-10-19T11:51:42Z",
+    "KeyUsage": [
+        "KeyCertSign",
+        "DigitalSignature",
+        "CRLSigning"
+    ],
+    "UefiSignatureOwner": "77fa9abd-0359-4d32-bd60-28f4e78f784b",
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/db/Certificates/3",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

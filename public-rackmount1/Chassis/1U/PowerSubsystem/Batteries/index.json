@@ -1,0 +1,12 @@
+{
+    "@odata.type": "#BatteryCollection.BatteryCollection",
+    "Name": "Battery Collection",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem/Batteries/Module1"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem/Batteries",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

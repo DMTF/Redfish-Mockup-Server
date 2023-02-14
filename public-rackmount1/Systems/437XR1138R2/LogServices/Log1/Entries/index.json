@@ -6,7 +6,7 @@
     "Members": [
         {
             "@odata.id": "/redfish/v1/Systems/437XR1138R2/LogServices/Log1/Entries/1",
-            "@odata.type": "#LogEntry.v1_5_1.LogEntry",
+            "@odata.type": "#LogEntry.v1_14_0.LogEntry",
             "Id": "1",
             "Name": "Log Entry 1",
             "EntryType": "SEL",
@@ -27,7 +27,7 @@
         },
         {
             "@odata.id": "/redfish/v1/Systems/437XR1138R2/LogServices/Log1/Entries/2",
-            "@odata.type": "#LogEntry.v1_5_1.LogEntry",
+            "@odata.type": "#LogEntry.v1_14_0.LogEntry",
             "Id": "2",
             "Name": "Log Entry 2",
             "EntryType": "SEL",
@@ -49,5 +49,5 @@
     ],
     "@odata.nextLink": "/redfish/v1/Systems/437XR1138R2/LogServices/Log1/Entries?$skiptoken=2",
     "@odata.id": "/redfish/v1/Systems/437XR1138R2/LogServices/Log1/Entries",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

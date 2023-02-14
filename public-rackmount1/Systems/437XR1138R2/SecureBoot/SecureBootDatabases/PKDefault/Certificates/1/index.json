@@ -1,0 +1,33 @@
+{
+    "@odata.type": "#Certificate.v1_6_0.Certificate",
+    "Id": "1",
+    "Name": "PKDefault Certificate",
+    "CertificateString": "-----BEGIN CERTIFICATE-----\nMIIDbTCCAlWgAwIBAgIUAZjZIHcy1np+3qP8RaHzTWaghuQwDQYJKoZIhvcNAQEL\nBQAwVjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAk5DMRAwDgYDVQQHEwdSYWxlaWdo\nMQ8wDQYDVQQKEwZMZW5vdm8xFzAVBgNVBAMTDkxlbm92byBVRUZJIFBLMB4XDTE3\nMDUyNzAzNTMzN1oXDTQxMDUyNzAzNTMzN1owVjELMAkGA1UEBhMCVVMxCzAJBgNV\nBAgTAk5DMRAwDgYDVQQHEwdSYWxlaWdoMQ8wDQYDVQQKEwZMZW5vdm8xFzAVBgNV\nBAMTDkxlbm92byBVRUZJIFBLMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC\nAQEA62pJedCNMZbqqqOfvpQb091Ov1SUZaAhIZl1GsaeZ9P0xHH1H93UdQSTA918\nqSHIxp31WLHdI+LiYEnJbXZgnJ2RhEPVXE55VvzUTI6zEV5elo5adnxXmXH7oz6x\n35nIBYCKGayfM+jg/S1oJr5s5H9/67M88nijZS/8dDg29UTVcu+YM4IgbNhY48Gi\nrPG+iIQ4kh4PcdPY+SAEHIxD94HhlTQHnrLrWjF9hdepVty48KrqcQYfKmsUAJ6M\nzyxYIyIEJSG61Lv49DlbPppC7uVjVV+laPwJyzoqg5c1lkhz0HaODy0OI7i8gTiH\nAe2vGt6liKQbsDvXS/Xy8kmn8wIDAQABozMwMTAPBgNVHRMBAf8EBTADAQH/MA4G\nA1UdDwEB/wQEAwICBDAOBgNVHQ8BAf8EBAMCB4AwDQYJKoZIhvcNAQELBQADggEB\nAAl2n3X/rZSKQju2AbBcmuRnPUXwqih5Qql+oOYzsE3XaZC1vILAAJLBUcHvbGkL\n40JQ9NaUAzxsaeERoMl7vneyNTutY03tmIDdC0nYzN9eEZO0GSEAVKoxgxLZ+od3\na2yGZ9htjCvaqUNniOlXCKQ0T595Z24mwY20F/ras1j8WXAYjyiCBUDpWi70VAdB\n0aCpZzterITmo7ymx7zK2hHIaYbRlXIXLMesdfSS/4hSLR49SvfVbOcnajdfmcI/\nXIWNRE/Xvg17lrgjMZ0vdU4wCVe2sAh6ckB45tJM/v97ICCZZld0Ee8IH1ayabmo\njSgtuHs9sxviahyMDv3gEGk=\n-----END CERTIFICATE-----",
+    "CertificateType": "PEM",
+    "Issuer": {
+        "Country": "US",
+        "State": "Oregon",
+        "City": "Portland",
+        "Organization": "Contoso",
+        "OrganizationalUnit": "ABC",
+        "CommonName": "PK.contoso.org"
+    },
+    "Subject": {
+        "Country": "US",
+        "State": "Oregon",
+        "City": "Portland",
+        "Organization": "Contoso",
+        "OrganizationalUnit": "ABC",
+        "CommonName": "Contoso UEFI PK"
+    },
+    "ValidNotBefore": "2018-09-07T13:22:05Z",
+    "ValidNotAfter": "2041-09-07T13:22:05Z",
+    "KeyUsage": [
+        "KeyCertSign",
+        "DigitalSignature"
+    ],
+    "UefiSignatureOwner": "5491316d-9694-4639-b72d-b8630ffa7dab",
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/PKDefault/Certificates/1",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

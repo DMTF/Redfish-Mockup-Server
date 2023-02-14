@@ -1,0 +1,29 @@
+{
+    "@odata.type": "#Fan.v1_3_0.Fan",
+    "Id": "CPU1",
+    "Name": "Fan for CPU 1",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "PhysicalContext": "CPU",
+    "Model": "RKS-440DC",
+    "Manufacturer": "Contoso Fans",
+    "PartNumber": "23456-133",
+    "SparePartNumber": "93284-133",
+    "LocationIndicatorActive": false,
+    "HotPluggable": false,
+    "SpeedPercent": {
+        "Reading": 45,
+        "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/CPUFan1"
+    },
+    "Location": {
+        "PartLocation": {
+            "ServiceLabel": "CPU #1 Fan",
+            "LocationType": "Bay",
+            "LocationOrdinalValue": 0
+        }
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U/ThermalSubsystem/Fans/CPU1",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

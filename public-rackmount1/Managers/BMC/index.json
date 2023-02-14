@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#Manager.v1_7_0.Manager",
+    "@odata.type": "#Manager.v1_17_0.Manager",
     "Id": "BMC",
     "Name": "Manager",
     "ManagerType": "BMC",
@@ -39,11 +39,24 @@
         ]
     },
     "FirmwareVersion": "1.45.455b66-rev4",
+    "AdditionalFirmwareVersions": {
+        "Bootloader": "v2022.01",
+        "Kernel": "Linux 5.13.0-30-generic arm71",
+        "Oem": {
+            "Contoso": {
+                "@odata.type": "#ContosoSoftwareInventory.v1_0_0.AdditionalVersions",
+                "ManagementApp": "1.30"
+            }
+        }
+    },
     "NetworkProtocol": {
         "@odata.id": "/redfish/v1/Managers/BMC/NetworkProtocol"
     },
     "EthernetInterfaces": {
         "@odata.id": "/redfish/v1/Managers/BMC/EthernetInterfaces"
+    },
+    "HostInterfaces": {
+        "@odata.id": "/redfish/v1/Managers/BMC/HostInterfaces"
     },
     "SerialInterfaces": {
         "@odata.id": "/redfish/v1/Managers/BMC/SerialInterfaces"
@@ -51,8 +64,11 @@
     "LogServices": {
         "@odata.id": "/redfish/v1/Managers/BMC/LogServices"
     },
-    "VirtualMedia": {
-        "@odata.id": "/redfish/v1/Managers/BMC/VirtualMedia"
+    "DedicatedNetworkPorts": {
+        "@odata.id": "/redfish/v1/Managers/BMC/DedicatedNetworkPorts"
+    },
+    "SecurityPolicy": {
+        "@odata.id": "/redfish/v1/Managers/BMC/SecurityPolicy"
     },
     "Links": {
         "ManagerForServers": [
@@ -82,5 +98,5 @@
     },
     "Oem": {},
     "@odata.id": "/redfish/v1/Managers/BMC",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

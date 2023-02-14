@@ -1,0 +1,26 @@
+{
+    "@odata.type": "#SecureBootDatabase.v1_0_1.SecureBootDatabase",
+    "Id": "db",
+    "Name": "db - Authorized Signature Database",
+    "Description": "UEFI db Secure Boot Database",
+    "DatabaseId": "db",
+    "Certificates": {
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/db/Certificates/"
+    },
+    "Signatures": {
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/db/Signatures/"
+    },
+    "Actions": {
+        "#SecureBootDatabase.ResetKeys": {
+            "target": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/db/Actions/SecureBootDatabase.ResetKeys",
+            "ResetKeysType@Redfish.AllowableValues": [
+                "ResetAllKeysToDefault",
+                "DeleteAllKeys"
+            ]
+        },
+        "Oem": {}
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/db",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

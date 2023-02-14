@@ -1,6 +1,4 @@
 {
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. All rights reserved.",
-    "@odata.id": "/redfish/v1/Registries/Base.1.5.0",
     "@odata.type": "#MessageRegistryFile.v1_1_3.MessageRegistryFile",
     "Id": "Base.1.5.0",
     "Name": "Base Message Registry File",
@@ -16,5 +14,7 @@
             "Uri": "/redfish/v1/Registries/Base.1.5.0.json"
         }
     ],
-    "Oem": {}
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Registries/Base.1.5.0",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

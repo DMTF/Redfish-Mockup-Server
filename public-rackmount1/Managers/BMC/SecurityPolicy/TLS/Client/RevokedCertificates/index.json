@@ -1,0 +1,8 @@
+{
+    "@odata.type": "#CertificateCollection.CertificateCollection",
+    "Name": "Certificates Collection",
+    "Members@odata.count": 0,
+    "Members": [],
+    "@odata.id": "/redfish/v1/Managers/BMC/SecurityPolicy/TLS/Client/RevokedCertificates",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

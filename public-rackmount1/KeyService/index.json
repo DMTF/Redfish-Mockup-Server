@@ -1,0 +1,15 @@
+{
+    "@odata.type": "#KeyService.v1_0_0.KeyService",
+    "Id": "KeyService",
+    "Name": "Key Service",
+    "Actions": {},
+    "NVMeoFSecrets": {
+        "@odata.id": "/redfish/v1/KeyService/NVMeoFSecrets"
+    },
+    "NVMeoFKeyPolicies": {
+        "@odata.id": "/redfish/v1/KeyService/NVMeoFKeyPolicies"
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/KeyService",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -1,0 +1,45 @@
+{
+    "@odata.type": "#Certificate.v1_6_0.Certificate",
+    "Id": "1",
+    "Name": "Client Certificate",
+    "CertificateString": "-----BEGIN CERTIFICATE-----\nMIIFsTCCA5mgAwIBAgIJAMusGfV8beSJMA0GCSqGSIb3DQEBCwUAMG8xCzAJBgNV\nBAYTAlVTMQ8wDQYDVQQIDAZPcmVnb24xETAPBgNVBAcMCFBvcnRsYW5kMRAwDgYD\nVQQKDAdDb250b3NvMQwwCgYDVQQLDANBQkMxHDAaBgNVBAMME21hbmFnZXIuY29u\ndG9zby5vcmcwHhcNMTgwOTA3MTMyMjA1WhcNMTkwOTA3MTMyMjA1WjBvMQswCQYD\nVQQGEwJVUzEPMA0GA1UECAwGT3JlZ29uMREwDwYDVQQHDAhQb3J0bGFuZDEQMA4G\nA1UECgwHQ29udG9zbzEMMAoGA1UECwwDQUJDMRwwGgYDVQQDDBNtYW5hZ2VyLmNv\nbnRvc28ub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAw39VGz5K\n9bD8UUmyUxH+s+IaYsd3rd8V3R6g3bzttGOW52nopt3ZQD4COHPePBcCBh2+xRFk\n0Wd6oJUECXKNYhoFRJAhyz2fmkO5I37D40iY8/Ihqnt0Kmt/8hETL2VMKbALnR+4\nAUNNGSomRD24FQDlK1Vs6urZHvTsEL5Z+CNdbKY6Yn1ksxR8vmze4hdxnzrQCua1\no7zNVzudLdhVpfeC3BvmflMjszPOjlo5dSkXeRWqQ1LikgcHyEf3hYWq3WXMUpkV\nm2nlM3Tzeaz2nO1quQ/HJ/DUuvHHvWIIZdExL1RABzSN8Sr3ZkMShmTNN4QWmrEX\nEADN8g8OXrRKrup+R6nbUT55Getn5jPesI5fNDHk0KRBUG0ALY73l9+ZlAdRTesq\naV6AL2hUYrb1SNjh50i15s4yPOytspF4B9LaqsG1w3PGjgLaUtWHTXwGAMdHVhWs\nym//6zFv3Ri5tbjThpeYv+UIkreyb0yAFlx/Kz62EFbkFcnaGPATqVd4yLtVdYu0\nz5O8JWhOuybmWMe6ifO97X8w7/Nr9QyzkB64wXSqsNpRiuZraErqa+hBqvPkz8KE\nFEwiclRvZ9OrNk/iKr1FO1HNs1byvNyJ3S9Bu4bMwMnxzrdNzaB5Ti0IywIvQ/qw\nJ8icHIn+3EM5g+DmvQTZIXNKOryrndjIUA0CAwEAAaNQME4wHQYDVR0OBBYEFLLG\niNCud7LYUKojqRVNhKBWoApFMB8GA1UdIwQYMBaAFLLGiNCud7LYUKojqRVNhKBW\noApFMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggIBAG+NJSRv1S0K4KjE\nwzAIlEsmYs65vPxKLg0a07EW8xO4m7AKtty9dyc3+xh0ftwosTmXp2GL3RbNFqpc\nqDjS/XLDGS7DCb5T/g2vZusfUCz6WXpJCZMBLNyNaVyhTHeV9f8sCWXAODwx8ED2\nIHADWI9EqYg3HovYJNP4iUXfivBkFdq6ptOwgMVLGpeMvt/VwBilOklL/+xrhiMD\n1SwZ+sPdWfgcIaeQ+Y3h0cbHzCeYlZDXjDR41zGrEb1lhSAj5n/BEQDjXsiIY386\n/czYW7Zz2ZxOK67ENaABUxg5w8iqu8wkF0pVHbjBThkEPvvdwWKAFLDC55q1KO4H\nsZLx8U/usUdHW9pz+/C7QW7UEJjKP7LfUWnosz7NJYtb7lXJ6pyLkstlA35/aXv3\nxS4eHxHFExl7hiTPgWuFYZUfhdTYSoUTO7WHI7IIZvAh05I/akrE7RpPXviMdIrI\nluKOGwMDHuKSUX93BfFcm9WyMx2cGvbORAXPonGadkPbNsuSK1YkalZ27x5Aq10T\nwJ6/u29+BMDIRB1qJPf5gm4itQpX0hLKXRAdSPKQgvA2gDN5fIlPDEAlWt3oo5JI\n6aWKaL1zAwSFcV2XE6c0r9ZrQPQw1cTzeAMDzMQ7MnEb6kt/YNdGfzTL/5b+vF+e\nHApck5WMN3G/8qlI5rFGXG5zljlu\n-----END CERTIFICATE-----",
+    "CertificateType": "PEM",
+    "Issuer": {
+        "Country": "US",
+        "State": "Oregon",
+        "City": "Portland",
+        "Organization": "Contoso",
+        "OrganizationalUnit": "ABC",
+        "CommonName": "manager.contoso.org"
+    },
+    "Subject": {
+        "Country": "US",
+        "State": "Oregon",
+        "City": "Portland",
+        "Organization": "Contoso",
+        "OrganizationalUnit": "ABC",
+        "CommonName": "manager.contoso.org"
+    },
+    "ValidNotBefore": "2018-09-07T13:22:05Z",
+    "ValidNotAfter": "2019-09-07T13:22:05Z",
+    "KeyUsage": [
+        "KeyEncipherment",
+        "ServerAuthentication"
+    ],
+    "SerialNumber": "5d:7a:d8:df:f6:fc:c1:b3:ca:fe:fb:cc:38:f3:01:64:51:ea:05:cb",
+    "Fingerprint": "A6:E9:D2:5C:DC:52:DA:4B:3B:14:97:F3:A4:53:D9:99:A1:0B:56:41",
+    "FingerprintHashAlgorithm": "TPM_ALG_SHA1",
+    "SignatureAlgorithm": "sha256WithRSAEncryption",
+    "Actions": {
+        "#Certificate.Rekey": {
+            "target": "/redfish/v1/UpdateService/ClientCertificates/1/Actions/Certificate.Rekey",
+            "@Redfish.ActionInfo": "/redfish/v1/UpdateService/ClientCertificates/1/RekeyActionInfo"
+        },
+        "#Certificate.Renew": {
+            "target": "/redfish/v1/UpdateService/ClientCertificates/1/Actions/Certificate.Renew"
+        }
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/UpdateService/ClientCertificates/1",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

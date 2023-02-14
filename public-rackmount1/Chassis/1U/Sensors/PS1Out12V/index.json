@@ -1,0 +1,42 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "PS1Out12V",
+    "Name": "Power Supply #1 12V Output Voltage",
+    "ReadingType": "Voltage",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "ElectricalContext": "Total",
+    "Reading": 12.08,
+    "ReadingUnits": "V",
+    "ReadingRangeMin": 0,
+    "ReadingRangeMax": 15,
+    "Accuracy": 0.02,
+    "Precision": 2,
+    "SensingInterval": "PT0.125S",
+    "PhysicalContext": "PowerSupply",
+    "PhysicalSubContext": "Output",
+    "Thresholds": {
+        "UpperCritical": {
+            "Reading": 12.5,
+            "Activation": "Increasing",
+            "DwellTime": "PT1M"
+        },
+        "UpperCaution": {
+            "Reading": 12.35,
+            "DwellTime": "PT10M"
+        },
+        "LowerCaution": {
+            "Reading": 11.85,
+            "DwellTime": "PT5M"
+        },
+        "LowerCritical": {
+            "Reading": 11.5,
+            "DwellTime": "PT1M"
+        }
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1Out12V",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -1,0 +1,38 @@
+{
+    "@odata.type": "#ThermalMetrics.v1_1_0.ThermalMetrics",
+    "Id": "ThermalMetrics",
+    "Name": "Chassis Thermal Metrics",
+    "TemperatureSummaryCelsius": {
+        "Internal": {
+            "Reading": 39,
+            "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/CPU1Temp"
+        },
+        "Intake": {
+            "Reading": 24.8,
+            "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/IntakeTemp"
+        },
+        "Ambient": {
+            "Reading": 22.5,
+            "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/AmbientTemp"
+        },
+        "Exhaust": {
+            "Reading": 40.5,
+            "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/ExhaustTemp"
+        }
+    },
+    "TemperatureReadingsCelsius": [
+        {
+            "Reading": 24.8,
+            "DeviceName": "Intake",
+            "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/IntakeTemp"
+        },
+        {
+            "Reading": 40.5,
+            "DeviceName": "Exhaust",
+            "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/ExhaustTemp"
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Chassis/1U/ThermalSubsystem/ThermalMetrics",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

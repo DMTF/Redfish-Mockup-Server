@@ -1,0 +1,17 @@
+{
+    "@odata.type": "#Certificate.v1_6_0.Certificate",
+    "Id": "EKCert",
+    "Name": "EKCert of the TPM of the computer system",
+    "CertificateType": "PEM",
+    "Links": {
+        "Issuer": {
+            "@odata.id": "/redfish/v1/Systems/437XR1138R2/Certificates/contoso-subca"
+        }
+    },
+    "CertificateUsageTypes": [
+        "Device"
+    ],
+    "CertificateString": "-----BEGIN CERTIFICATE-----\nMIIDejCCAmICAQIwDQYJKoZIhvcNAQENBQAwgYAxCzAJBgNVBAYTAlVTMRAwDgYD\nVQQIDAdSZWRmaXNoMRwwGgYDVQQHDBNTb21ld2hlcmUgSW5iZXR3ZWVuMRAwDgYD\nVQQKDAdDb250b3NvMRAwDgYDVQQLDAdNb2NrdXBzMR0wGwYDVQQDDBRDZXJ0aWZp\nY2F0ZSBEaXZpc2lvbjAgFw0yMTEwMDcyMzQxNTNaGA8yMDk5MTAwODIzNDE1M1ow\ngYIxCzAJBgNVBAYTAlVTMRAwDgYDVQQIDAdSZWRmaXNoMR8wHQYDVQQHDBZFdmVy\neXdoZXJlIGFuZCBub3doZXJlMRAwDgYDVQQKDAdDb250b3NvMRYwFAYDVQQLDA1U\nUE0gU29sdXRpb25zMRYwFAYDVQQDDA1EaXNjcmV0ZSBUUE1zMIIBIjANBgkqhkiG\n9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuVZyaRkASJBM9TuAYReCBLGB2NAF1moUBn0q\nH8mUOpO/Iv6Qm1EpAx398L85K/5KwQf0WwNY6wmzAdwJ5aKftnm92krEC0VnXytb\nYQC8D7b/f/Dw2NMWsTwE+NBsoRdj7Cz1pGRMYEJv7BG4t8VXRXe5UiZ9QHCLzMbT\n6y/T32WKCR/9XWtxWjaoqQEIsyGyQfrmYq2i/mAAcSrtFSAntJUwymEBGI9CKBqy\n2V/Ih0YQ3FwItt6mJNwba8fZ8aSXAEmTlIo8pX71eN9pQOnhSDce62naXqfEgz7I\ncW3Z9Ll6j2omYuOdu3EXylIAU/+Hdn31PoV7KOOsA2U9E/P5PwIDAQABMA0GCSqG\nSIb3DQEBDQUAA4IBAQCG4m5j1LUgC18gFDUztShcEmjyxhJ8QuEbDcVHT6UowhST\n/TDAhwgGSAa2kNCefayG/EEur6s7SJ5Qryx97637iz9Icv4uq+Dg6w4vlpCB2E7j\nT2/liiRq0CSOIQ8bpfot+skp68kFPyw+hgLyci2tjYV3FGkZmsfKCV58hh+jkNr+\nIQHpyF/FEd96edWrUqsau6rIBzFk6EsdTncYTcMyVXjAQWva1u1Xygy7CvR2IEae\nBEN7S34RKluP+UKuB56Wi7b2BZQmLCfGbEUVaN3UyjNwZf2BqYT7yjm+B7D6ncvJ\nMoKeFJfWNY1KzDF7HwhHSVfJAKLRimplM2f/ImBZ\n-----END CERTIFICATE-----\n",
+    "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/TPM/Certificates/EKCert",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

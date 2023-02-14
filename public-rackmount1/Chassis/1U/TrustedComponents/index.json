@@ -1,0 +1,19 @@
+{
+    "@odata.type": "#TrustedComponentCollection.TrustedComponentCollection",
+    "Name": "Trusted Component Collection",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/AC-RoT0"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/iRoT0"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/TPM"
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

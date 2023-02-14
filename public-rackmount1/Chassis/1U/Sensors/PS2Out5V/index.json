@@ -1,0 +1,15 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "PS2Out5V",
+    "Name": "Power Supply #2 5V Output Voltage",
+    "ReadingType": "Voltage",
+    "Status": {
+        "State": "Absent"
+    },
+    "ElectricalContext": "Total",
+    "PhysicalContext": "PowerSupply",
+    "PhysicalSubContext": "Output",
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2Out5V",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#ActionInfo.v1_1_2.ActionInfo",
+    "@odata.type": "#ActionInfo.v1_3_0.ActionInfo",
     "Id": "SimpleUpdateActionInfo",
     "Name": "Simple Update Action Info",
     "Parameters": [
@@ -34,5 +34,5 @@
     ],
     "Oem": {},
     "@odata.id": "/redfish/v1/UpdateService/SimpleUpdateActionInfo",
-    "@Redfish.Copyright": "Copyright 2018-2019 DMTF. All rights reserved."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

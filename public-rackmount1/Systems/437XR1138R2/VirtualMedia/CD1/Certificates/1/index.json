@@ -1,0 +1,35 @@
+{
+    "@odata.type": "#Certificate.v1_6_0.Certificate",
+    "Id": "1",
+    "Name": "HTTPS Certificate",
+    "CertificateString": "------BEGIN CERTIFICATE-----\nMIIFvzCCA6egAwIBAgIJAIkDi2/oWYwhMA0GCSqGSIb3DQEBCwUAMHYxCzAJBgNV\nBAYTAlVTMQ8wDQYDVQQIDAZPcmVnb24xETAPBgNVBAcMCFBvcnRsYW5kMRAwDgYD\nVQQKDAdDb250b3NvMRYwFAYDVQQLDA1JbWFnZSBIb3N0aW5nMRkwFwYDVQQDDBBy\nZWRmaXNoLmRtdGYub3JnMB4XDTIxMDkyMjIwNTAwOFoXDTIyMDkyMjIwNTAwOFow\ndjELMAkGA1UEBhMCVVMxDzANBgNVBAgMBk9yZWdvbjERMA8GA1UEBwwIUG9ydGxh\nbmQxEDAOBgNVBAoMB0NvbnRvc28xFjAUBgNVBAsMDUltYWdlIEhvc3RpbmcxGTAX\nBgNVBAMMEHJlZGZpc2guZG10Zi5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAw\nggIKAoICAQCwxEYgPsHZSjY9FRcJRIB/EkUqHSOXoMlSSM250Ju6Fd3TY3yl3G1a\nccUskvQS1iYQbasPvyi8hOJE4rKIz/4CKPvZjMun+flHGktIb33wjIuxenzj8UoK\nuPYsEQc5HNB9NUwqrPT1PHob75CdYOZSJoqQqSX4LZpiYNKHRgI/njaLzzn8HRBI\nxk/pUj23i11uZtriQKBUY8lQuDiDr7MyuFOOk3x6+vdgzWSkJD6NA/tUAchy5SwQ\n8P368KT7ZM9KCirzWgNCKG51aNzrc8qY/Y7180/Emca2JQR3jPuI/HTp9C8cril/\nb1bFIWgVHJivehjLjBhA+HS8hk0j76RyqfKr/emRshW/2ch3LOsa2G8Bv8qD2BBX\naJ/zfS+WuN1T/ekOOEdP9G1HNxVGdr+WV4zDyFQxDJnKCLIQxc4RMX9iNIIa1w9z\n8ZMCtzb4Fwtkan0Pf/VP7zjBo1V3WgVs/2LSy0+cKMUTUUJTDUo4NQFt+cbArDqR\nGYoChCc/0foaaZUOmZ7pMWg4MeVr3eh9ZrSofhEFiS+SWNzdlUf2XXKa+xXOmUw4\n+yB3+zW4FBduKqBVL04XS4ruVxl0dYP7h2n9Qjp6N7eYBGsfPIFFKvHCTNeZuFrX\nEJNheFrJwBTre9Any7FtRESS+MzqmDSX4ErBuR6iwQtVTp59LN8gzwIDAQABo1Aw\nTjAdBgNVHQ4EFgQUzSniTsBoaxfcA+IL+bVV+9GS9OYwHwYDVR0jBBgwFoAUzSni\nTsBoaxfcA+IL+bVV+9GS9OYwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOC\nAgEAaX0gqlyvn7iFfD9YR+frnBwcKDC85gQULTc1JlV3ybWl63fEb/SD7EGYp8kU\n/4LkO3Ig/qqSMIkMp+IHvjkhCFW6BP3j4NwBRmXWwDK/AjVODGpucu6HjhJ4cT1c\n2dxNz+TYgghuArdnBxKObcrgOmSzB0j3fcFqXJB5YJNWMd/K0MpdCGwwH4J2GM+2\nxH4Sf/48txQ0bkVqBzT1QstWCF4ZEoStSfTviw6XnqOvXlGoBEn2Yw7RnGUitHwd\nK+g77V/ReFkJ/SJimYUCt1h04Bt7BsFLICOPmZ+YsDtr5D6NxOvh+ixtQ//MfXTl\n6REiSugnJ7hxymfmF8GIiXxJ05aXTFZfSah3P+77L6Vtfabjnzdq7elHP3lPKSBz\nQZr5AK/TiPO+RbMGK54vhiaEHgTVJ8YNNxrTugknwx6jd2jPmjXJreBfj1WfsX8i\npbIcipdfJfeH7QsTkaiTq78Cxx/nHARKpF0dh/YwgYvLbDYHz1h3nxrH95VemOAK\nrWe1MGZx8bO0w87qKsMAexo313MhssUgRr8gzUQfkGTlYCbAwXu1JOWxHaXtDBRE\n/u7mvf2qSQiYokPhBAm26VHPv8gyb6XowcPI6ZSxKTEidgwDkyWUzlvCa3k9hdLm\nKFN7+DYh2oeVCrbxsXM1U/35/Is7+Pu8TOvJY5uQsO3+w9M=\n-----END CERTIFICATE-----",
+    "CertificateType": "PEM",
+    "Issuer": {
+        "Country": "US",
+        "State": "Oregon",
+        "City": "Portland",
+        "Organization": "Contoso",
+        "OrganizationalUnit": "Image Hosting",
+        "CommonName": "redfish.dmtf.org"
+    },
+    "Subject": {
+        "Country": "US",
+        "State": "Oregon",
+        "City": "Portland",
+        "Organization": "Contoso",
+        "OrganizationalUnit": "Image Hosting",
+        "CommonName": "redfish.dmtf.org"
+    },
+    "ValidNotBefore": "2021-09-22T20:50:08Z",
+    "ValidNotAfter": "2022-09-22T20:50:08Z",
+    "KeyUsage": [
+        "KeyEncipherment",
+        "ServerAuthentication"
+    ],
+    "SerialNumber": "89:03:8B:6F:E8:59:8C:21",
+    "Fingerprint": "5C:58:1E:1E:11:17:A1:03:68:3C:12:8A:D4:F2:DD:10:45:15:93:61",
+    "FingerprintHashAlgorithm": "TPM_ALG_SHA1",
+    "SignatureAlgorithm": "sha256WithRSAEncryption",
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/VirtualMedia/CD1/Certificates/1",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

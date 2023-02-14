@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#UpdateService.v1_8_0.UpdateService",
+    "@odata.type": "#UpdateService.v1_11_2.UpdateService",
     "Id": "UpdateService",
     "Name": "Update service",
     "Status": {
@@ -26,6 +26,9 @@
     "FirmwareInventory": {
         "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory"
     },
+    "ClientCertificates": {
+        "@odata.id": "/redfish/v1/UpdateService/ClientCertificates"
+    },
     "Actions": {
         "#UpdateService.SimpleUpdate": {
             "target": "/redfish/v1/UpdateService/Actions/SimpleUpdate",
@@ -35,5 +38,5 @@
     },
     "Oem": {},
     "@odata.id": "/redfish/v1/UpdateService",
-    "@Redfish.Copyright": "Copyright 2018-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

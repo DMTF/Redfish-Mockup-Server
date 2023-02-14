@@ -1,0 +1,13 @@
+{
+    "@odata.type": "#PortCollection.PortCollection",
+    "Name": "Port Collection",
+    "Description": "Collection of dedicated network ports for this manager",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Managers/BMC/DedicatedNetworkPorts/1"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Managers/BMC/DedicatedNetworkPorts",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

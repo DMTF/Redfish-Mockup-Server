@@ -1,0 +1,55 @@
+{
+    "@odata.type": "#EthernetInterface.v1_9_0.EthernetInterface",
+    "Id": "ToManager",
+    "Name": "Host Ethernet Interface",
+    "Description": "Host Network Interface",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "InterfaceEnabled": true,
+    "PermanentMACAddress": "AA:BB:CC:DD:EE:FE",
+    "MACAddress": "AA:BB:CC:DD:EE:FE",
+    "SpeedMbps": 100,
+    "AutoNeg": true,
+    "FullDuplex": true,
+    "MTUSize": 1500,
+    "MaxIPv6StaticAddresses": 1,
+    "IPv4Addresses": [
+        {
+            "Address": "192.168.20.56",
+            "SubnetMask": "255.255.255.0",
+            "AddressOrigin": "Static",
+            "Gateway": "192.168.20.1"
+        }
+    ],
+    "IPv6AddressPolicyTable": [
+        {
+            "Prefix": "::1/128",
+            "Precedence": 50,
+            "Label": 0
+        }
+    ],
+    "IPv6StaticAddresses": [
+        {
+            "Address": "fe80::1ec1:deff:fe6f:1e25",
+            "PrefixLength": 64
+        }
+    ],
+    "IPv6DefaultGateway": "fe80::1ec1:deff:fe6f:1e24",
+    "IPv6Addresses": [
+        {
+            "Address": "fe80::1ec1:deff:fe6f:1e25",
+            "PrefixLength": 64,
+            "AddressOrigin": "Static",
+            "AddressState": "Preferred"
+        }
+    ],
+    "Links": {
+        "HostInterface": {
+            "@odata.id": "/redfish/v1/Managers/BMC/HostInterfaces/1"
+        }
+    },
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/EthernetInterfaces/ToManager",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

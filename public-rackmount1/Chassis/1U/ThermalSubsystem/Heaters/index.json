@@ -1,0 +1,12 @@
+{
+    "@odata.type": "#HeaterCollection.HeaterCollection",
+    "Name": "Heater Collection",
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/ThermalSubsystem/Heaters/CPU1Heater"
+        }
+    ],
+    "Members@odata.count": 1,
+    "@odata.id": "/redfish/v1/Chassis/1U/ThermalSubsystem/Heaters",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

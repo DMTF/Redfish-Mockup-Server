@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#ActionInfo.v1_1_2.ActionInfo",
+    "@odata.type": "#ActionInfo.v1_3_0.ActionInfo",
     "Id": "SubmitTestEventActionInfo",
     "Name": "SubmitTestEvent Action Info",
     "Parameters": [
@@ -58,5 +58,6 @@
         }
     ],
     "Oem": {},
-    "@odata.id": "/redfish/v1/EventService/SubmitTestEventActionInfo"
+    "@odata.id": "/redfish/v1/EventService/SubmitTestEventActionInfo",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

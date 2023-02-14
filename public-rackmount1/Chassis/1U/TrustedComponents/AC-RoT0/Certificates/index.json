@@ -1,0 +1,12 @@
+{
+    "@odata.type": "#CertificateCollection.CertificateCollection",
+    "Name": "AC-RoT0 Certificates Collection",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/AC-RoT0/Certificates/DeviceCert"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/AC-RoT0/Certificates",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

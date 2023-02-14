@@ -1,0 +1,17 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "ExhaustTemp",
+    "Name": "Fan Bay #1 Exhaust Temperature",
+    "Oem": {},
+    "PhysicalContext": "Exhaust",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Reading": 40.5,
+    "ReadingUnits": "Cel",
+    "ReadingRangeMin": 0,
+    "ReadingRangeMax": 75,
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/ExhaustTemp",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

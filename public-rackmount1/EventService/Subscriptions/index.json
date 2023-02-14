@@ -1,7 +1,7 @@
 {
     "@odata.type": "#EventDestinationCollection.EventDestinationCollection",
     "Name": "Event Subscriptions Collection",
-    "Members@odata.count": 3,
+    "Members@odata.count": 4,
     "Members": [
         {
             "@odata.id": "/redfish/v1/EventService/Subscriptions/1"
@@ -11,8 +11,11 @@
         },
         {
             "@odata.id": "/redfish/v1/EventService/Subscriptions/3"
+        },
+        {
+            "@odata.id": "/redfish/v1/EventService/Subscriptions/4"
         }
     ],
     "@odata.id": "/redfish/v1/EventService/Subscriptions",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

@@ -1,0 +1,26 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "CPUFan2",
+    "Name": "CPU #2 Fan Speed",
+    "Oem": {},
+    "PhysicalContext": "CPU",
+    "Reading": 60,
+    "ReadingRangeMax": 100,
+    "ReadingRangeMin": 0,
+    "ReadingType": "Percent",
+    "ReadingUnits": "%",
+    "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+    },
+    "Thresholds": {
+        "LowerCaution": {
+            "Reading": 5
+        },
+        "LowerCritical": {
+            "Reading": 0
+        }
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/CPUFan2",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -1,0 +1,36 @@
+{
+    "@odata.type": "#EnvironmentMetrics.v1_3_0.EnvironmentMetrics",
+    "Name": "Chassis Environment Metrics",
+    "TemperatureCelsius": {
+        "Reading": 39,
+        "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/CPU1Temp"
+    },
+    "PowerWatts": {
+        "Reading": 374,
+        "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/TotalPower"
+    },
+    "PowerLimitWatts": {
+        "SetPoint": 500,
+        "AllowableMax": 1000,
+        "AllowableMin": 150,
+        "ControlMode": "Automatic",
+        "DataSourceUri": "/redfish/v1/Chassis/1U/Controls/PowerLimit"
+    },
+    "FanSpeedsPercent": [
+        {
+            "DeviceName": "Chassis Fan #1",
+            "Reading": 45,
+            "SpeedRPM": 1900,
+            "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/FanBay1"
+        },
+        {
+            "DeviceName": "Chassis Fan #2",
+            "Reading": 55,
+            "SpeedRPM": 2100,
+            "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/FanBay2"
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Chassis/1U/EnvironmentMetrics",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

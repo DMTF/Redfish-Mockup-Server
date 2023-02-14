@@ -1,0 +1,15 @@
+{
+    "@odata.type": "#CertificateCollection.CertificateCollection",
+    "Name": "Certificate Collection",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/437XR1138R2/VirtualMedia/CD1/Certificates/1"
+        }
+    ],
+    "@Redfish.SupportedCertificates": [
+        "PEM"
+    ],
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/VirtualMedia/CD1/Certificates",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

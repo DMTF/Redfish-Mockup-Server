@@ -1,0 +1,70 @@
+{
+    "@odata.type": "#ComponentIntegrity.v1_2_0.ComponentIntegrity",
+    "Id": "SS-SPDM-0",
+    "Description": "SPDM Integrity Information for CPU1 reported by AC-RoT0",
+    "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+    },
+    "ComponentIntegrityType": "SPDM",
+    "ComponentIntegrityTypeVersion": "1.1.0",
+    "ComponentIntegrityEnabled": true,
+    "TargetComponentURI": "/redfish/v1/Chassis/1U/TrustedComponents/AC-RoT0",
+    "LastUpdated": "2021-11-02T14:05:39-07:00",
+    "SPDM": {
+        "Requester": {
+            "@odata.id": "/redfish/v1/Managers/BMC"
+        },
+        "MeasurementSet": {
+            "MeasurementSpecification": "DMTF",
+            "MeasurementSummary": "oylHo8JAT1RqtB0Vlx9dCzogavikhSvIZpVEDhI1X1+TKeyZZvwuUb5qF9uWqPVa",
+            "MeasurementSummaryHashAlgorithm": "TPM_ALG_SHA_384",
+            "MeasurementSummaryType": "TCB",
+            "Measurements": [
+                {
+                    "MeasurementIndex": 1,
+                    "PartofSummaryHash": false,
+                    "LastUpdated": "2021-10-31T19:08:02-07:00",
+                    "Measurement": "K0zqzG/MFbeV7OVAhvDugxEzc7nMnRvdoKy8g2zU5JovPrUNSeFJxibTZE+0kOR9QhDR5RzumnomFECF8zI/Lw==",
+                    "MeasurementHashAlgorithm": "TPM_ALG_SHA_512"
+                },
+                {
+                    "MeasurementIndex": 3,
+                    "PartofSummaryHash": true,
+                    "LastUpdated": "2021-10-31T19:08:02-07:00",
+                    "Measurement": "4wEF1nnub2ozuYTWyjyvFGrYnSn0eidy54uaIYXjp/HKRByaco9UtCZeyNfA3rQ3YsRD/6csLcqGw9Nd9/HPAw==",
+                    "MeasurementHashAlgorithm": "TPM_ALG_SHA_512",
+                    "MeasurmentType": "ImmutableROM"
+                },
+                {
+                    "MeasurementIndex": 150,
+                    "PartofSummaryHash": true,
+                    "LastUpdated": "2021-10-31T19:08:02-07:00",
+                    "Measurement": "dZyksxnM/LZbSUY8INpp4wqcCM8m6XOKoy8cLaXOjUzqYYJT92AmEp7hKVFULNz1aCpKk69VULMyaDIv9hmJSQ==",
+                    "MeasurementHashAlgorithm": "TPM_ALG_SHA_512"
+                }
+            ]
+        },
+        "IdentityAuthentication": {
+            "ResponderAuthentication": {
+                "ComponentCertificate": {
+                    "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/AC-RoT0/Certificates/DeviceCert"
+                }
+            }
+        },
+        "ComponentCommunication": {
+            "Sessions": [
+                {
+                    "SessionId": 15999129,
+                    "SessionType": "EncryptedAuthenticated"
+                },
+                {
+                    "SessionId": 1193013,
+                    "SessionType": "EncryptedAuthenticated"
+                }
+            ]
+        }
+    },
+    "@odata.id": "/redfish/v1/ComponentIntegrity/SS-SPDM-0",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

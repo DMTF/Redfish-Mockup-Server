@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#ComputerSystem.v1_10_0.ComputerSystem",
+    "@odata.type": "#ComputerSystem.v1_20_0.ComputerSystem",
     "Id": "437XR1138R2",
     "Name": "WebFrontEnd483",
     "SystemType": "Physical",
@@ -64,10 +64,18 @@
             "Style": "Executive"
         }
     },
+    "BootProgress": {
+        "LastState": "OSRunning",
+        "LastStateTime": "2021-03-13T04:14:13+06:00",
+        "LastBootTimeSeconds": 676
+    },
+    "LastResetTime": "2021-03-13T04:02:57+06:00",
     "BiosVersion": "P79 v1.45 (12/06/2017)",
     "ProcessorSummary": {
         "Count": 2,
         "Model": "Multi-Core Intel(R) Xeon(R) processor 7xxx Series",
+        "LogicalProcessorCount": 16,
+        "CoreCount": 8,
         "Status": {
             "State": "Enabled",
             "Health": "OK",
@@ -87,6 +95,9 @@
     "Bios": {
         "@odata.id": "/redfish/v1/Systems/437XR1138R2/Bios"
     },
+    "SecureBoot": {
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot"
+    },
     "Processors": {
         "@odata.id": "/redfish/v1/Systems/437XR1138R2/Processors"
     },
@@ -101,6 +112,18 @@
     },
     "LogServices": {
         "@odata.id": "/redfish/v1/Systems/437XR1138R2/LogServices"
+    },
+    "GraphicsControllers": {
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/GraphicsControllers"
+    },
+    "USBControllers": {
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/USBControllers"
+    },
+    "Certificates": {
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/Certificates"
+    },
+    "VirtualMedia": {
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/VirtualMedia"
     },
     "Links": {
         "Chassis": [
@@ -135,5 +158,5 @@
         }
     },
     "@odata.id": "/redfish/v1/Systems/437XR1138R2",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

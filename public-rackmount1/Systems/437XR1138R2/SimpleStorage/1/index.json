@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#SimpleStorage.v1_2_3.SimpleStorage",
+    "@odata.type": "#SimpleStorage.v1_3_1.SimpleStorage",
     "Id": "1",
     "Name": "Simple Storage Controller",
     "Description": "System SATA",
@@ -44,5 +44,5 @@
         }
     ],
     "@odata.id": "/redfish/v1/Systems/437XR1138R2/SimpleStorage/1",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

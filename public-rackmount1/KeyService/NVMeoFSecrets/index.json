@@ -1,0 +1,15 @@
+{
+    "@odata.type": "#KeyCollection.KeyCollection",
+    "Name": "Key Collection",
+    "Members@odata.count": 2,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/KeyService/NVMeoFSecrets/0"
+        },
+        {
+            "@odata.id": "/redfish/v1/KeyService/NVMeoFSecrets/1"
+        }
+    ],
+    "@odata.id": "/redfish/v1/KeyService/NVMeoFSecrets",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

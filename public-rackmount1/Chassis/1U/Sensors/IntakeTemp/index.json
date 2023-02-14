@@ -1,0 +1,17 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "IntakeTemp",
+    "Name": "Front Panel Intake Temperature",
+    "Oem": {},
+    "PhysicalContext": "Intake",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Reading": 24.8,
+    "ReadingUnits": "Cel",
+    "ReadingRangeMin": 0,
+    "ReadingRangeMax": 75,
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/IntakeTemp",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

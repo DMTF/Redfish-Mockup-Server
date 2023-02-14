@@ -1,9 +1,22 @@
 {
-    "@odata.type": "#ServiceRoot.v1_6_0.ServiceRoot",
+    "@odata.type": "#ServiceRoot.v1_15_0.ServiceRoot",
     "Id": "RootService",
     "Name": "Root Service",
-    "RedfishVersion": "1.6.0",
+    "RedfishVersion": "1.15.0",
     "UUID": "92384634-2938-2342-8820-489239905423",
+    "ProtocolFeaturesSupported": {
+        "ExpandQuery": {
+            "ExpandAll": true,
+            "Levels": true,
+            "MaxLevels": 6,
+            "Links": true,
+            "NoLinks": true
+        },
+        "SelectQuery": false,
+        "FilterQuery": false,
+        "OnlyMemberQuery": true,
+        "ExcerptQuery": true
+    },
     "Systems": {
         "@odata.id": "/redfish/v1/Systems"
     },
@@ -34,12 +47,18 @@
     "CertificateService": {
         "@odata.id": "/redfish/v1/CertificateService"
     },
+    "KeyService": {
+        "@odata.id": "/redfish/v1/KeyService"
+    },
     "Links": {
         "Sessions": {
             "@odata.id": "/redfish/v1/SessionService/Sessions"
         }
     },
+    "ComponentIntegrity": {
+        "@odata.id": "/redfish/v1/ComponentIntegrity"
+    },
     "Oem": {},
     "@odata.id": "/redfish/v1/",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

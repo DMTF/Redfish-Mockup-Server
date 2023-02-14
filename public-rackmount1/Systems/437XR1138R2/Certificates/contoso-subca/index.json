@@ -1,0 +1,25 @@
+{
+    "@odata.type": "#Certificate.v1_6_0.Certificate",
+    "Id": "SScert",
+    "Name": "Contoso Intermediate CA - Level 1",
+    "CertificateType": "PEM",
+    "Links": {
+        "Issuer": {
+            "@odata.id": "/redfish/v1/Systems/437XR1138R2/Certificates/contoso-root"
+        },
+        "Subjects": [
+            {
+                "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/AC-RoT0/Certificates/DeviceCert"
+            },
+            {
+                "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/iRoT0/Certificates/DeviceCert"
+            },
+            {
+                "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/TPM/Certificates/EKCert"
+            }
+        ]
+    },
+    "CertificateString": "-----BEGIN CERTIFICATE-----\nMIIFFTCCAv2gAwIBAgIBATANBgkqhkiG9w0BAQ0FADBgMQswCQYDVQQGEwJVUzEQ\nMA4GA1UECAwHUmVkZmlzaDEbMBkGA1UEBwwSTm90LUhlcmUtTm90LVRoZXJlMRAw\nDgYDVQQKDAdDb250b3NvMRAwDgYDVQQLDAdSZWRmaXNoMCAXDTIxMTAwNzE5Mzcx\nNFoYDzIwOTkxMDA4MTkzNzE0WjCBgDELMAkGA1UEBhMCVVMxEDAOBgNVBAgMB1Jl\nZGZpc2gxHDAaBgNVBAcME1NvbWV3aGVyZSBJbmJldHdlZW4xEDAOBgNVBAoMB0Nv\nbnRvc28xEDAOBgNVBAsMB01vY2t1cHMxHTAbBgNVBAMMFENlcnRpZmljYXRlIERp\ndmlzaW9uMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAywVlS8JJShc/\n81nnNBVMlv2jZvwUGWET2pRzayBsDSuotCuHFRexslsHZhHZygIGn6JTxlw24Bt7\nB4NVHrwCfy+yMPbcqo3fyaNz7bEWBHfzh4vbSqwvfd8A0N8z/Nz6nXcUFM1o5ajI\nN8pVODJZsS4oXDFi0BEyto4EEYGpZgGwi/S9k+vi3BDS5Fplo9RGuCcVnf7Iq6RL\nlU/uu6+sleBfjKPty8VIOnLX+4YuA32BPZjbeBnsdDHq1cu0QTGWQLXQisC8TPYt\n1lRkiNqD7/4E8k07SRHPs/XxWLIqZKDQe4XQC1I0CkEyOceW7BWp3/Z2kXJT4zR/\nLZunbX3FsQIDAQABo4G2MIGzMB0GA1UdDgQWBBT80CP8NbbpE4mJBHH3G8TCEMk3\nFjB6BgNVHSMEczBxoWSkYjBgMQswCQYDVQQGEwJVUzEQMA4GA1UECAwHUmVkZmlz\naDEbMBkGA1UEBwwSTm90LUhlcmUtTm90LVRoZXJlMRAwDgYDVQQKDAdDb250b3Nv\nMRAwDgYDVQQLDAdSZWRmaXNoggkAkhbCLnVHq9AwCQYDVR0TBAIwADALBgNVHQ8E\nBAMCBaAwDQYJKoZIhvcNAQENBQADggIBABMdLmvS2fjYhlJGBIfmht5HDL829ORG\n4LnLqtDOzY4LkWE9ri14unaWmqeD0tfq5cy2un9C30LFvwMxb0O+UlLdpcuxR74B\n8Oq97VCRiwdlVt4YxWRxfVbA9D/YjOZFjumnHebMz6EOpl0HgsaQ95QmF8Hdb6Wg\n6j0m/7WZFED3thfw2SAel+B/OlJkUSN4zsPC2w2e7Gy4VpSpP8BYvsnQ9nE6TEyA\nOCj1VNQJsVGqu1g21CStDWOb6mqQDM8Ns1VMrHKRbZQRaugdvrRtTJ74wnV+YOFl\n/IhM5JIDs2cyiM4NepMfIzbgQG28IyuP8l4U7y+cZCf7p5+SWJgfzCQOMVGZhgsI\n8pKZqWIRmwl+nLFAXAa+RDcyI8DWh2y01Jk+7+9QgWhfvmFsPm7/qTOEhi79PU9H\nIAMkL9Xi1OcPEeAMk4Xfh578e0Xleq2cZVtYxZl71HJ0s39huyVNSKbsljA9S2rv\nSgczNruYDIIjniTkbWkebY1kbPBTjbSOUS1WT60iFRFgNbJ06gpz3yCpMnny7vVg\nVMPUq1m9AfVw3s6x1db3B0TCoNLUK16bmterp0CZe69azzK111scNlM0jFV0R2Kl\nsIZ5E0vmKzfg2XAgEY0rb7S0O363ASINOgAQSJVB9aXkJeNt68SC0UsTwy6x0ikX\n4kvr+YAqTSOA\n-----END CERTIFICATE-----",
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/Certificates/contoso-subca",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

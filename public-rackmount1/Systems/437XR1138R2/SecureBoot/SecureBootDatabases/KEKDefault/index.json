@@ -1,0 +1,13 @@
+{
+    "@odata.type": "#SecureBootDatabase.v1_0_1.SecureBootDatabase",
+    "Id": "KEKDefault",
+    "Name": "KEKDefault - Default Key Exchange Key Database",
+    "Description": "UEFI KEKDefault Secure Boot Database",
+    "DatabaseId": "KEKDefault",
+    "Certificates": {
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/KEKDefault/Certificates/"
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/KEKDefault",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

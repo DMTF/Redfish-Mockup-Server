@@ -1,0 +1,13 @@
+{
+    "@odata.type": "#HostInterfaceCollection.HostInterfaceCollection",
+    "Name": "Host Interface Collection",
+    "Description": "Collection of HostInterfaces for this Manager",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Managers/BMC/HostInterfaces/1"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Managers/BMC/HostInterfaces",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

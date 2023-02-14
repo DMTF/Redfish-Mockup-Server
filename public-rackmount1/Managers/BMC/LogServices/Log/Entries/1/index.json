@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#LogEntry.v1_5_1.LogEntry",
+    "@odata.type": "#LogEntry.v1_14_0.LogEntry",
     "Id": "1",
     "Name": "Log Entry 1",
     "EntryType": "Event",
@@ -19,5 +19,5 @@
     },
     "Oem": {},
     "@odata.id": "/redfish/v1/Managers/BMC/LogServices/Log/Entries/1",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

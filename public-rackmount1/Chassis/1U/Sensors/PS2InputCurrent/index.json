@@ -1,0 +1,15 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "PS2InputCurrent",
+    "Name": "Power Supply #2 Input Current",
+    "ReadingType": "Current",
+    "ElectricalContext": "Total",
+    "Status": {
+        "State": "Absent"
+    },
+    "PhysicalContext": "PowerSupply",
+    "PhysicalSubContext": "Input",
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2InputCurrent",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}
