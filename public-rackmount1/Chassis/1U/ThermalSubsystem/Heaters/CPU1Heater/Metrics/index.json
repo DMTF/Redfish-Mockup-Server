@@ -1,0 +1,24 @@
+{
+    "@odata.type": "#HeaterMetrics.v1_0_0.HeaterMetrics",
+    "Id": "HeaterMetrics",
+    "Description": "Heater Metrics for CPU1 Heater",
+    "Name": "CPU1 Heater Metrics",
+    "PrePowerOnHeatingTimeSeconds": 600,
+    "RuntimeHeatingTimeSeconds": 3600,
+    "PowerWatts": {
+        "Reading": 200.3
+    },
+    "TemperatureReadingsCelsius": [
+        {
+            "DeviceName": "Heater Average Temperature",
+            "Reading": 2.5
+        }
+    ],
+    "Actions": {
+        "#HeaterMetrics.ResetMetrics": {
+            "target": "/redfish/v1/Chassis/1U/ThermalSubsystem/Heaters/CPU1Heater/Metrics/HeaterMetrics.ResetMetrics"
+        }
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U/ThermalSubsystem/Heaters/CPU1Heater/Metrics",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

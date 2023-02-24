@@ -1,0 +1,39 @@
+{
+    "@odata.type": "#Port.v1_8_0.Port",
+    "CurrentSpeedGbps": 0.1,
+    "Ethernet": {
+        "FlowControlConfiguration": "TX_RX",
+        "FlowControlStatus": "TX_RX",
+        "SupportedEthernetCapabilities": [
+            "WakeOnLAN"
+        ],
+        "LLDPEnabled": true,
+        "LLDPTransmit": {},
+        "LLDPReceive": {}
+    },
+    "LinkConfiguration": [
+        {
+            "AutoSpeedNegotiationCapable": true,
+            "AutoSpeedNegotiationEnabled": true,
+            "CapableLinkSpeedGbps": [
+                0.1
+            ]
+        }
+    ],
+    "LinkNetworkTechnology": "Ethernet",
+    "LinkState": "Enabled",
+    "LinkStatus": "LinkUp",
+    "MaxFrameSize": 1500,
+    "MaxSpeedGbps": 0.1,
+    "PortMedium": "Electrical",
+    "PortType": "UpstreamPort",
+    "Links": {
+        "EthernetInterfaces": [
+            {
+                "@odata.id": "/redfish/v1/Managers/BMC/EthernetInterfaces/eth0"
+            }
+        ]
+    },
+    "@odata.id": "/redfish/v1/Managers/BMC/DedicatedNetworkPorts/1",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -1,4 +1,5 @@
 {
+    "@odata.context": "/redfish/v1/$metadata",
     "value": [
         {
             "name": "Service",
@@ -51,6 +52,11 @@
             "url": "/redfish/v1/CertificateService"
         },
         {
+            "name": "KeyService",
+            "kind": "Singleton",
+            "url": "/redfish/v1/KeyService"
+        },
+        {
             "name": "UpdateService",
             "kind": "Singleton",
             "url": "/redfish/v1/UpdateService"
@@ -61,6 +67,5 @@
             "url": "/redfish/v1/SessionService/Sessions"
         }
     ],
-    "@odata.context": "/redfish/v1/$metadata",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

@@ -1,0 +1,29 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "Battery1Temp",
+    "Name": "Battery #1 Temperature",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "ReadingType": "Temperature",
+    "Reading": 33,
+    "ReadingUnits": "Cel",
+    "ReadingRangeMin": 0,
+    "ReadingRangeMax": 75,
+    "PhysicalContext": "Battery",
+    "Thresholds": {
+        "UpperCritical": {
+            "Reading": 60,
+            "DwellTime": "PT15S",
+            "Activation": "Increasing"
+        },
+        "UpperCaution": {
+            "Reading": 50,
+            "Activation": "Increasing",
+            "DwellTime": "PT15S"
+        }
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/Battery1Temp",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

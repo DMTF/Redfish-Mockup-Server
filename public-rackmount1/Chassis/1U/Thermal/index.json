@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#Thermal.v1_6_0.Thermal",
+    "@odata.type": "#Thermal.v1_7_1.Thermal",
     "Id": "Thermal",
     "Name": "Thermal",
     "Temperatures": [
@@ -155,5 +155,5 @@
         }
     ],
     "@odata.id": "/redfish/v1/Chassis/1U/Thermal",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

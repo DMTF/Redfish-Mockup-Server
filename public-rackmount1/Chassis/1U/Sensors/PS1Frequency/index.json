@@ -1,0 +1,41 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "PS1Frequency",
+    "Name": "Power Supply #1 Frequency",
+    "ReadingType": "Frequency",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Reading": 60.1,
+    "ReadingUnits": "Hz",
+    "ReadingRangeMin": 0,
+    "ReadingRangeMax": 160,
+    "Accuracy": 0.02,
+    "Precision": 2,
+    "SensingInterval": "PT0.125S",
+    "PhysicalContext": "PowerSupply",
+    "PhysicalSubContext": "Input",
+    "Thresholds": {
+        "UpperCritical": {
+            "Reading": 60.37,
+            "Activation": "Increasing",
+            "DwellTime": "PT1M"
+        },
+        "UpperCaution": {
+            "Reading": 60.2,
+            "DwellTime": "PT10M"
+        },
+        "LowerCaution": {
+            "Reading": 59.5,
+            "DwellTime": "PT5M"
+        },
+        "LowerCritical": {
+            "Reading": 58.75,
+            "DwellTime": "PT1M"
+        }
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1Frequency",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

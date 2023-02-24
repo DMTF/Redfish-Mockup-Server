@@ -1,0 +1,42 @@
+{
+    "@odata.type": "#PowerSubsystem.v1_1_0.PowerSubsystem",
+    "Id": "PowerSubsystem",
+    "Name": "Power Subsystem for Chassis",
+    "CapacityWatts": 2000,
+    "Allocation": {
+        "RequestedWatts": 1500,
+        "AllocatedWatts": 1200
+    },
+    "PowerSupplyRedundancy": [
+        {
+            "RedundancyType": "Failover",
+            "MaxSupportedInGroup": 2,
+            "MinNeededInGroup": 1,
+            "RedundancyGroup": [
+                {
+                    "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem/PowerSupplies/Bay1"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem/PowerSupplies/Bay2"
+                }
+            ],
+            "Status": {
+                "State": "UnavailableOffline",
+                "Health": "OK"
+            }
+        }
+    ],
+    "PowerSupplies": {
+        "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem/PowerSupplies"
+    },
+    "Batteries": {
+        "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem/Batteries"
+    },
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

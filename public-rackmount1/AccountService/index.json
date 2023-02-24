@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#AccountService.v1_7_0.AccountService",
+    "@odata.type": "#AccountService.v1_12_0.AccountService",
     "Id": "AccountService",
     "Name": "Account Service",
     "Description": "Account Service",
@@ -92,9 +92,25 @@
             }
         ]
     },
+    "OAuth2": {
+        "AccountProviderType": "OAuth2",
+        "ServiceEnabled": true,
+        "ServiceAddresses": [
+            "https://contoso.org/.well-known/oauth-authorization-server"
+        ],
+        "OAuth2Service": {
+            "Mode": "Discovery",
+            "Issuer": "https://contoso.org/services/oauth2",
+            "Audience": [
+                "23:11:8A:33:CF:EA",
+                "92384634-2938-2342-8820-489239905423"
+            ],
+            "OAuthServiceSigningKeys": "ewogICAgImtleXMiOiBbCiAgICAgICAgewogICAgICAgICAgICAiZSI6ICJBUUFCIiwKICAgICAgICAgICAgImtpZCI6ICJvV1F2Tl8tRUxnd25HMzFNTEl4Rm5hTVlfNTd0Wk9FSUVQYnpaYlBqS2FBIiwKICAgICAgICAgICAgImt0eSI6ICJSU0EiLAogICAgICAgICAgICAibiI6ICJvYS1Kb2pkSGw2VHQ3N2Vma2h6aW5MMU9XNmZjMGhjQjloOTN2WUZyRVlPakozRjhfTFh1c1ItMW95MUFKdExZcF9KeVI4Q1ZET28yVGNCaTBuSkhKczF1dkN4WWljX202WE5vMHptVm1VQ2hVMnBYSlBGelZKRGV5VVhIWWVONG5yQ1k4XzlTLXlzWnlKa2RRaWJmeHlBRndUMHdpNlZldF9MYTE4N3JNZUFCU0tXdEdIVmpkOWk1UmhELWNGU1JaNk05M0s2bXFPUUpaX0pMXzJKUU93aGk5dFl4Q2drVVpqc1gyWXowMEZpdUVTWDhHcXRGQlI1UzhIT2p0b2FhZUJrTk5hYWZFOFdSUVl6QlVmOHpiNkVobUFMemc0Z0YxTVhRb3dZV25GcGpzYXcwNVRONHk3SWZJUVhLODlqbGxnbWFkWVVjbndaUmRMc1o2VTdBS1EiCiAgICAgICAgfQogICAgXQp9"
+        }
+    },
     "AdditionalExternalAccountProviders": {
         "@odata.id": "/redfish/v1/AccountService/ExternalAccountProviders"
     },
     "@odata.id": "/redfish/v1/AccountService",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

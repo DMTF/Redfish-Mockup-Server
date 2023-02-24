@@ -1,0 +1,30 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "Battery1OutputVoltage",
+    "Name": "Battery #1 Output Voltage",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "ReadingType": "Voltage",
+    "Reading": 12.22,
+    "ReadingUnits": "V",
+    "ReadingRangeMin": 0,
+    "ReadingRangeMax": 15,
+    "PhysicalContext": "Battery",
+    "PhysicalSubContext": "Output",
+    "Thresholds": {
+        "UpperCritical": {
+            "Reading": 14,
+            "Activation": "Increasing",
+            "DwellTime": "PT1S"
+        },
+        "UpperCaution": {
+            "Reading": 13,
+            "Activation": "Increasing",
+            "DwellTime": "PT1S"
+        }
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/Battery1OutputVoltage",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

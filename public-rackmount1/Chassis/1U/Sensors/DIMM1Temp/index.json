@@ -1,0 +1,46 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "DIMM1Temp",
+    "Name": "DIMM #1 Temperature",
+    "Oem": {},
+    "PhysicalContext": "Memory",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Reading": 44,
+    "ReadingUnits": "Cel",
+    "Thresholds": {
+        "UpperCaution": {
+            "Reading": 55,
+            "DwellTime": "PT5M",
+            "Activation": "Increasing"
+        },
+        "UpperCautionUser": {
+            "Reading": 50
+        },
+        "UpperCriticalUser": {
+            "Reading": 60,
+            "DwellTime": "PT1M"
+        },
+        "UpperCritical": {
+            "Reading": 65,
+            "DwellTime": "PT5M",
+            "Activation": "Increasing"
+        },
+        "UpperFatal": {
+            "Reading": 75,
+            "DwellTime": "PT30S",
+            "Activation": "Increasing"
+        }
+    },
+    "ReadingRangeMin": 0,
+    "ReadingRangeMax": 75,
+    "RelatedItem": [
+        {
+            "@odata.id": "/redfish/v1/Systems/437XR1138R2/Memory/DIMM1"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/DIMM1Temp",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

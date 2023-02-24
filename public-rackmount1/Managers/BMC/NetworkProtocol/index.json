@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#ManagerNetworkProtocol.v1_5_0.ManagerNetworkProtocol",
+    "@odata.type": "#ManagerNetworkProtocol.v1_9_1.ManagerNetworkProtocol",
     "Id": "NetworkProtocol",
     "Name": "Manager Network Protocol",
     "Description": "Manager Network Service",
@@ -19,6 +19,15 @@
         "Certificates": {
             "@odata.id": "/redfish/v1/Managers/BMC/NetworkProtocol/HTTPS/Certificates"
         }
+    },
+    "Proxy": {
+        "Enabled": true,
+        "ProxyServerURI": "https://proxy.intranet.contoso.com:9900",
+        "Username": "proxy",
+        "Password": null,
+        "PasswordSet": true,
+        "ExcludeAddresses": [],
+        "ProxyAutoConfigURI": "proxy.intranet.contoso.com/proxy.pac"
     },
     "IPMI": {
         "ProtocolEnabled": true,
@@ -75,5 +84,5 @@
     },
     "Oem": {},
     "@odata.id": "/redfish/v1/Managers/BMC/NetworkProtocol",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

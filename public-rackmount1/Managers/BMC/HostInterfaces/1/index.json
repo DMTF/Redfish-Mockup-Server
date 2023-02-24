@@ -1,0 +1,46 @@
+{
+    "@odata.type": "#HostInterface.v1_3_0.HostInterface",
+    "Id": "1",
+    "Name": "Host Interface",
+    "Description": "Management Host Interface",
+    "HostInterfaceType": "NetworkHostInterface",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "InterfaceEnabled": true,
+    "ExternallyAccessible": false,
+    "AuthenticationModes": [
+        "AuthNone",
+        "BasicAuth",
+        "RedfishSessionAuth",
+        "OemAuth"
+    ],
+    "CredentialBootstrapping": {
+        "RoleId": "Administrator",
+        "Enabled": true,
+        "EnableAfterReset": true
+    },
+    "HostEthernetInterfaces": {
+        "@odata.id": "/redfish/v1/Managers/BMC/HostInterfaces/1/HostEthernetInterfaces"
+    },
+    "ManagerEthernetInterface": {
+        "@odata.id": "/redfish/v1/Managers/BMC/EthernetInterfaces/ToHost"
+    },
+    "NetworkProtocol": {
+        "@odata.id": "/redfish/v1/Managers/BMC/NetworkProtocol"
+    },
+    "Links": {
+        "ComputerSystems": [
+            {
+                "@odata.id": "/redfish/v1/Systems/437XR1138R2"
+            }
+        ],
+        "CredentialBootstrappingRole": {
+            "@odata.id": "/redfish/v1/AccountService/Roles/Administrator"
+        }
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Managers/BMC/HostInterfaces/1",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#CertificateService.v1_0_2.CertificateService",
+    "@odata.type": "#CertificateService.v1_0_4.CertificateService",
     "Id": "CertificateService",
     "Name": "Certificate Service",
     "Actions": {
@@ -17,5 +17,5 @@
     },
     "Oem": {},
     "@odata.id": "/redfish/v1/CertificateService",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

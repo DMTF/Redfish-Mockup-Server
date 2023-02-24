@@ -1,0 +1,20 @@
+{
+    "@odata.type": "#Certificate.v1_6_0.Certificate",
+    "Id": "DeviceCert",
+    "Name": "SPDM Device Certificate",
+    "CertificateType": "PEM",
+    "Links": {
+        "Issuer": {
+            "@odata.id": "/redfish/v1/Systems/437XR1138R2/Certificates/contoso-subca"
+        }
+    },
+    "CertificateUsageTypes": [
+        "Device"
+    ],
+    "SPDM": {
+        "SlotId": 0
+    },
+    "CertificateString": "-----BEGIN CERTIFICATE-----\nMIIDvzCCAqegAwIBAgIBATANBgkqhkiG9w0BAQ0FADCBgDELMAkGA1UEBhMCVVMx\nEDAOBgNVBAgMB1JlZGZpc2gxHDAaBgNVBAcME1NvbWV3aGVyZSBJbmJldHdlZW4x\nEDAOBgNVBAoMB0NvbnRvc28xEDAOBgNVBAsMB01vY2t1cHMxHTAbBgNVBAMMFENl\ncnRpZmljYXRlIERpdmlzaW9uMCAXDTIxMTAwNzIwMzExOFoYDzIwOTkxMDA4MjAz\nMTE4WjBnMQswCQYDVQQGEwJVUzEQMA4GA1UECAwHUmVkZmlzaDEQMA4GA1UECgwH\nQ29udG9zbzEZMBcGA1UECwwQU3RvcmFnZSBCdXNpbmVzczEZMBcGA1UEAwwQU3Rv\ncmFnZSBQcm9kdWN0czCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJrI\nfABOA7LBs9eLmWvNqwaZEKHXksvfF7YLqkamROep4AAAdLmLI39yQCmQVdNkHVXf\nMHofF7d+ej8EPil3ORT2Y/Yv3+Cc4ZtvDCOTNyJUD8IRa/O7UcGNrCY/Pv0ZHRca\nG+prcaHibpm7YVW5wNFyZ+Rt9pV5KUQ1hJPtdPZEPkfMF1s6SoYkRQwtXXDVuG3G\nPYSBMiFa51rf0H3EtHWxjTjkp6MKi5maqBiaOOVoYbuWeh1DzgAMs48++8KGDI2T\nkPynhl21gCuLzEUgAI5akGXmlgJ6FrxOXvSCCoD7ghk786CKg933FcYoiwNy167u\nyfMDzrgGugLZXcHDr/sCAwEAAaNaMFgwHQYDVR0OBBYEFK9kV2zMi8Y3xB+1No9K\nyX5+Gqc8MB8GA1UdIwQYMBaAFPzQI/w1tukTiYkEcfcbxMIQyTcWMAkGA1UdEwQC\nMAAwCwYDVR0PBAQDAgWgMA0GCSqGSIb3DQEBDQUAA4IBAQBTWhkRvj2nFP6Pvttk\nqbYwCawCMqn0W//pJ/eVZpYx3OT5315VacMrhUDwePZbJXOKNhuuEiymQxM4iHd0\nfh6Bq7ykonZAYWuYNt1KRA98QI1lZh42TvcZ43HaWkao/R9OoR8uiICGjIGRV987\nAATMKsuZkA3rB06XdNlSlHGehwSZAOPguVG5QWOUE9qA9p1Uu6cot1h4jXYhO/vV\nr1/9zwS01fRnc77lMOTOsBloy+OUj8ibY+BzCXOjhAZfvv0hLszWMAUGfktMGcWc\n3gprFHocW18ReuosiZyffDvxJfo5HQfZM429tTxA7ixozI2F0MRDSFuQ/OATDJpu\npzcr\n-----END CERTIFICATE-----\n",
+    "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/iRoT0/Certificates/DeviceCert",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

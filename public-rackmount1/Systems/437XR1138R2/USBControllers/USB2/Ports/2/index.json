@@ -1,0 +1,38 @@
+{
+    "@odata.type": "#Port.v1_8_0.Port",
+    "Id": "2",
+    "Name": "USB Port 4",
+    "Description": "USB Port 4",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "PortId": "4",
+    "PortProtocol": "USB",
+    "PortType": "BidirectionalPort",
+    "CurrentSpeedGbps": 0,
+    "Width": 1,
+    "MaxSpeedGbps": 0.48,
+    "CurrentProtocolVersion": null,
+    "CapableProtocolVersions": [
+        "1.0",
+        "1.1",
+        "2.0"
+    ],
+    "Location": {
+        "PartLocation": {
+            "ServiceLabel": "USB 4",
+            "LocationOrdinalValue": 4,
+            "LocationType": "Connector",
+            "Orientation": "TopToBottom",
+            "Reference": "Front"
+        }
+    },
+    "Actions": {
+        "Oem": {}
+    },
+    "Links": {},
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/USBControllers/USB2/Ports/2",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

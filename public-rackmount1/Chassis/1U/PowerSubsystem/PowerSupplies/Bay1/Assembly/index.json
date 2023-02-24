@@ -1,0 +1,26 @@
+{
+    "@odata.type": "#Assembly.v1_4_0.Assembly",
+    "Id": "Assembly",
+    "Name": "Power Supply-related Assembly data",
+    "Assemblies": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem/PowerSupplies/Bay1/Assembly#/Assemblies/0",
+            "MemberId": "0",
+            "Name": "Contoso Power Supply",
+            "Model": "345TTT",
+            "PartNumber": "923943",
+            "SparePartNumber": "55-434",
+            "SKU": "55ZZATR",
+            "SerialNumber": "345394834",
+            "Vendor": "Contoso",
+            "ProductionDate": "2017-04-01T14:55:33+03:00",
+            "Producer": "Contoso Supply Co.",
+            "Version": "1.44B",
+            "EngineeringChangeLevel": "9",
+            "BinaryDataURI": "/dumpster/434"
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem/PowerSupplies/Bay1/Assembly",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

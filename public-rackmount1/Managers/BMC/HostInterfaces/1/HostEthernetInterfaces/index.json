@@ -1,0 +1,13 @@
+{
+    "@odata.type": "#EthernetInterfaceCollection.EthernetInterfaceCollection",
+    "Name": "Ethernet Network Interface Collection",
+    "Description": "Collection of EthernetInterfaces hosts connected to this HostInterface on the Manager",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/437XR1138R2/EthernetInterfaces/ToManager"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Managers/BMC/HostInterfaces/1/HostEthernetInterfaces",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

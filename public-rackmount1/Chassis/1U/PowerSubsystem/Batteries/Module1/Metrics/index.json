@@ -1,0 +1,64 @@
+{
+    "@odata.type": "#BatteryMetrics.v1_0_1.BatteryMetrics",
+    "Id": "Metrics",
+    "Name": "Metrics for Battery 1",
+    "DischargeCycles": 8.67,
+    "InputVoltage": {
+        "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/Battery1InputVoltage",
+        "Reading": 12.22
+    },
+    "InputCurrentAmps": {
+        "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/Battery1InputCurrent",
+        "Reading": 0
+    },
+    "OutputVoltages": [
+        {
+            "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/Battery1OutputVoltage",
+            "Reading": 12.22
+        }
+    ],
+    "OutputCurrentAmps": [
+        {
+            "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/Battery1OutputCurrent",
+            "Reading": 0
+        }
+    ],
+    "StoredEnergyWattHours": {
+        "Reading": 19.41
+    },
+    "TemperatureCelsius": {
+        "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/Battery1Temp",
+        "Reading": 33
+    },
+    "ChargePercent": {
+        "Reading": 100
+    },
+    "CellVoltages": [
+        {
+            "Reading": 3.44
+        },
+        {
+            "Reading": 3.45
+        },
+        {
+            "Reading": 3.43
+        },
+        {
+            "Reading": 3.43
+        },
+        {
+            "Reading": 3.45
+        },
+        {
+            "Reading": 3.44
+        },
+        {
+            "Reading": 3.43
+        },
+        {
+            "Reading": 3.44
+        }
+    ],
+    "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem/Batteries/Module1/Metrics",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

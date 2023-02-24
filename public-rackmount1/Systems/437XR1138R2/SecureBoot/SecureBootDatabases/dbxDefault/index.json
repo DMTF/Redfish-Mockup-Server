@@ -1,0 +1,13 @@
+{
+    "@odata.type": "#SecureBootDatabase.v1_0_1.SecureBootDatabase",
+    "Id": "dbxDefault",
+    "Name": "dbxDefault - Default Forbidden Signature Database",
+    "Description": "UEFI dbxDefault Secure Boot Database",
+    "DatabaseId": "dbxDefault",
+    "Signatures": {
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/dbxDefault/Signatures/"
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/dbxDefault",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

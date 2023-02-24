@@ -1,0 +1,32 @@
+{
+    "@odata.type": "#Port.v1_8_0.Port",
+    "Id": "DisplayPort",
+    "Name": "Display Port",
+    "Description": "Display Port",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "PortId": "1",
+    "PortProtocol": "DisplayPort",
+    "PortType": "BidirectionalPort",
+    "CurrentSpeedGbps": 21.6,
+    "Width": 4,
+    "MaxSpeedGbps": 32.4,
+    "CurrentProtocolVersion": "1.2",
+    "CapableProtocolVersions": [
+        "1.0",
+        "1.1",
+        "1.1a",
+        "1.2",
+        "1.2a",
+        "1.3"
+    ],
+    "Actions": {
+        "Oem": {}
+    },
+    "Links": {},
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/GraphicsControllers/GPU1/Ports/DisplayPort",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

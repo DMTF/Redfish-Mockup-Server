@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#ExternalAccountProvider.v1_1_2.ExternalAccountProvider",
+    "@odata.type": "#ExternalAccountProvider.v1_5_0.ExternalAccountProvider",
     "Id": "ExternalRedfishService",
     "Name": "Remote Redfish Service",
     "Description": "Remote Redfish Service providing additional Accounts to this Redfish Service",
@@ -26,5 +26,5 @@
         }
     ],
     "@odata.id": "/redfish/v1/AccountService/ExternalAccountProviders/ExternalRedfishService",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

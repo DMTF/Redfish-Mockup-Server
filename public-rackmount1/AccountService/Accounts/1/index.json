@@ -1,10 +1,14 @@
 {
-    "@odata.type": "#ManagerAccount.v1_5_0.ManagerAccount",
+    "@odata.type": "#ManagerAccount.v1_10_0.ManagerAccount",
     "Id": "1",
     "Name": "User Account",
     "Description": "User Account",
     "Enabled": true,
     "Password": null,
+    "PasswordChangeRequired": false,
+    "AccountTypes": [
+        "Redfish"
+    ],
     "UserName": "Administrator",
     "RoleId": "Administrator",
     "Locked": false,
@@ -17,5 +21,5 @@
         }
     },
     "@odata.id": "/redfish/v1/AccountService/Accounts/1",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

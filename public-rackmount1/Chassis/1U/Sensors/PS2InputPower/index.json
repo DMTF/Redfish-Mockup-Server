@@ -1,0 +1,15 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "PS2InputPower",
+    "Name": "Power Supply #2 Input Power",
+    "ReadingType": "Power",
+    "Status": {
+        "State": "Absent"
+    },
+    "ElectricalContext": "Total",
+    "PhysicalContext": "PowerSupply",
+    "PhysicalSubContext": "Input",
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2InputPower",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

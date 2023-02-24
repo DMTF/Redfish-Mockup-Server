@@ -1,0 +1,14 @@
+{
+    "@odata.type": "#PortCollection.PortCollection",
+    "Name": "Port Collection",
+    "Description": "GPU Port Collection",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/437XR1138R2/GraphicsControllers/GPU1/Ports/DisplayPort"
+        }
+    ],
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/GraphicsControllers/GPU1/Ports",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

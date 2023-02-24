@@ -1,0 +1,13 @@
+{
+    "@odata.type": "#SecureBootDatabase.v1_0_1.SecureBootDatabase",
+    "Id": "PKDefault",
+    "Name": "PKDefault - Default Platform Key",
+    "Description": "UEFI PKDefault Secure Boot Database",
+    "DatabaseId": "PKDefault",
+    "Certificates": {
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/PKDefault/Certificates/"
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/PKDefault",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -1,0 +1,22 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "PS1Energy",
+    "Name": "Power Supply #1 Energy",
+    "ReadingType": "EnergykWh",
+    "ElectricalContext": "Total",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Reading": 7855,
+    "ReadingUnits": "kW.h",
+    "PhysicalContext": "PowerSupply",
+    "Oem": {},
+    "Actions": {
+        "#Sensor.ResetMetrics": {
+            "target": "/redfish/v1/Chassis/1U/Sensors/PS1Energy/Actions/Sensor.ResetMetrics"
+        }
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1Energy",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -1,0 +1,31 @@
+{
+    "@odata.type": "#TrustedComponent.v1_0_0.TrustedComponent",
+    "Id": "AC-RoT0",
+    "UUID": "A3981CF9-576A-4335-A19F-B8CD7EC2821D",
+    "Description": "Root of trust chip for CPU1",
+    "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+    },
+    "TrustedComponentType": "Discrete",
+    "Certificates": {
+        "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/AC-RoT0/Certificates"
+    },
+    "Links": {
+        "ComponentsProtected": [
+            {
+                "@odata.id": "/redfish/v1/Systems/437XR1138R2/Processors/CPU1"
+            }
+        ],
+        "ComponentIntegrity": [
+            {
+                "@odata.id": "/redfish/v1/ComponentIntegrity/SS-SPDM-0"
+            }
+        ],
+        "ActiveSoftwareImage": {
+            "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/AC-RoT0"
+        }
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents/AC-RoT0",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

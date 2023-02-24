@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#Chassis.v1_11_0.Chassis",
+    "@odata.type": "#Chassis.v1_22_0.Chassis",
     "Id": "1U",
     "Name": "Computer System Chassis",
     "ChassisType": "RackMount",
@@ -36,9 +36,29 @@
         "State": "Enabled",
         "Health": "OK"
     },
+    "ThermalSubsystem": {
+        "@odata.id": "/redfish/v1/Chassis/1U/ThermalSubsystem"
+    },
+    "PowerSubsystem": {
+        "@odata.id": "/redfish/v1/Chassis/1U/PowerSubsystem"
+    },
+    "EnvironmentMetrics": {
+        "@odata.id": "/redfish/v1/Chassis/1U/EnvironmentMetrics"
+    },
+    "Sensors": {
+        "@odata.id": "/redfish/v1/Chassis/1U/Sensors"
+    },
+    "Controls": {
+        "@odata.id": "/redfish/v1/Chassis/1U/Controls"
+    },
+    "TrustedComponents": {
+        "@odata.id": "/redfish/v1/Chassis/1U/TrustedComponents"
+    },
+    "Thermal@Redfish.Deprecated": "Please migrate to use /redfish/v1/Chassis/1U/ThermalSubsystem",
     "Thermal": {
         "@odata.id": "/redfish/v1/Chassis/1U/Thermal"
     },
+    "Power@Redfish.Deprecated": "Please migrate to use /redfish/v1/Chassis/1U/PowerSubsystem",
     "Power": {
         "@odata.id": "/redfish/v1/Chassis/1U/Power"
     },
@@ -60,5 +80,5 @@
         ]
     },
     "@odata.id": "/redfish/v1/Chassis/1U",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

@@ -1,0 +1,32 @@
+{
+    "@odata.type": "#Certificate.v1_6_0.Certificate",
+    "Id": "2",
+    "Name": "Microsoft Corporation UEFI CA Certificate",
+    "CertificateString": "-----BEGIN CERTIFICATE-----\nMIIDbzCCAlegAwIBAgIUf2b1tKa8CXy2shrPf6i1mIwnRTcwDQYJKoZIhvcNAQEL\nBQAwVzELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAk5DMRAwDgYDVQQHEwdSYWxlaWdo\nMQ8wDQYDVQQKEwZMZW5vdm8xGDAWBgNVBAMTD0xlbm92byBVRUZJIEtFSzAeFw0x\nNzA1MjcwMzU0NDJaFw00MTA1MjcwMzU0NDJaMFcxCzAJBgNVBAYTAlVTMQswCQYD\nVQQIEwJOQzEQMA4GA1UEBxMHUmFsZWlnaDEPMA0GA1UEChMGTGVub3ZvMRgwFgYD\nVQQDEw9MZW5vdm8gVUVGSSBLRUswggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK\nAoIBAQDCu6lcSg/MmtcXRGPmxSaMRuFUa/Hoge40OnklJ936OYqPTTZGPZMld0mq\nzrfW/jZ7YYbtbS2vLTU4uzKo6YHRgp+IlAalmXZNh+D1MsJpJ1zqbxkcBW/ohPZY\nTgNPugYeVw+kbcunxQPqa6dvgidGu6qo3uLCJ0kWmZeCqGLgJ8NkKyGpiALALCcK\njVHNd87WUVnf9V1VsqRGytIOk42VbxBjuP1yS/nW1yJ+9wmftYtDy6/MuFT7DIM7\n1cVsRZGlM0WZbfVxHVAd8KGOvsXMOu7vgfKrLd/ZOWwtk+Iqthg23+Cc7aY2tc9q\nS1pa378idhbY8beJIyjCQgdheL8vAgMBAAGjMzAxMA8GA1UdEwEB/wQFMAMBAf8w\nDgYDVR0PAQH/BAQDAgIEMA4GA1UdDwEB/wQEAwIHgDANBgkqhkiG9w0BAQsFAAOC\nAQEAtcTQVLt/t8ijoB6Na4pvdtG0c11ZG9vJvx0mZEgp30VUwgWPqnlAmkA5RNhh\nate/fGNvwAuyJZjiHJ4nqtJ9/pEDc+RMnPiGZDzKZcZlYiqOwod6nZklGw6X3f45\nxmiM+YYfeY1vlptTnm2FyuFtgqiJ6lAVJ4c17KyrsDBw79G/3hsB9H3E8YeyA0kq\nXELejPl9JSSCvY6+KtO/BFRR36Q1Xwz9lUWI+tLkAiOLIgLsJBu4ADX276pCGGTw\nIj9pRcFEjGwp3iwXid4323b36iLiUDyQTkBGjzZlIZekSS+BMEyZ9RKoIyrxyUjC\npmPlF6edID9hg2iv9pPjGfFfKQ==\n-----END CERTIFICATE-----",
+    "CertificateType": "PEM",
+    "Issuer": {
+        "Country": "US",
+        "State": "Washington",
+        "City": "Redmond",
+        "Organization": "Microsoft Corporation",
+        "CommonName": "Microsoft Corporation Third Party Marketplace Root"
+    },
+    "Subject": {
+        "Country": "US",
+        "State": "Washington",
+        "City": "Redmond",
+        "Organization": "Microsoft Corporation",
+        "CommonName": "Microsoft Corporation UEFI CA 2011"
+    },
+    "ValidNotBefore": "2011-06-27T14:22:45Z",
+    "ValidNotAfter": "2026-06-27T14:32:45Z",
+    "KeyUsage": [
+        "KeyCertSign",
+        "DigitalSignature",
+        "CRLSigning"
+    ],
+    "UefiSignatureOwner": "77fa9abd-0359-4d32-bd60-28f4e78f784b",
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/db/Certificates/2",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

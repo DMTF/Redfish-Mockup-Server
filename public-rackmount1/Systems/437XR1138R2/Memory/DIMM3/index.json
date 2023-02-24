@@ -1,5 +1,5 @@
 {
-    "@odata.type": "#Memory.v1_9_0.Memory",
+    "@odata.type": "#Memory.v1_17_0.Memory",
     "Id": "DIMM3",
     "Name": "DIMM Slot 3",
     "RankCount": 2,
@@ -26,6 +26,9 @@
         "State": "Enabled",
         "Health": "OK"
     },
-    "@odata.id": "/redfish/v1/Systems/437XR1138R2/Memory/DIMM2",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+    "EnvironmentMetrics": {
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/Memory/DIMM3/EnvironmentMetrics"
+    },
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/Memory/DIMM3",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
 }

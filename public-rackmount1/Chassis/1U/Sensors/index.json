@@ -1,0 +1,132 @@
+{
+    "@odata.type": "#SensorCollection.SensorCollection",
+    "Name": "Chassis sensors",
+    "Members@odata.count": 41,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/AmbientTemp"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/CPUFan1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/CPUFan2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/CPU1Temp"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/DIMM1Temp"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/DIMM2Temp"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/DIMM3Temp"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/ExhaustTemp"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/FanBay1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/FanBay2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/IntakeTemp"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1Energy"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1Frequency"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1InputCurrent"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1InputPower"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1InputVoltage"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1Out12V"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1Out12VCurrent"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1Out3V"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1Out3VCurrent"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1Out5V"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS1Out5VCurrent"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2Energy"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2Frequency"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2InputCurrent"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2InputPower"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2InputVoltage"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2Out12V"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2Out12VCurrent"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2Out3V"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2Out3VCurrent"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2Out5V"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/PS2Out5VCurrent"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/TotalEnergy"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/TotalPower"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/Battery1Temp"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/Battery1InputVoltage"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/Battery1InputCurrent"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/Battery1OutputVoltage"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/Battery1OutputCurrent"
+        },
+        {
+            "@odata.id": "/redfish/v1/Chassis/1U/Sensors/Battery1StateOfHealth"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

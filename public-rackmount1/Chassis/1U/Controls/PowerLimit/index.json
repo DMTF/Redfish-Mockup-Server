@@ -1,0 +1,22 @@
+{
+    "@odata.type": "#Control.v1_2_0.Control",
+    "Id": "PowerLimit",
+    "Name": "System Power Limit",
+    "PhysicalContext": "Chassis",
+    "ControlType": "Power",
+    "ControlMode": "Automatic",
+    "SetPoint": 500,
+    "SetPointUnits": "W",
+    "AllowableMax": 1000,
+    "AllowableMin": 150,
+    "Sensor": {
+        "Reading": 374,
+        "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/TotalPower"
+    },
+    "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U/Controls/PowerLimit",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

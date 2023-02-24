@@ -1,0 +1,20 @@
+{
+    "@odata.type": "#VirtualMedia.v1_6_0.VirtualMedia",
+    "Id": "Floppy1",
+    "Name": "Virtual Removable Media",
+    "MediaTypes": [
+        "Floppy",
+        "USBStick"
+    ],
+    "Image": "https://www.dmtf.org/freeImages/Sardine.img",
+    "ImageName": "Sardine2.1.43.35.6a",
+    "ConnectedVia": "URI",
+    "Inserted": true,
+    "WriteProtected": false,
+    "VerifyCertificate": false,
+    "Certificates": {
+        "@odata.id": "/redfish/v1/Systems/437XR1138R2/VirtualMedia/Floppy1/Certificates"
+    },
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/VirtualMedia/Floppy1",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -1,0 +1,24 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "Battery1StateOfHealth",
+    "Name": "Battery #1 State of Health",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "ReadingType": "Percent",
+    "Reading": 91,
+    "ReadingUnits": "%",
+    "ReadingRangeMin": 0,
+    "ReadingRangeMax": 100,
+    "PhysicalContext": "Battery",
+    "Thresholds": {
+        "LowerCritical": {
+            "Reading": 30,
+            "Activation": "Decreasing",
+            "DwellTime": "PT1S"
+        }
+    },
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/Battery1StateOfHealth",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

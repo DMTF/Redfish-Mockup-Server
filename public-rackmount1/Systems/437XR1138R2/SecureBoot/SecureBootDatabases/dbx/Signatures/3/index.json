@@ -1,0 +1,12 @@
+{
+    "@odata.type": "#Signature.v1_0_2.Signature",
+    "Id": "3",
+    "Name": "SHA256 Signature",
+    "SignatureString": "ACD161952F7B443BF2E83F9AFC7E0F972CB4448DA3814A7F8047584F2102E7B7",
+    "SignatureTypeRegistry": "UEFI",
+    "SignatureType": "EFI_CERT_SHA256_GUID",
+    "UefiSignatureOwner": "b30f32b3-eca0-41a6-3777-a22bcf62cab2",
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Systems/437XR1138R2/SecureBoot/SecureBootDatabases/dbx/Signatures/3",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

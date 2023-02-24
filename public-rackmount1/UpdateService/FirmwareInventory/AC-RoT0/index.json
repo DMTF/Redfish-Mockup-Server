@@ -1,0 +1,18 @@
+{
+    "@odata.type": "#SoftwareInventory.v1_9_0.SoftwareInventory",
+    "Id": "AC-RoT0",
+    "Name": "AC-RoT0 firmware",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Updateable": true,
+    "Version": "1.11",
+    "SoftwareId": "6FC0A31C-FD11-4803-8A35-F3BA2F0E2B6B",
+    "Actions": {
+        "Oem": {}
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/UpdateService/FirmwareInventory/AC-RoT0",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

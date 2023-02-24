@@ -1,0 +1,34 @@
+{
+    "@odata.type": "#Sensor.v1_6_0.Sensor",
+    "Id": "CPU1Power",
+    "Name": "Power reading for CPU #1",
+    "ReadingType": "Power",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Reading": 90,
+    "ReadingUnits": "W",
+    "Implementation": "Reported",
+    "ReadingTime": "2019-08-13T04:14:33+06:00",
+    "ReadingRangeMin": 0,
+    "ReadingRangeMax": 150,
+    "Accuracy": 0.2,
+    "Precision": 1,
+    "SensingInterval": "PT0.01S",
+    "PhysicalContext": "CPU",
+    "Thresholds": {
+        "UpperCriticalUser": {
+            "Reading": 115,
+            "Activation": "Increasing",
+            "DwellTime": "PT0.03S"
+        },
+        "UpperCautionUser": {
+            "Reading": 82,
+            "DwellTime": "PT1S"
+        }
+    },
+    "Oem": {},
+    "@odata.id": "/redfish/v1/Chassis/1U/Sensors/CPU1Power",
+    "@Redfish.Copyright": "Copyright 2014-2022 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}
