@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.2.2] - 2023-02-24
+- Updated bundled mockup to match 2022.3 release of public-rackmount1
+
 ## [1.2.1] - 2023-01-20
 - Added support for binary files in a mockup
 
