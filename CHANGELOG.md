@@ -1,7 +1,16 @@
 # Change Log
 
+## [1.2.1] - 2023-01-20
+- Added support for binary files in a mockup
+
+## [1.2.0] - 2023-01-13
+- Import Mapping from collections.abc to support Python 3.10
+
+## [1.1.9] - 2022-08-12
+- Added SIGTERM handler to close the server
+
 ## [1.1.8] - 2022-06-03
-- Added baseline support for the '' query parameter
+- Added baseline support for the '$expand' query parameter
 
 ## [1.1.7] - 2021-07-02
 - Added Content-Length header to responses for statically built /redfish
