@@ -5,6 +5,7 @@
 " Lib to receive ssdp packets "
 
 import socket
+import struct
 import sys
 import logging
 
@@ -49,23 +50,16 @@ class RfSSDPServer():
         #   must use TTL 2
         #   must use port 1900
         #   optional MSEARCH messages: Notify, Alive, Shutdown
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)  # ttl 2
+        sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
         sock.settimeout(timeout)
 
-        # To receive a multicast datagram, it is necessary to advise the kernel which
-        # multicast groups we are interested in and ask the kernel to "join" those multicast groups
-        # Depending on the underlying hardware, multicast datagrams are filtered
-        # by the hardware or by the IP layer (and, in some cases, by both)
-        # Only those with a destination group previously registered via a join are accepted
-        # (ref: https://www.tldp.org/HOWTO/Multicast-HOWTO-2.html)
-        # adding this membership, causes other applications to receive data from the kernel as well
-        addr = socket.inet_aton('239.255.255.250')  # multicast address
-        interface = socket.inet_aton(self.ip)
-        sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, addr + interface)
+        # join the multicast group on any interface, and allow for the loopback address
+        sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, socket.inet_aton('239.255.255.250') + struct.pack(b"@I", socket.INADDR_ANY))
+        sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, 1)
 
-        sock.bind((self.ip, self.port))
+        sock.bind(('', port))
         """
         Redfish Service Search Target (ST): "urn:dmtf-org:service:redfish-rest:1"
         For ssdp, "ssdp:all".
