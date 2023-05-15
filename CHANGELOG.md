@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.2.3] - 2023-05-15
+- Fixes to SSDP listener to bind to all interfaces as well as enable listening on the loopback address
+
 ## [1.2.2] - 2023-02-24
 - Updated bundled mockup to match 2022.3 release of public-rackmount1
 
