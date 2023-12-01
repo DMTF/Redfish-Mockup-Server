@@ -682,6 +682,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                             self.send_response(204)
                             self.send_header("Location", newpath)
                             self.send_header("Content-Length", "0")
+                            if 'SessionService/Sessions' in self.path:
+                                self.send_header("X-Auth-Token", "1234567890ABCDEF")
                             self.end_headers()
 
                     # Actions framework
