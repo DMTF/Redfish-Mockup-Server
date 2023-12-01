@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.2.4] - 2023-12-01
+- Added better handling of resource creation operations to not rely on a resource identifier to be given
+- Added the  response header when a new session is created
+
 ## [1.2.3] - 2023-05-15
 - Fixes to SSDP listener to bind to all interfaces as well as enable listening on the loopback address
 
