@@ -130,12 +130,22 @@ class RfMockupServer(BaseHTTPRequestHandler):
         def add_new_member(self, payload, data_received):
             members = payload.get('Members')
             n = 1
-            pattern = re.sub(r'\d+$', '{id}', members[0].get('@odata.id').replace(self.path, '').strip('/')) if len(members) else 'Member{id}'
+            # Use an existing member ID if one exists
+            if len(members):
+                member_id = members[0].get('@odata.id').replace(self.path, '').strip('/')
+                pattern = re.sub(r'\d+$', '{id}', member_id)
+            else:
+                pattern = 'Member{id}'
+            # If no {id} is in the pattern, append one to it
+            pattern = pattern if re.search(r'\{id\}$', pattern) else pattern + "{id}"
             newpath_id = data_received.get('Id', pattern.format(id=n))
+            # Default to standard pattern if the received ID already exists in members
+            if data_received.get('Id') in [m.get('@odata.id').replace(self.path, '').strip('/') for m in members]:
+                newpath_id = pattern.format(id=n)
             newpath = '/'.join([ self.path, newpath_id ])
             while newpath in [m.get('@odata.id') for m in members]:
                 n = n + 1
-                newpath_id = data_received.get('Id', pattern.format(id=n))
+                newpath_id = pattern.format(id=n)
                 newpath = '/'.join([ self.path, newpath_id ])
             members.append({'@odata.id': newpath})
             data_received['@odata.id'] = newpath
@@ -672,6 +682,8 @@ class RfMockupServer(BaseHTTPRequestHandler):
                             self.send_response(204)
                             self.send_header("Location", newpath)
                             self.send_header("Content-Length", "0")
+                            if 'SessionService/Sessions' in self.path:
+                                self.send_header("X-Auth-Token", "1234567890ABCDEF")
                             self.end_headers()
 
                     # Actions framework
