@@ -1,0 +1,25 @@
+# Copyright Notice:
+# Copyright 2016-2024 DMTF. All rights reserved.
+# License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/python-redfish-library/blob/main/LICENSE.md
+
+---
+version: "3.7"
+
+services:
+
+  bmc:
+    image: docker.io/dmtf/redfish-mockup-server:latest
+    networks:
+      - dmtf
+
+  test:
+    image: docker.io/curlimages/curl:8.5.0
+    depends_on:
+      bmc:
+        condition: service_healthy
+    networks:
+      - dmtf
+    command: ["--fail", "-i", "-H", "Accept:application/yang-data+json", "http://bmc:8000/redfish/v1/Managers"]
+
+networks:
+  dmtf:
