@@ -864,7 +864,9 @@ def main():
 
         if sslMode:
             logger.info("Using SSL with certfile: {}".format(sslCert))
-            myServer.socket = ssl.wrap_socket(myServer.socket, certfile=sslCert, keyfile=sslKey, server_side=True)
+            context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+            context.load_cert_chain(certfile=sslCert, keyfile=sslKey)
+            myServer.socket = context.wrap_socket(myServer.socket, server_side=True)
 
         # save the test flag, and real path to the mockup dir for the handler to use
         myServer.mockDir = mockDir
