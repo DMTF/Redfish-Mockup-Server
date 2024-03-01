@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.2.5] - 2024-03-01
+- Added sample Docker compose file
+- Migrated away from deprecated 'ssl.wrap_socket' method
+
 ## [1.2.4] - 2023-12-01
 - Added better handling of resource creation operations to not rely on a resource identifier to be given
 - Added the  response header when a new session is created
