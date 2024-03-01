@@ -98,6 +98,12 @@ This command runs the container with a specified mockup, where `<path-to-mockup>
 docker run --rm -v <path-to-mockup>:/mockup dmtf/redfish-mockup-server:latest -D /mockup
 ```
 
+Or using compose:
+
+```bash
+docker compose up
+```
+
 ## Release process
 
 1. Go to the "Actions" page
