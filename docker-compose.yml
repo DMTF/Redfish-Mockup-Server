@@ -21,5 +21,27 @@ services:
       - dmtf
     command: ["--fail", "-i", "-H", "Accept:application/yang-data+json", "http://bmc:8000/redfish/v1/Managers"]
 
+  bmc-ssl:
+    image: docker.io/dmtf/redfish-mockup-server:latest
+    networks:
+      - dmtf
+    volumes:
+      - ./key.pem:/opt/key.pem
+      - ./cert.pem:/opt/cert.pem
+    command:
+      --ssl --key /opt/key.pem --cert /opt/cert.pem --port 9000
+    healthcheck:
+      test: curl --insecure --fail https://localhost:9000/redfish/
+
+  test-ssl:
+    image: docker.io/curlimages/curl:8.5.0
+    depends_on:
+      bmc-ssl:
+        condition: service_healthy
+    networks:
+      - dmtf
+    command: ["--fail", "--insecure", "-i", "-H", "Accept:application/yang-data+json", "https://bmc-ssl:9000/redfish/v1/Managers"]
+
+
 networks:
   dmtf:
