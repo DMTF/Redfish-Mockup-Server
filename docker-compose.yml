@@ -25,11 +25,11 @@ services:
     image: docker.io/dmtf/redfish-mockup-server:latest
     networks:
       - dmtf
-    volumes:
-      - ./key.pem:/opt/key.pem
-      - ./cert.pem:/opt/cert.pem
-    command:
-      --ssl --key /opt/key.pem --cert /opt/cert.pem --port 9000
+    entrypoint: ["/bin/bash"]
+    command: |
+      -x -c '
+      openssl req -x509 -nodes -newkey rsa:2048 -keyout key.pem -out cert.pem -sha256 -days 365 -subj "/C=GB/ST=London/L=London/O=Alros/OU=IT Department/CN=localhost" && \
+      python /usr/src/app/redfishMockupServer.py -H 0.0.0.0 --ssl --key ./key.pem --cert ./cert.pem --port 9000'
     healthcheck:
       test: curl --insecure --fail https://localhost:9000/redfish/
 
