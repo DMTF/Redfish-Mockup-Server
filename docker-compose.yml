@@ -21,15 +21,32 @@ services:
       - dmtf
     command: ["--fail", "-i", "-H", "Accept:application/yang-data+json", "http://bmc:8000/redfish/v1/Managers"]
 
+  setup-cert:
+    image: docker.io/dmtf/redfish-mockup-server:latest
+    volumes:
+      - certs:/certs
+    user: "0"
+    entrypoint: /bin/bash
+    command: >
+      -c '
+        set -e
+        openssl req -x509 -nodes -newkey rsa:2048 -keyout key.pem -out cert.pem -sha256 -days 365 \
+          -subj "/C=GB/ST=London/L=London/O=Alros/OU=IT Department/CN=localhost"
+        cp key.pem cert.pem /certs
+        echo "Certificates created succcessfully."
+      '
+
   bmc-ssl:
     image: docker.io/dmtf/redfish-mockup-server:latest
+    depends_on:
+      setup-cert:
+        condition: service_completed_successfully
     networks:
       - dmtf
     volumes:
-      - ./key.pem:/opt/key.pem
-      - ./cert.pem:/opt/cert.pem
+      - certs:/certs
     command:
-      --ssl --key /opt/key.pem --cert /opt/cert.pem --port 9000
+      --ssl --key /certs/key.pem --cert /certs/cert.pem --port 9000
     healthcheck:
       test: curl --insecure --fail https://localhost:9000/redfish/
 
@@ -45,3 +62,6 @@ services:
 
 networks:
   dmtf:
+
+volumes:
+  certs:
