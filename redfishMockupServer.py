@@ -109,7 +109,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                 responseTime = self.getResponseTime(method, path)
                 try:
                     time.sleep(float(responseTime))
-                except ValueError as e:
+                except ValueError:
                     logger.info("Time is not a float value. Sleeping with default response time")
                     time.sleep(float(self.server.responseTime))
             else:
@@ -227,7 +227,6 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         (('MetricName' in data_received) and ('MetricValues' in data_received)):
                     # If the EventType in the request is one of interest to the subscriber, build an event payload
                     expected_keys = ['MetricId', 'MetricValue', 'Timestamp', 'MetricProperty', 'MetricDefinition']
-                    other_keys = ['MetricProperty']
                     my_name = data_received.get('MetricName',
                             data_received.get('MetricReportName'))
                     my_data = data_received.get('MetricValues',
@@ -318,7 +317,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
             # Create a stack to handle diving deeper in the JSON data
             stack = [(data, levels)]
             while stack:
-                current_data, expand_level = stack.pop();
+                current_data, expand_level = stack.pop()
                 # If expand level is less than 1 then we've completed expansion
                 if expand_level < 1:
                     continue
@@ -711,7 +710,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                                         else:
                                             if payload['Actions'][action]['target'] == self.path:
                                                 action_found = True
-                                except:
+                                except Exception:
                                     pass
                                 if action_found:
                                     self.send_response(204)
@@ -773,7 +772,7 @@ class RfMockupServer(BaseHTTPRequestHandler):
                         if time_str in d:
                             try:
                                 float(d[time_str])
-                            except Exception as e:
+                            except Exception:
                                 logger.info(
                                     "Time in the json file, not a float/int value. Reading the default time.")
                                 return (self.server.responseTime)
@@ -876,7 +875,7 @@ def main():
         myServer.shortForm = shortForm
         try:
             myServer.responseTime = float(responseTime)
-        except ValueError as e:
+        except ValueError:
             logger.info("Enter an integer or float value")
             sys.exit(2)
         # myServer.me="HELLO"
