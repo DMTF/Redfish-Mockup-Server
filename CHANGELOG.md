@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.2.6] - 2024-03-22
+- Updated Docker compose file to automatically generate TLS certificate and key
+
 ## [1.2.5] - 2024-03-01
 - Added sample Docker compose file
 - Migrated away from deprecated 'ssl.wrap_socket' method
