@@ -4,11 +4,16 @@ Copyright 2016-2020 DMTF. All rights reserved.
 
 ## About
 
-The Redfish Mockup Server serves Redfish requests against a Redfish mockup. The server runs at either a specified IP address and port or the default IP address and port, `127.0.0.1:8000`.
+The Redfish Mockup Server serves Redfish requests against a Redfish mockup.  The server runs at either a specified IP address and port or the default IP address and port, `127.0.0.1:8000`.
 
 You can find DMTF-published sample mockups at [All Published Versions of DSP2043](https://www.dmtf.org/dsp/DSP2043 "https://www.dmtf.org/dsp/DSP2043").
 
 To create a mockup from a service, use the [Redfish-Mockup-Creator](https://github.com/DMTF/Redfish-Mockup-Creator "https://github.com/DMTF/Redfish-Mockup-Creator").
+
+The scope of this tool is to serve a static mockup for development purposes.  It does support modification requests, such as `PATCH` and `POST`, and actions to a limited extent.  For a more feature-rich Redfish experience, one of the following tools can be used instead of the Redfish Mockup Server:
+
+* [Redfish-Interface-Emulator](https://github.com/DMTF/Redfish-Interface-Emulator): A more functional service that implements modification requests and actions.
+* [Swordfish-API-Emulator](https://github.com/SNIA/Swordfish-API-Emulator): A SNIA extension to the previous tool with more built-in functionality supported.
 
 ## Requirements
 
