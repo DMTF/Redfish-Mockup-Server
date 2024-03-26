@@ -2,6 +2,13 @@
 
 Copyright 2016-2020 DMTF. All rights reserved.
 
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://github.com/DMTF/Redfish-Mockup-Server/blob/main/LICENSE.md)
+[![Pulls](https://img.shields.io/docker/pulls/dmtf/redfish-mockup-server?style=flat&logo=docker&label=Pulls)](https://hub.docker.com/r/dmtf/redfish-mockup-server)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat)](https://github.com/psf/black)
+[![Linters](https://github.com/DMTF/Redfish-Mockup-Server/actions/workflows/linters.yml/badge.svg)](https://github.com/DMTF/Redfish-Mockup-Server/actions/workflows/linters.yml)
+[![GitHub stars](https://img.shields.io/github/stars/DMTF/Redfish-Mockup-Server.svg?style=flat-square&label=github%20stars)](https://github.com/DMTF/Redfish-Mockup-Server)
+[![GitHub Contributors](https://img.shields.io/github/contributors/DMTF/Redfish-Mockup-Server.svg?style=flat-square)](https://github.com/DMTF/Redfish-Mockup-Server/graphs/contributors)
+
 ## About
 
 The Redfish Mockup Server serves Redfish requests against a Redfish mockup. The server runs at either a specified IP address and port or the default IP address and port, `127.0.0.1:8000`.
