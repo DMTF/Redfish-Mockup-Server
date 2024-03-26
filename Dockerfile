@@ -1,16 +1,18 @@
 FROM python:3-slim
 
 # For healthcheck
-RUN apt-get update && apt-get install curl -y
+RUN apt-get update && apt-get install curl -y --no-install-recommends \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install python requirements
 COPY requirements.txt /tmp/
-RUN pip install --upgrade pip && \
+RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r /tmp/requirements.txt
 
 # Copy server files
 COPY rfSsdpServer.py redfishMockupServer.py /usr/src/app/
-ADD public-rackmount1 /usr/src/app/public-rackmount1
+COPY public-rackmount1 /usr/src/app/public-rackmount1
 
 # Env settings
 EXPOSE 8000
