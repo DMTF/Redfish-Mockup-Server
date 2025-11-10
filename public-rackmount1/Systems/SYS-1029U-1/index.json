@@ -1,0 +1,162 @@
+{
+    "@odata.type": "#ComputerSystem.v1_22_0.ComputerSystem",
+    "Id": "SYS-1029U-1",
+    "Name": "Supermicro SYS-1029U Node 1",
+    "SystemType": "Physical",
+    "AssetTag": "Chicago-45Z-2381",
+    "Manufacturer": "Supermicro",
+    "Model": "SYS-1029U",
+    "SubModel": "",
+    "SKU": "",
+    "SerialNumber": "SM1029U001",
+    "PartNumber": "MBD-X11DPU",
+    "Description": "Supermicro SYS-1029U server",
+    "UUID": "3e9c1f7a-5b22-4a0b-a41b-5b4f1e2d3c4a",
+    "HostName": "sys-1029u-1",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK",
+        "HealthRollup": "OK"
+    },
+    "HostingRoles": [
+        "ApplicationServer"
+    ],
+    "IndicatorLED": "Off",
+    "PowerState": "On",
+    "Boot": {
+        "BootSourceOverrideEnabled": "Once",
+        "BootSourceOverrideTarget": "Pxe",
+        "BootSourceOverrideTarget@Redfish.AllowableValues": [
+            "None",
+            "Pxe",
+            "Cd",
+            "Usb",
+            "Hdd",
+            "BiosSetup",
+            "Utilities",
+            "Diags",
+            "SDCard",
+            "UefiTarget"
+        ],
+        "BootSourceOverrideMode": "UEFI",
+        "UefiTargetBootSourceOverride": "/0x31/0x33/0x01/0x01"
+    },
+    "TrustedModules": [
+        {
+            "FirmwareVersion": "1.13b",
+            "InterfaceType": "TPM1_2",
+            "Status": {
+                "State": "Enabled",
+                "Health": "OK"
+            }
+        }
+    ],
+    "Oem": {
+        "Contoso": {
+            "@odata.type": "#Contoso.ComputerSystem",
+            "ProductionLocation": {
+                "FacilityName": "PacWest Production Facility",
+                "Country": "USA"
+            }
+        },
+        "Chipwise": {
+            "@odata.type": "#Chipwise.ComputerSystem",
+            "Style": "Executive"
+        }
+    },
+    "BootProgress": {
+        "LastState": "OSRunning",
+        "LastStateTime": "2021-03-13T04:14:13+06:00",
+        "LastBootTimeSeconds": 676
+    },
+    "LastResetTime": "2021-03-13T04:02:57+06:00",
+    "BiosVersion": "P79 v1.45 (12/06/2017)",
+    "ProcessorSummary": {
+        "Count": 1,
+        "Model": "Intel(R) Xeon(R) Silver 4114",
+        "LogicalProcessorCount": 20,
+        "CoreCount": 10,
+        "Status": {
+            "State": "Enabled",
+            "Health": "OK",
+            "HealthRollup": "OK"
+        }
+    },
+    "MemorySummary": {
+        "TotalSystemMemoryGiB": 128,
+        "TotalSystemPersistentMemoryGiB": 0,
+        "MemoryMirroring": "None",
+        "Status": {
+            "State": "Enabled",
+            "Health": "OK",
+            "HealthRollup": "OK"
+        }
+    },
+    "Bios": {
+        "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/Bios"
+    },
+    "SecureBoot": {
+        "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/SecureBoot"
+    },
+    "Processors": {
+        "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/Processors"
+    },
+    "Memory": {
+        "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/Memory"
+    },
+    "EthernetInterfaces": {
+        "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/EthernetInterfaces"
+    },
+    "SimpleStorage": {
+        "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/SimpleStorage"
+    },
+    "LogServices": {
+        "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/LogServices"
+    },
+    "GraphicsControllers": {
+        "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/GraphicsControllers"
+    },
+    "USBControllers": {
+        "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/USBControllers"
+    },
+    "Certificates": {
+        "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/Certificates"
+    },
+    "VirtualMedia": {
+        "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/VirtualMedia"
+    },
+    "Links": {
+        "Chassis": [
+            {
+                "@odata.id": "/redfish/v1/Chassis/1U"
+            }
+        ],
+        "ManagedBy": [
+            {
+                "@odata.id": "/redfish/v1/Managers/BMC"
+            }
+        ]
+    },
+    "Actions": {
+        "#ComputerSystem.Reset": {
+            "target": "/redfish/v1/Systems/SYS-1029U-1/Actions/ComputerSystem.Reset",
+            "ResetType@Redfish.AllowableValues": [
+                "On",
+                "ForceOff",
+                "GracefulShutdown",
+                "GracefulRestart",
+                "ForceRestart",
+                "Nmi",
+                "ForceOn",
+                "PushPowerButton"
+            ]
+        },
+        "Oem": {
+            "#Contoso.Reset": {
+                "target": "/redfish/v1/Systems/SYS-1029U-1/Oem/Contoso/Actions/Contoso.Reset"
+            }
+        }
+    },
+    "@odata.id": "/redfish/v1/Systems/SYS-1029U-1",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

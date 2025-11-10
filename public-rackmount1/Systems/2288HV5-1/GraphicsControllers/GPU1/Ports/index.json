@@ -1,0 +1,13 @@
+{
+    "@odata.type": "#PortCollection.PortCollection",
+    "Name": "Port Collection",
+    "Description": "GPU Port Collection",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/2288HV5-1/GraphicsControllers/GPU1/Ports/DisplayPort"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Systems/2288HV5-1/GraphicsControllers/GPU1/Ports",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

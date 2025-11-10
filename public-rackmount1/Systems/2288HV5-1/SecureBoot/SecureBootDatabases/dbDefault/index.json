@@ -1,0 +1,12 @@
+{
+    "@odata.type": "#SecureBootDatabase.v1_0_2.SecureBootDatabase",
+    "Id": "dbDefault",
+    "Name": "dbDefault - Default Authorized Signature Database",
+    "Description": "UEFI dbDefault Secure Boot Database",
+    "DatabaseId": "dbDefault",
+    "Signatures": {
+        "@odata.id": "/redfish/v1/Systems/2288HV5-1/SecureBoot/SecureBootDatabases/dbDefault/Signatures"
+    },
+    "@odata.id": "/redfish/v1/Systems/2288HV5-1/SecureBoot/SecureBootDatabases/dbDefault",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

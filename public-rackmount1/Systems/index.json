@@ -1,11 +1,18 @@
 {
     "@odata.type": "#ComputerSystemCollection.ComputerSystemCollection",
     "Name": "Computer System Collection",
-    "Members@odata.count": 1,
+    "Members@odata.count": 10,
     "Members": [
-        {
-            "@odata.id": "/redfish/v1/Systems/437XR1138R2"
-        }
+        { "@odata.id": "/redfish/v1/Systems/437XR1138R2" },
+        { "@odata.id": "/redfish/v1/Systems/R740XD1" },
+        { "@odata.id": "/redfish/v1/Systems/DL380Gen10-1" },
+        { "@odata.id": "/redfish/v1/Systems/SR650-1" },
+        { "@odata.id": "/redfish/v1/Systems/SYS-1029U-1" },
+        { "@odata.id": "/redfish/v1/Systems/UCS-C240-M5-1" },
+        { "@odata.id": "/redfish/v1/Systems/RX2540M5-1" },
+        { "@odata.id": "/redfish/v1/Systems/NF5280M5-1" },
+        { "@odata.id": "/redfish/v1/Systems/2288HV5-1" },
+        { "@odata.id": "/redfish/v1/Systems/X3650M5-1" }
     ],
     "@odata.id": "/redfish/v1/Systems",
     "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."

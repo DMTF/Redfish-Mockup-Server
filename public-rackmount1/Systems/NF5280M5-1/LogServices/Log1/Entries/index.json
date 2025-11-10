@@ -1,0 +1,49 @@
+{
+    "@odata.type": "#LogEntryCollection.LogEntryCollection",
+    "Name": "Log Service Collection",
+    "Description": "Collection of Logs for this System",
+    "Members@odata.count": 2,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/NF5280M5-1/LogServices/Log1/Entries/1",
+            "@odata.type": "#LogEntry.v1_16_0.LogEntry",
+            "Id": "1",
+            "Name": "Log Entry 1",
+            "EntryType": "SEL",
+            "Severity": "Critical",
+            "Created": "2012-03-07T14:44:00Z",
+            "EntryCode": "Upper Critical - going high",
+            "SensorType": "Temperature",
+            "SensorNumber": 1,
+            "Message": "Temperature threshold exceeded",
+            "MessageId": "0x592A28",
+            "Links": {
+                "OriginOfCondition": {
+                    "@odata.id": "/redfish/v1/Chassis/1U/Thermal"
+                }
+            }
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/NF5280M5-1/LogServices/Log1/Entries/2",
+            "@odata.type": "#LogEntry.v1_16_0.LogEntry",
+            "Id": "2",
+            "Name": "Log Entry 2",
+            "EntryType": "SEL",
+            "Severity": "Critical",
+            "Created": "2012-03-07T14:45:00Z",
+            "EntryCode": "Upper Critical - going high",
+            "SensorType": "Temperature",
+            "SensorNumber": 2,
+            "Message": "Temperature threshold exceeded",
+            "MessageId": "0x592E28",
+            "Links": {
+                "OriginOfCondition": {
+                    "@odata.id": "/redfish/v1/Chassis/1U/Thermal"
+                }
+            }
+        }
+    ],
+    "@odata.nextLink": "/redfish/v1/Systems/NF5280M5-1/LogServices/Log1/Entries?$skiptoken=2",
+    "@odata.id": "/redfish/v1/Systems/NF5280M5-1/LogServices/Log1/Entries",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

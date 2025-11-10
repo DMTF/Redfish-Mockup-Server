@@ -73,9 +73,9 @@
     "BiosVersion": "P79 v1.45 (12/06/2017)",
     "ProcessorSummary": {
         "Count": 2,
-        "Model": "Multi-Core Intel(R) Xeon(R) processor 7xxx Series",
-        "LogicalProcessorCount": 16,
-        "CoreCount": 8,
+        "Model": "Intel(R) Xeon(R) E5-2640 v4",
+        "LogicalProcessorCount": 40,
+        "CoreCount": 20,
         "Status": {
             "State": "Enabled",
             "Health": "OK",
@@ -83,7 +83,7 @@
         }
     },
     "MemorySummary": {
-        "TotalSystemMemoryGiB": 96,
+        "TotalSystemMemoryGiB": 64,
         "TotalSystemPersistentMemoryGiB": 0,
         "MemoryMirroring": "None",
         "Status": {

@@ -1,0 +1,41 @@
+{
+    "@odata.type": "#Memory.v1_19_0.Memory",
+    "Id": "DIMM3",
+    "Name": "DIMM Slot 3",
+    "RankCount": 2,
+    "MaxTDPMilliWatts": [
+        12000
+    ],
+    "CapacityMiB": 32768,
+    "DataWidthBits": 64,
+    "BusWidthBits": 72,
+    "ErrorCorrection": "MultiBitECC",
+    "MemoryLocation": {
+        "Socket": 2,
+        "MemoryController": 2,
+        "Channel": 1,
+        "Slot": 3
+    },
+    "Location": {
+        "PartLocation": {
+            "ServiceLabel": "DIMM 3",
+            "LocationType": "Slot",
+            "LocationOrdinalValue": 2
+        }
+    },
+    "MemoryType": "DRAM",
+    "MemoryDeviceType": "DDR4",
+    "BaseModuleType": "RDIMM",
+    "MemoryMedia": [
+        "DRAM"
+    ],
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "EnvironmentMetrics": {
+        "@odata.id": "/redfish/v1/Systems/X3650M5-1/Memory/DIMM3/EnvironmentMetrics"
+    },
+    "@odata.id": "/redfish/v1/Systems/X3650M5-1/Memory/DIMM3",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

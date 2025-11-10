@@ -1,0 +1,13 @@
+{
+    "@odata.type": "#GraphicsControllerCollection.GraphicsControllerCollection",
+    "Name": "GraphicsControllers",
+    "Description": "Redfish Graphics Controllers",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/2288HV5-1/GraphicsControllers/GPU1"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Systems/2288HV5-1/GraphicsControllers",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

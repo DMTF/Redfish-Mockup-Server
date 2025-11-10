@@ -1,0 +1,45 @@
+{
+    "@odata.type": "#EthernetInterface.v1_12_0.EthernetInterface",
+    "Id": "12446A3B8890",
+    "Name": "Ethernet Interface",
+    "Description": "System NIC 2",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "EthernetInterfaceType": "Physical",
+    "LinkStatus": "LinkUp",
+    "PermanentMACAddress": "12:44:6A:3B:88:90",
+    "MACAddress": "AA:BB:CC:DD:EE:00",
+    "SpeedMbps": 1000,
+    "FullDuplex": true,
+    "HostName": "backup-web483",
+    "FQDN": "backup-web483.contoso.com",
+    "IPv6DefaultGateway": "fe80::3ed9:2bff:fe34:600",
+    "NameServers": [
+        "names.contoso.com"
+    ],
+    "IPv4Addresses": [
+        {
+            "Address": "192.168.0.11",
+            "SubnetMask": "255.255.255.0",
+            "AddressOrigin": "Static",
+            "Gateway": "192.168.0.1"
+        }
+    ],
+    "IPv6Addresses": [
+        {
+            "Address": "fe80::1ec1:deff:fe6f:1e33",
+            "PrefixLength": 64,
+            "AddressOrigin": "Static",
+            "AddressState": "Preferred"
+        }
+    ],
+    "VLAN": {
+        "VLANEnable": true,
+        "VLANId": 101
+    },
+    "TeamMode": "None",
+    "@odata.id": "/redfish/v1/Systems/X3650M5-1/EthernetInterfaces/12446A3B8890",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -1,0 +1,11 @@
+{
+    "@odata.type": "#EnvironmentMetrics.v1_3_1.EnvironmentMetrics",
+    "Id": "EnvironmentMetrics",
+    "Name": "Memory Environment Metrics",
+    "TemperatureCelsius": {
+        "DataSourceUri": "/redfish/v1/Chassis/1U/Sensors/DIMM1Temp",
+        "Reading": 44
+    },
+    "@odata.id": "/redfish/v1/Systems/2288HV5-1/Memory/DIMM3/EnvironmentMetrics",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

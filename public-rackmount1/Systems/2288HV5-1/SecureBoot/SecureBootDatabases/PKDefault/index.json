@@ -1,0 +1,12 @@
+{
+    "@odata.type": "#SecureBootDatabase.v1_0_2.SecureBootDatabase",
+    "Id": "PKDefault",
+    "Name": "PKDefault - Default Platform Key",
+    "Description": "UEFI PKDefault Secure Boot Database",
+    "DatabaseId": "PKDefault",
+    "Certificates": {
+        "@odata.id": "/redfish/v1/Systems/2288HV5-1/SecureBoot/SecureBootDatabases/PKDefault/Certificates"
+    },
+    "@odata.id": "/redfish/v1/Systems/2288HV5-1/SecureBoot/SecureBootDatabases/PKDefault",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

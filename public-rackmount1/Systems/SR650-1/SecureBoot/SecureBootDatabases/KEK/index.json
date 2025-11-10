@@ -1,0 +1,21 @@
+{
+    "@odata.type": "#SecureBootDatabase.v1_0_2.SecureBootDatabase",
+    "Id": "KEK",
+    "Name": "KEK - Key Exchange Key Database",
+    "Description": "UEFI KEK Secure Boot Database",
+    "DatabaseId": "KEK",
+    "Certificates": {
+        "@odata.id": "/redfish/v1/Systems/SR650-1/SecureBoot/SecureBootDatabases/KEK/Certificates"
+    },
+    "Actions": {
+        "#SecureBootDatabase.ResetKeys": {
+            "target": "/redfish/v1/Systems/SR650-1/SecureBoot/SecureBootDatabases/KEK/Actions/SecureBootDatabase.ResetKeys",
+            "ResetKeysType@Redfish.AllowableValues": [
+                "ResetAllKeysToDefault",
+                "DeleteAllKeys"
+            ]
+        }
+    },
+    "@odata.id": "/redfish/v1/Systems/SR650-1/SecureBoot/SecureBootDatabases/KEK",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

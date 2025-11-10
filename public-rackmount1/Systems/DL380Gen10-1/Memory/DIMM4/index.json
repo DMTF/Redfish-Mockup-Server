@@ -1,0 +1,23 @@
+{
+    "@odata.type": "#Memory.v1_19_0.Memory",
+    "Id": "DIMM4",
+    "Name": "DIMM Slot 4",
+    "MemoryLocation": {
+        "Socket": 2,
+        "MemoryController": 2,
+        "Channel": 1,
+        "Slot": 4
+    },
+    "Location": {
+        "PartLocation": {
+            "ServiceLabel": "DIMM 4",
+            "LocationType": "Slot",
+            "LocationOrdinalValue": 3
+        }
+    },
+    "Status": {
+        "State": "Absent"
+    },
+    "@odata.id": "/redfish/v1/Systems/DL380Gen10-1/Memory/DIMM4",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

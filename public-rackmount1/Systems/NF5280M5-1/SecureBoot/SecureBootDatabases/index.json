@@ -1,0 +1,33 @@
+{
+    "@odata.type": "#SecureBootDatabaseCollection.SecureBootDatabaseCollection",
+    "Name": "UEFI SecureBoot Database Collection",
+    "Members@odata.count": 8,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/NF5280M5-1/SecureBoot/SecureBootDatabases/PK"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/NF5280M5-1/SecureBoot/SecureBootDatabases/KEK"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/NF5280M5-1/SecureBoot/SecureBootDatabases/db"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/NF5280M5-1/SecureBoot/SecureBootDatabases/dbx"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/NF5280M5-1/SecureBoot/SecureBootDatabases/PKDefault"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/NF5280M5-1/SecureBoot/SecureBootDatabases/KEKDefault"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/NF5280M5-1/SecureBoot/SecureBootDatabases/dbDefault"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/NF5280M5-1/SecureBoot/SecureBootDatabases/dbxDefault"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Systems/NF5280M5-1/SecureBoot/SecureBootDatabases",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

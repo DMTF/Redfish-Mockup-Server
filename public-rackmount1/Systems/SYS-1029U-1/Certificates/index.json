@@ -1,0 +1,15 @@
+{
+    "@odata.type": "#CertificateCollection.CertificateCollection",
+    "Name": "Certificates Collection",
+    "Members@odata.count": 3,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/Certificates/contoso-root"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/Certificates/contoso-subca"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Systems/SYS-1029U-1/Certificates",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

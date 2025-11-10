@@ -1,0 +1,12 @@
+{
+    "@odata.type": "#SignatureCollection.SignatureCollection",
+    "Name": "Signature Collection",
+    "Members@odata.count": 1,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/NF5280M5-1/SecureBoot/SecureBootDatabases/db/Signatures/1"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Systems/NF5280M5-1/SecureBoot/SecureBootDatabases/db/Signatures",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

@@ -1,0 +1,23 @@
+{
+    "@odata.type": "#SecureBoot.v1_1_1.SecureBoot",
+    "Id": "SecureBoot",
+    "Name": "UEFI Secure Boot",
+    "Actions": {
+        "#SecureBoot.ResetKeys": {
+            "target": "/redfish/v1/Systems/X3650M5-1/SecureBoot/Actions/SecureBoot.ResetKeys",
+            "ResetKeysType@Redfish.AllowableValues": [
+                "ResetAllKeysToDefault",
+                "DeleteAllKeys",
+                "DeletePK"
+            ]
+        }
+    },
+    "SecureBootEnable": false,
+    "SecureBootCurrentBoot": "Disabled",
+    "SecureBootMode": "UserMode",
+    "SecureBootDatabases": {
+        "@odata.id": "/redfish/v1/Systems/X3650M5-1/SecureBoot/SecureBootDatabases"
+    },
+    "@odata.id": "/redfish/v1/Systems/X3650M5-1/SecureBoot",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

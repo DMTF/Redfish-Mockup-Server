@@ -1,0 +1,22 @@
+{
+    "@odata.type": "#EthernetInterfaceCollection.EthernetInterfaceCollection",
+    "Name": "Ethernet Interface Collection",
+    "Description": "System NICs on Contoso Servers",
+    "Members@odata.count": 4,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/DL380Gen10-1/EthernetInterfaces/12446A3B0411"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/DL380Gen10-1/EthernetInterfaces/12446A3B8890"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/DL380Gen10-1/EthernetInterfaces/VLAN1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/DL380Gen10-1/EthernetInterfaces/ToManager"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Systems/DL380Gen10-1/EthernetInterfaces",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

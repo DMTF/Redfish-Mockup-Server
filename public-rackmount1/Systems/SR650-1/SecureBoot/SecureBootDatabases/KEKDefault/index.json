@@ -1,0 +1,12 @@
+{
+    "@odata.type": "#SecureBootDatabase.v1_0_2.SecureBootDatabase",
+    "Id": "KEKDefault",
+    "Name": "KEKDefault - Default Key Exchange Key Database",
+    "Description": "UEFI KEKDefault Secure Boot Database",
+    "DatabaseId": "KEKDefault",
+    "Certificates": {
+        "@odata.id": "/redfish/v1/Systems/SR650-1/SecureBoot/SecureBootDatabases/KEKDefault/Certificates"
+    },
+    "@odata.id": "/redfish/v1/Systems/SR650-1/SecureBoot/SecureBootDatabases/KEKDefault",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

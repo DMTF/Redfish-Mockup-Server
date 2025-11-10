@@ -1,0 +1,50 @@
+{
+    "@odata.type": "#Processor.v1_19_0.Processor",
+    "Id": "CPU1",
+    "Name": "Processor",
+    "Socket": "CPU 1",
+    "ProcessorType": "CPU",
+    "ProcessorArchitecture": "x86",
+    "InstructionSet": "x86-64",
+    "Manufacturer": "Intel(R) Corporation",
+    "Model": "Multi-Core Intel(R) Xeon(R) processor 7xxx Series",
+    "ProcessorId": {
+        "VendorId": "GenuineIntel",
+        "IdentificationRegisters": "0x34AC34DC8901274A",
+        "EffectiveFamily": "0x42",
+        "EffectiveModel": "0x61",
+        "Step": "0x1",
+        "MicrocodeInfo": "0x429943"
+    },
+    "Location": {
+        "PartLocation": {
+            "ServiceLabel": "CPU 1",
+            "LocationType": "Socket",
+            "LocationOrdinalValue": 0
+        }
+    },
+    "AdditionalFirmwareVersions": {
+        "Microcode": "0x46"
+    },
+    "MaxSpeedMHz": 3700,
+    "OperatingSpeedMHz": 2333,
+    "OperatingSpeedRangeMHz": {
+        "DataSourceUri": "/redfish/v1/Chassis/1U/Controls/CPU1Freq",
+        "ControlMode": "Automatic",
+        "AllowableMin": 1200,
+        "SettingMin": 2000,
+        "SettingMax": 2400,
+        "AllowableMax": 3700
+    },
+    "TotalCores": 8,
+    "TotalThreads": 16,
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "EnvironmentMetrics": {
+        "@odata.id": "/redfish/v1/Systems/X3650M5-1/Processors/CPU1/EnvironmentMetrics"
+    },
+    "@odata.id": "/redfish/v1/Systems/X3650M5-1/Processors/CPU1",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

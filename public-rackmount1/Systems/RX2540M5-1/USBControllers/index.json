@@ -1,0 +1,16 @@
+{
+    "@odata.type": "#USBControllerCollection.USBControllerCollection",
+    "Name": "USBControllers",
+    "Description": "Redfish USB Controllers",
+    "Members@odata.count": 2,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/RX2540M5-1/USBControllers/USB1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/RX2540M5-1/USBControllers/USB2"
+        }
+    ],
+    "@odata.id": "/redfish/v1/Systems/RX2540M5-1/USBControllers",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

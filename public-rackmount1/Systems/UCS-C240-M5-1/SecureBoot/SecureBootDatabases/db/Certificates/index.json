@@ -1,0 +1,21 @@
+{
+    "@odata.type": "#CertificateCollection.CertificateCollection",
+    "Name": "Certificate Collection",
+    "Members@odata.count": 3,
+    "Members": [
+        {
+            "@odata.id": "/redfish/v1/Systems/UCS-C240-M5-1/SecureBoot/SecureBootDatabases/db/Certificates/1"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/UCS-C240-M5-1/SecureBoot/SecureBootDatabases/db/Certificates/2"
+        },
+        {
+            "@odata.id": "/redfish/v1/Systems/UCS-C240-M5-1/SecureBoot/SecureBootDatabases/db/Certificates/3"
+        }
+    ],
+    "@Redfish.SupportedCertificates": [
+        "PEM"
+    ],
+    "@odata.id": "/redfish/v1/Systems/UCS-C240-M5-1/SecureBoot/SecureBootDatabases/db/Certificates",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

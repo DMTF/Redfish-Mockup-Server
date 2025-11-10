@@ -1,0 +1,26 @@
+{
+    "@odata.type": "#Processor.v1_19_0.Processor",
+    "Id": "CPU2",
+    "Name": "Processor",
+    "Socket": "CPU 2",
+    "ProcessorType": "CPU",
+    "ProcessorArchitecture": "x86",
+    "InstructionSet": "x86-64",
+    "Manufacturer": "Intel(R) Corporation",
+    "Model": "Multi-Core Intel(R) Xeon(R) processor 7xxx Series",
+    "Status": {
+        "State": "Absent"
+    },
+    "Location": {
+        "PartLocation": {
+            "ServiceLabel": "CPU 2",
+            "LocationType": "Socket",
+            "LocationOrdinalValue": 1
+        }
+    },
+    "MaxSpeedMHz": 3700,
+    "TotalCores": 8,
+    "TotalThreads": 16,
+    "@odata.id": "/redfish/v1/Systems/RX2540M5-1/Processors/CPU2",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

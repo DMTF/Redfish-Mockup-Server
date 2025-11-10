@@ -1,0 +1,32 @@
+{
+    "@odata.type": "#GraphicsController.v1_0_1.GraphicsController",
+    "Id": "GPU1",
+    "Name": "Contoso Graphics Controller 1",
+    "AssetTag": "",
+    "Manufacturer": "Contoso",
+    "Model": "GPU1",
+    "SKU": "80937",
+    "SerialNumber": "2M220100SL",
+    "PartNumber": "G37891",
+    "SparePartNumber": "G37890",
+    "BiosVersion": "90.02.17.00.7D",
+    "DriverVersion": "27.21.14.6079 (Contoso 460.79) DCH / Win 10 64",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK"
+    },
+    "Location": {
+        "PartLocation": {
+            "ServiceLabel": "Slot 1",
+            "LocationOrdinalValue": 1,
+            "LocationType": "Slot",
+            "Orientation": "LeftToRight",
+            "Reference": "Rear"
+        }
+    },
+    "Ports": {
+        "@odata.id": "/redfish/v1/Systems/R740XD1/GraphicsControllers/GPU1/Ports"
+    },
+    "@odata.id": "/redfish/v1/Systems/R740XD1/GraphicsControllers/GPU1",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}

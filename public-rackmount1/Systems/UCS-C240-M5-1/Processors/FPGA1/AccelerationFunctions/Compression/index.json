@@ -1,0 +1,25 @@
+{
+    "@odata.type": "#AccelerationFunction.v1_0_4.AccelerationFunction",
+    "Id": "Compression",
+    "Name": "Compression Accelerator",
+    "Description": "Compression Acceleration Function",
+    "Status": {
+        "State": "Enabled",
+        "Health": "OK",
+        "HealthRollup": "OK"
+    },
+    "UUID": "00000000-0000-0000-0000-000000000000",
+    "FpgaReconfigurationSlots": [
+        "AFU0"
+    ],
+    "AccelerationFunctionType": "Compression",
+    "Manufacturer": "Intel (R) Corporation",
+    "Version": "Green Compression Type 1 v.1.00.86",
+    "PowerWatts": 15,
+    "Links": {
+        "Endpoints": [],
+        "PCIeFunctions": []
+    },
+    "@odata.id": "/redfish/v1/Systems/UCS-C240-M5-1/Processors/FPGA1/AccelerationFunctions/Compression",
+    "@Redfish.Copyright": "Copyright 2014-2023 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
+}
