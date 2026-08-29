@@ -36,16 +36,59 @@ To run the mockup server as a Docker container:
 
 ## Usage
 
+The Redfish Mockup Server can be configured using either command-line arguments or a configuration file (config.ini).
+
+### Configuration File
+
+You can use a `config.ini` file in the current working directory with your settings. This is useful for repeated operations with the same configuration.
+
+Example `config.ini`:
+
+```ini
+[Server]
+host = 127.0.0.1
+port = 8000
+
+[Mockup]
+Dir = /path/to/mockup
+short-form = false
+
+[SSL]
+ssl = false
+cert = 
+key = 
+
+[Options]
+headers = false
+time = 0
+timefromjson = false
+test-etag = false
+ssdp = false
+```
+
+To use a configuration file in a different location, use the `--config` option:
+
+```bash
+python redfishMockupServer.py --config /path/to/myconfig.ini
+```
+
+**Note:** Command-line arguments always override configuration file settings, ensuring backward compatibility.
+
+### Command-Line Arguments
+
 ```text
 Redfish Mockup Server, version 1.1.4
-usage: redfishMockupServer.py [-h] [-H HOST] [-p PORT] [-D DIR] [-E] [-X]
-                              [-t TIME] [-T] [-s] [--cert CERT] [--key KEY]
-                              [-S] [-P]
+usage: redfishMockupServer.py [-h] [-c CONFIG] [-H HOST] [-p PORT] [-D DIR]
+                              [-E] [-X] [-t TIME] [-T] [-s] [--cert CERT]
+                              [--key KEY] [-S] [-P]
 
 Serve a static Redfish mockup.
 
 optional arguments:
   -h, --help            show this help message and exit
+  -c CONFIG, --config CONFIG
+                        Path to configuration file; defaults to 'config.ini'
+                        in current directory
   -H HOST, --host HOST, --Host HOST
                         hostname or IP address (default 127.0.0.1)
   -p PORT, --port PORT, --Port PORT
@@ -72,6 +115,34 @@ optional arguments:
 The mockup server starts an HTTP server at the `-H HOST` host and `-p PORT` port. The mockup server provides Redfish resources in the `-D DIR` mockup directory.
 
 If the mockup does not contain the representation of the `/redfish` resource, you must provide the `--short-form` argument. If you omit the mockup, the mockup server serves DMTF's `public-rackmount1` mockup.
+
+### Examples
+
+Using command-line arguments only (backward compatible):
+
+```bash
+python redfishMockupServer.py -H 127.0.0.1 -p 8000 -D /home/user/redfish-mockup
+```
+
+Using a configuration file:
+
+```bash
+# Uses config.ini from current directory
+python redfishMockupServer.py
+```
+
+Using a custom configuration file:
+
+```bash
+python redfishMockupServer.py --config /path/to/custom.ini
+```
+
+Mixing configuration file and command-line arguments (command-line overrides config):
+
+```bash
+# Uses settings from config.ini but overrides the port
+python redfishMockupServer.py -p 9000
+```
 
 ### Native system example
 
