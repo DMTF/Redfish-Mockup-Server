@@ -8,6 +8,7 @@
 import re
 import sys
 import argparse
+import configparser
 import time
 import collections.abc
 import json
@@ -35,6 +36,78 @@ logger.addHandler(ch)
 tool_version = "1.2.9"
 
 dont_send = ["connection", "keep-alive", "content-length", "transfer-encoding"]
+
+
+def load_config(config_file):
+    """
+    Loads configuration from a config.ini file
+
+    Args:
+        config_file: Path to the configuration file
+
+    Returns:
+        A dictionary containing the configuration values
+    """
+    config = configparser.ConfigParser()
+    config_values = {}
+    
+    try:
+        if not os.path.isfile(config_file):
+            return config_values
+
+        config.read(config_file)
+        
+        # Server section
+        if config.has_section('Server'):
+            if config.has_option('Server', 'host'):
+                host_val = config.get('Server', 'host').strip()
+                if host_val:
+                    config_values['host'] = host_val
+            if config.has_option('Server', 'port'):
+                config_values['port'] = config.getint('Server', 'port')
+        
+        # Mockup section
+        if config.has_section('Mockup'):
+            if config.has_option('Mockup', 'Dir'):
+                dir_val = config.get('Mockup', 'Dir').strip()
+                if dir_val:
+                    config_values['Dir'] = dir_val
+            if config.has_option('Mockup', 'short-form'):
+                config_values['short-form'] = config.getboolean('Mockup', 'short-form')
+        
+        # SSL section
+        if config.has_section('SSL'):
+            if config.has_option('SSL', 'ssl'):
+                config_values['ssl'] = config.getboolean('SSL', 'ssl')
+            if config.has_option('SSL', 'cert'):
+                cert_val = config.get('SSL', 'cert').strip()
+                if cert_val:
+                    config_values['cert'] = cert_val
+            if config.has_option('SSL', 'key'):
+                key_val = config.get('SSL', 'key').strip()
+                if key_val:
+                    config_values['key'] = key_val
+        
+        # Options section
+        if config.has_section('Options'):
+            if config.has_option('Options', 'headers'):
+                config_values['headers'] = config.getboolean('Options', 'headers')
+            if config.has_option('Options', 'time'):
+                time_val = config.get('Options', 'time').strip()
+                if time_val:
+                    config_values['time'] = time_val
+            if config.has_option('Options', 'timefromjson'):
+                config_values['timefromjson'] = config.getboolean('Options', 'timefromjson')
+            if config.has_option('Options', 'test-etag'):
+                config_values['test-etag'] = config.getboolean('Options', 'test-etag')
+            if config.has_option('Options', 'ssdp'):
+                config_values['ssdp'] = config.getboolean('Options', 'ssdp')
+        
+    except Exception as err:
+        print("WARNING: Error reading config file '{}': {}".format(config_file, err))
+        return {}
+    
+    return config_values
 
 
 def dict_merge(dct, merge_dct):
@@ -825,12 +898,13 @@ def main():
     logger.info("Redfish Mockup Server, version {}".format(tool_version))
 
     parser = argparse.ArgumentParser(description="Serve a static Redfish mockup.")
-    parser.add_argument("-H", "--host", "--Host", default="127.0.0.1", help="hostname or IP address (default 127.0.0.1)")
-    parser.add_argument("-p", "--port", "--Port", default=8000, type=int, help="host port (default 8000)")
+    parser.add_argument("-c", "--config", default="config.ini", help="path to config file (default config.ini in current directory)")
+    parser.add_argument("-H", "--host", "--Host", help="hostname or IP address (default 127.0.0.1)")
+    parser.add_argument("-p", "--port", "--Port", type=int, help="host port (default 8000)")
     parser.add_argument("-D", "--dir", "--Dir", help="path to mockup dir (may be relative to CWD)")
     parser.add_argument("-E", "--test-etag", "--TestEtag", action="store_true", help="(unimplemented) etag testing")
     parser.add_argument("-X", "--headers", action="store_true", help="load headers from headers.json files in mockup")
-    parser.add_argument("-t", "--time", default=0, help="delay in seconds added to responses (float or int)")
+    parser.add_argument("-t", "--time", help="delay in seconds added to responses (float or int)")
     parser.add_argument("-T", action="store_true", help="delay response based on times in time.json files in mockup")
     parser.add_argument("-s", "--ssl", action="store_true", help="place server in SSL (HTTPS) mode; requires a cert and key")
     parser.add_argument("--cert", help="the certificate for SSL")
@@ -839,6 +913,38 @@ def main():
     parser.add_argument("-P", "--ssdp", action="store_true", help="make mockup SSDP discoverable")
 
     args = parser.parse_args()
+    
+    # Load configuration from file
+    config_values = load_config(args.config)
+    
+    # Optional string arguments
+    if args.host is None:
+        args.host = config_values.get('host', '127.0.0.1')
+    if args.port is None:
+        args.port = config_values.get('port', 8000)
+    if args.dir is None:
+        args.dir = config_values.get('Dir')
+    if args.time is None:
+        args.time = config_values.get('time', 0)
+    if args.cert is None:
+        args.cert = config_values.get('cert')
+    if args.key is None:
+        args.key = config_values.get('key')
+    
+    # Optional boolean arguments
+    if not args.headers and 'headers' in config_values:
+        args.headers = config_values['headers']
+    if not args.T and 'timefromjson' in config_values:
+        args.T = config_values['timefromjson']
+    if not args.test_etag and 'test-etag' in config_values:
+        args.test_etag = config_values['test-etag']
+    if not args.ssl and 'ssl' in config_values:
+        args.ssl = config_values['ssl']
+    if not args.short_form and 'short-form' in config_values:
+        args.short_form = config_values['short-form']
+    if not args.ssdp and 'ssdp' in config_values:
+        args.ssdp = config_values['ssdp']
+    
     hostname = args.host
     port = args.port
     mockDirPath = args.dir
