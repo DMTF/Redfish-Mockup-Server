@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.3.0] - 2026-09-04
+- Added support for loading settings from a config file
+
 ## [1.2.9] - 2024-05-03
 - Added basic handling for multipart requests
 
