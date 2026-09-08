@@ -14,8 +14,11 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY rfSsdpServer.py redfishMockupServer.py /usr/src/app/
 COPY public-rackmount1 /usr/src/app/public-rackmount1
 
+# Copy healthcheck script
+COPY healthcheck.sh /usr/src/app/
+
 # Env settings
 EXPOSE 8000
-HEALTHCHECK CMD curl --fail http://127.0.0.1:8000/redfish/v1 || exit 1
+HEALTHCHECK --interval=5s --timeout=3s --start-period=10s --retries=3 CMD /usr/src/app/healthcheck.sh
 WORKDIR /usr/src/app
 ENTRYPOINT ["python", "/usr/src/app/redfishMockupServer.py", "-H", "0.0.0.0"]
